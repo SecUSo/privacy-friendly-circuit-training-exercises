@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="org.secuso.privacyfriendlyintervaltimer">
+    package="org.secuso.privacyfriendlycircuittraining">
 
     <supports-screens
         android:anyDensity="true"
@@ -20,7 +20,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name="org.secuso.privacyfriendlyintervaltimer.activities.SplashActivity"
+            android:name="org.secuso.privacyfriendlycircuittraining.activities.SplashActivity"
             android:theme="@style/SplashTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -29,78 +29,78 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="org.secuso.privacyfriendlyintervaltimer.tutorial.TutorialActivity"
+            android:name="org.secuso.privacyfriendlycircuittraining.tutorial.TutorialActivity"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name="org.secuso.privacyfriendlyintervaltimer.activities.MainActivity"
+            android:name="org.secuso.privacyfriendlycircuittraining.activities.MainActivity"
             android:label="@string/app_name"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name="org.secuso.privacyfriendlyintervaltimer.activities.AboutActivity"
+            android:name="org.secuso.privacyfriendlycircuittraining.activities.AboutActivity"
             android:label="@string/about"
-            android:parentActivityName="org.secuso.privacyfriendlyintervaltimer.activities.MainActivity"
+            android:parentActivityName="org.secuso.privacyfriendlycircuittraining.activities.MainActivity"
             android:screenOrientation="portrait">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="org.secuso.privacyfriendlyintervaltimer.activities.MainActivity" />
+                android:value="org.secuso.privacyfriendlycircuittraining.activities.MainActivity" />
         </activity>
         <activity
-            android:name="org.secuso.privacyfriendlyintervaltimer.activities.HelpActivity"
+            android:name="org.secuso.privacyfriendlycircuittraining.activities.HelpActivity"
             android:label="@string/help"
-            android:parentActivityName="org.secuso.privacyfriendlyintervaltimer.activities.MainActivity"
+            android:parentActivityName="org.secuso.privacyfriendlycircuittraining.activities.MainActivity"
             android:theme="@style/AppTheme.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="org.secuso.privacyfriendlyintervaltimer.activities.MainActivity" />
+                android:value="org.secuso.privacyfriendlycircuittraining.activities.MainActivity" />
         </activity>
         <activity
-            android:name="org.secuso.privacyfriendlyintervaltimer.activities.SettingsActivity"
+            android:name="org.secuso.privacyfriendlycircuittraining.activities.SettingsActivity"
             android:label="@string/title_activity_settings"
-            android:parentActivityName="org.secuso.privacyfriendlyintervaltimer.activities.MainActivity">
+            android:parentActivityName="org.secuso.privacyfriendlycircuittraining.activities.MainActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="org.secuso.privacyfriendlyintervaltimer.activities.MainActivity" />
+                android:value="org.secuso.privacyfriendlycircuittraining.activities.MainActivity" />
         </activity>
         <activity
-            android:name="org.secuso.privacyfriendlyintervaltimer.activities.WorkoutActivity"
+            android:name="org.secuso.privacyfriendlycircuittraining.activities.WorkoutActivity"
             android:label="@string/title_activity_workout"
             android:launchMode="singleTask"
-            android:parentActivityName="org.secuso.privacyfriendlyintervaltimer.activities.MainActivity"
+            android:parentActivityName="org.secuso.privacyfriendlycircuittraining.activities.MainActivity"
             android:theme="@style/AppTheme.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="org.secuso.privacyfriendlyintervaltimer.activities.MainActivity" />
+                android:value="org.secuso.privacyfriendlycircuittraining.activities.MainActivity" />
         </activity>
         <activity
-            android:name="org.secuso.privacyfriendlyintervaltimer.activities.MotivationAlertTextsActivity"
+            android:name="org.secuso.privacyfriendlycircuittraining.activities.MotivationAlertTextsActivity"
             android:label="@string/title_activity_motivation_alert_texts"
-            android:parentActivityName="org.secuso.privacyfriendlyintervaltimer.activities.SettingsActivity">
+            android:parentActivityName="org.secuso.privacyfriendlycircuittraining.activities.SettingsActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="org.secuso.privacyfriendlyintervaltimer.activities.SettingsActivity" />
+                android:value="org.secuso.privacyfriendlycircuittraining.activities.SettingsActivity" />
         </activity>
 
         <service
-            android:name="org.secuso.privacyfriendlyintervaltimer.services.TimerService"
+            android:name="org.secuso.privacyfriendlycircuittraining.services.TimerService"
             android:enabled="true"
             android:exported="true" />
 
-        <receiver android:name="org.secuso.privacyfriendlyintervaltimer.receivers.OnBootCompletedBroadcastReceiver">
+        <receiver android:name="org.secuso.privacyfriendlycircuittraining.receivers.OnBootCompletedBroadcastReceiver">
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
             </intent-filter>
         </receiver>
 
-        <receiver android:name="org.secuso.privacyfriendlyintervaltimer.receivers.MotivationAlertReceiver" />
+        <receiver android:name="org.secuso.privacyfriendlycircuittraining.receivers.MotivationAlertReceiver" />
 
         <activity
-            android:name="org.secuso.privacyfriendlyintervaltimer.activities.StatisticsActivity"
+            android:name="org.secuso.privacyfriendlycircuittraining.activities.StatisticsActivity"
             android:label="@string/title_activity_statistics"
-            android:parentActivityName="org.secuso.privacyfriendlyintervaltimer.activities.MainActivity"
+            android:parentActivityName="org.secuso.privacyfriendlycircuittraining.activities.MainActivity"
             android:theme="@style/AppTheme.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="org.secuso.privacyfriendlyintervaltimer.activities.MainActivity" />
+                android:value="org.secuso.privacyfriendlycircuittraining.activities.MainActivity" />
         </activity>
     </application>
 

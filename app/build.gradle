@@ -5,7 +5,7 @@ android {
     buildToolsVersion '27.0.1'
 
     defaultConfig {
-        applicationId "org.secuso.privacyfriendlyintervaltimer"
+        applicationId "org.secuso.privacyfriendlycircuittraining"
         minSdkVersion 21
         targetSdkVersion 26
         versionCode 1

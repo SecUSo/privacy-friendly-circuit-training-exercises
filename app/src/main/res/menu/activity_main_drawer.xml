@@ -8,6 +8,10 @@
             android:icon="@drawable/ic_home_24dp"
             android:title="@string/action_main" />
         <item
+            android:id="@+id/nav_exercises"
+            android:icon="@drawable/ic_workout_24dp"
+            android:title="Exercises Sets" />
+        <item
             android:id="@+id/nav_statistics"
             android:icon="@drawable/ic_statistics_24dp"
             android:title="@string/action_statistics" />
