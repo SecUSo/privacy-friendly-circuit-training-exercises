@@ -1,0 +1,229 @@
+<resources>
+    <string name="app_name">Interval Timer</string>
+    <string name="app_name_long">Privacy Friendly Interval Timer</string>
+    <string name="app_prefix" translatable="false">Privacy Friendly</string>
+
+    <!-- ###GENERAL###-->
+    <string name="save">Save</string>
+    <string name="edit">Edit</string>
+    <string name="delete">Delete</string>
+    <string name="set">Set</string>
+
+
+    <!-- ###DRAWER###-->
+    <string name="action_help">Help</string>
+    <string name="action_about">About</string>
+    <string name="action_tutorial">Tutorial</string>
+    <string name="action_settings">Settings</string>
+    <string name="action_main">Main</string>
+    <string name="action_statistics">Statistics</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="main_button_text">Full Width Button</string>
+    <string name="main_button_disabled_text">Inactive Button</string>
+    <string name="main_text_work_interval">Workout Interval</string>
+    <string name="main_text_rest_interval">Rest Interval</string>
+    <string name="main_text_sets">Sets</string>
+    <string name="main_text_start">START  ></string>
+    <string name="main_text_title">Please choose:</string>
+    <string name="main_block_periodization_headline">Configuration:</string>
+    <string name="main_block_periodization">Block Periodization</string>
+    <string name="main_block_periodization_info">Block Periodization</string>
+    <string name="main_block_periodization_sets">Set interval before break starts:</string>
+    <string name="main_block_periodization_duration">Duration of break:</string>
+    <string name="main_button_1">1</string>
+    <string name="main_button_2">2</string>
+    <string name="main_button_3">3</string>
+    <string name="main_button_4">4</string>
+    <string name="main_button_5">5</string>
+    <string name="main_text_fullwithbutton_desc">A button that uses the full width of the screen looks like this:</string>
+    <string name="main_text_disabledbutton_desc">A disabled button looks like this (any size):</string>
+    <string name="main_text_normalbutton_desc">There are multiple ways to display basic buttons. Button 1 is the basic button. If you wish to separate a button visually, use button 2. The buttons 3&#8211;5 are examples for highlighted buttons. Depending on the app other colors are possible.</string>
+    <string name="main_button_welcomedialog_text">Use the button in the lower left corner to call the Welcome Dialog.</string>
+
+    <!-- ###WORKOUT###-->
+    <string name="workout_headline_start_timer">START IN</string>
+    <string name="workout_headline_workout">WORKOUT</string>
+    <string name="workout_headline_done">DONE</string>
+    <string name="workout_headline_rest">REST</string>
+    <string name="workout_info">Set</string>
+    <string name="workout_finished_text">You did it!</string>
+    <string name="workout_finished_calories_text">Amount of calories burned:</string>
+    <string name="workout_finished_calories_unit">kcal</string>
+    <string name="workout_block_periodization_headline">Block Break</string>
+    <string name="workout_finish_button">FINISH</string>
+
+
+    <!-- ###NOTIFICATIONS###-->
+    <string name="workout_notification_time">Time</string>
+    <string name="workout_notification_pause">Pause</string>
+    <string name="workout_notification_resume">Resume</string>
+    <string name="reminder_notification_title">Circuit Training</string>
+
+
+    <!--###HELP###-->
+    <string name="help">Help</string>
+    <string name="help_whatis">What is Privacy Friendly Training?</string>
+    <string name="help_whatis_answer">Privacy Friendly Training supports the user during his/her circuit training session. It provides a configurable set of timers for the exercises and the rest phases as well as multiple other features.</string>
+    <string name="help_feature_workout_timer">Feature: Workokut timer</string>
+    <string name="help_feature_workout_timer_answer">After configuring the set of timers in the main menu you can start the workout routine by pressing the start button. The workout view has animations and sound output features which can be turned on and off inside the settings menu.</string>
+    <string name="help_feature_motivation_alert">Feature: Motivation alert</string>
+    <string name="help_feature_motivation_alert_answer">The app can show you motivation alerts to remind you of planned workout sessions. You can define the time of day and the notification texts inside the settings menu.</string>
+    <string name="help_feature_block_periodization">Feature: Block Periodization</string>
+    <string name="help_feature_block_periodization_answer">When scheduling the timers you may also choose the block periodization feature. This feature allows you to configure longer, separate breaks in between the exercises. This way the workout can be split into multiple high intensity workout cycles.</string>
+    <string name="help_feature_workout_history">Feature: Workout history</string>
+    <string name="help_feature_workout_history_answer">The app can collect statistics about your performed workout sessions. The collected data comprises of the time spend working out and the calories burnt while exercising. The accuracy of the calories calculation can be improved by configuring the necessary user data in the settings menu. The collection of this data can be deleted as well as turned on and off inside the settings menu.</string>
+    <string name="help_privacy">What makes the app privacy-friendly?</string>
+    <string name="help_privacy_answer">This app does not include any tracking mechanisms or advertisement. It further does not share any user information which may be collected during the usage of this app.</string>
+    <string name="help_permission">Which permissions are required by the app?</string>
+    <string name="help_permission_answer">Privacy Friendly Training requires the permission "Receive Boot Completed". It is used to reschedule the motivation alert after a reboot. If the permission is not granted, the app has to be launched first to reschedule the daily reminder notification.</string>
+
+    <!--###ABOUT###-->
+    <string name="about">About</string>
+    <string name="version_number">Version</string>
+    <string name="about_author">Authors: </string>
+    <string name="about_author_names" translatable="false">Alexander Karakuz, Karola Marky</string>
+    <string name="about_author_contributors">and contributors.</string>
+    <string name="about_affiliation">In affiliation with</string>
+    <string name="privacy_friendly">This application belongs to the group of Privacy Friendly Apps developed by Technische Universität Darmstadt. Sourcecode licensed under GPLv3. Images copyright TU Darmstadt and Google Inc.</string>
+    <string name="more_info">More information can be found on:</string>
+    <string name="github" translatable="false"><a href="https://github.com/SecUSo/privacy-friendly-app-example">Github-Repo</a></string>
+    <string name="url" translatable="false"><a href="https://www.secuso.org/pfa">SECUSO-Website</a></string>
+    <string name="about_third_party_libs">The app uses <a href="https://github.com/PhilJay/MPAndroidChart">MPAndroidChart</a> from Philipp Jahoda (Apache 2 License).</string>
+
+    <!-- ###SETTINGS### -->
+    <string name="title_activity_settings">Settings</string>
+    <string name="pref_header_general">General</string>
+    <string name="pref_header_workout">Workout</string>
+    <string name="pref_voice_countdown_workout_title">Voice Countdown Workout</string>
+    <string name="pref_voice_countdown_workout_summary">A voice counts down the final seconds of a workout.</string>
+    <string name="pref_voice_countdown_rest_title">Voice Countdown Rest</string>
+    <string name="pref_voice_countdown_rest_summary">A voice counts down the final seconds of the rest phase.</string>
+    <string name="pref_sound_rythm_title">Timer signal</string>
+    <string name="pref_sound_rythm_summary">A signal tone on for each countdown during the workout.</string>
+    <string name="pref_voice_halftime_title">Voice Halftime</string>
+    <string name="pref_voice_halftime_summary">A voice says when half the time of the workout passed.</string>
+    <string name="pref_header_notification">Notifications</string>
+    <string name="pref_header_statistics">Statistics</string>
+    <string name="pref_header_personalization">Personalization</string>
+    <string name="pref_title_notification_motivation_alert_time">Motivation alert time</string>
+    <string name="pref_title_notification_delete_statistics_alert">Delete Statistics</string>
+    <string name="pref_example_switch_summary">Example Switch Summary</string>
+    <string name="pref_keep_screen_on_switch">Keep Screen On</string>
+    <string name="pref_keep_screen_on_switch_summary">The Screen remains turned on during the workout.</string>
+    <string name="pref_start_timer_switch">Start timer</string>
+    <string name="pref_start_timer_switch_summary">A start timer is shown before the workout begins.</string>
+    <string name="pref_blinking_progress_bar">Blinking progress bar</string>
+    <string name="pref_blinking_progress_bar_summary">The progress bar of the workout timer blinks during the final seconds.</string>
+    <string name="pref_voice_output">Voice Output</string>
+    <string name="pref_voice_output_summary">A voice counts down the final seconds of each workout and rest phase.</string>
+    <string name="pref_title_motivation_alert_switch">Motivation alert</string>
+    <string name="pref_notification_motivation_alert_texts">Motivation texts</string>
+    <string name="title_activity_motivation_alert_texts">Motivation alert texts</string>
+    <string name="pref_statistics_title">Statistics</string>
+    <string name="pref_delete_statistics_dialog_title">Delete statistics</string>
+    <string name="pref_delete_statistics_dialog_info">Do you want to delete all saved statistics?</string>
+    <string name="pref_cancel_workout_check_title">Alert dialog on workout abort</string>
+    <string name="pref_cancel_workout_check_summary">Show an alert whenever you try to abort the workout.</string>
+    <string name="pref_delete_statistics_dialog_toast">Statistics have been reset!</string>
+    <string name="pref_calories_counter_title">Calories counter</string>
+    <string name="pref_calories_counter_summary">Count the calories burnt during workout.</string>
+    <string name="pref_group_title_personal_settings">Personalization</string>
+    <string name="pref_title_weight">Weight (kg)</string>
+    <string name="pref_title_age">Age</string>
+    <string name="pref_title_height">Height (cm)</string>
+    <string name="pref_title_gender">Gender</string>
+    <string-array name="pref_keys_gender">
+        <item>female</item>
+        <item>male</item>
+    </string-array>
+
+    <!-- ###PREFERENCE NOT TRANSLATEABLES### -->
+    <string name="pref_cancel_workout_dialog" translatable="false">org.secuso.privacyfriendlytraining.pref_cancel_workout_dialog</string>
+    <string name="pref_keep_screen_on_switch_enabled" translatable="false">org.secuso.privacyfriendlytraining.pref_keep_screen_on_switch_enabled</string>
+    <string name="pref_start_timer_switch_enabled" translatable="false">org.secuso.privacyfriendlytraining.pref_start_timer_switch_enabled</string>
+    <string name="pref_notification_motivation_alert_enabled" translatable="false">org.secuso.privacyfriendlytraining.pref.motivation_alert_enabled</string>
+    <string name="pref_notification_motivation_alert_time" translatable="false">org.secuso.privacyfriendlytraining.pref.motivation_alert_time</string>
+    <string name="pref_notification_delete_statistics_alert" translatable="false">org.secuso.privacyfriendlytraining.pref.motivation_alert_time</string>
+    <string name="pref_notification_motivation_texts" translatable="false">org.secuso.privacyfriendlytraining.pref.motivation_texts</string>
+    <string name="pref_delete_statistics_dialog" translatable="false">org.secuso.privacyfriendlytraining.pref.delete_dialog</string>
+    <string name="pref_weight" translatable="false">org.secuso.privacyfriendlytraining.pref.weight</string>
+    <string name="pref_height" translatable="false">org.secuso.privacyfriendlytraining.pref.height</string>
+    <string name="pref_age" translatable="false">org.secuso.privacyfriendlytraining.pref.age</string>
+    <string name="pref_gender" translatable="false">org.secuso.privacyfriendlytraining.pref.gender</string>
+    <string name="pref_calories_counter" translatable="false">org.secuso.privacyfriendlytraining.pref.calories</string>
+    <string name="pref_voice_countdown_workout" translatable="false">org.secuso.privacyfriendlytraining.pref.voicecountdownworkout</string>
+    <string name="pref_voice_countdown_rest" translatable="false">org.secuso.privacyfriendlytraining.pref.voicecountdownrest</string>
+    <string name="pref_sound_rythm" translatable="false">org.secuso.privacyfriendlytraining.pref.soundrythm</string>
+    <string name="pref_voice_halftime" translatable="false">org.secuso.privacyfriendlytraining.pref.voicehalftime</string>
+    <string name="pref_cancel_workout_check" translatable="false">org.secuso.privacyfriendlytraining.pref.cancel_workout_check</string>
+    <string name="pref_sounds_muted" translatable="false">org.secuso.privacyfriendlytraining.pref.sounds_muted</string>
+    <string name="pref_timer_workout" translatable="false">org.secuso.privacyfriendlytraining.pref.timer_workout</string>
+    <string name="pref_timer_rest" translatable="false">org.secuso.privacyfriendlytraining.pref.timer_rest</string>
+    <string name="pref_timer_set" translatable="false">org.secuso.privacyfriendlytraining.pref.timer_set</string>
+    <string name="pref_timer_periodization_time" translatable="false">org.secuso.privacyfriendlytraining.pref.timer_periodization_time</string>
+    <string name="pref_timer_periodization_set" translatable="false">org.secuso.privacyfriendlytraining.pref.timer_periodization_set</string>
+    <string name="pref_default_weight" translatable="false">70.0</string>
+    <string name="pref_default_age" translatable="false">25</string>
+    <string name="pref_default_height" translatable="false">170</string>
+    <string-array name="pref_values_gender" translatable="false">
+        <item>0</item>
+        <item>1</item>
+    </string-array>
+
+
+    <!-- Alerts -->
+    <string name="motivation_alert_input_title">Motivation alert text</string>
+    <string name="motivation_alert_empty">Set custom alert messages to be displayed when you are reminded about workout sessions.\n\nThere will be no alert if no message exists.</string>
+    <string name="motivation_alert_input_msg">Set your own custom motivation alert. The app notifies you with one of your texts randomly.</string>
+    <string name="motivation_alert_input_empty">Please enter a custom motivation alert.</string>
+    <string-array name="pref_default_notification_motivation_alert_messages">
+        <item>Let\'s do it, it\'s time to work out!</item>
+    </string-array>
+    <string name="alert_confirm_dialog_positive">Yes</string>
+    <string name="alert_confirm_dialog_negative">No</string>
+    <string name="workout_canceled_info">Do you want to abort the workout?</string>
+    <string name="workout_canceled_check">Don\'t show this message again</string>
+    <string name="alert_personalization_title">Do you want to personalize your app now?</string>
+    <string name="alert_personalization_message">This will improve the calories calculation.</string>
+
+
+    <!-- ReportFragment -->
+    <string name="month">Month</string>
+    <string name="week">Week</string>
+    <string name="day">Day</string>
+    <string name="report_workout_time">Workout time in minutes</string>
+    <string name="report_calories">Calories</string>
+    <string name="activity_summary_subtitle">Summary of activities</string>
+    <string name="activity_chart_summary_subtitle">Detailed summary of your activities</string>
+    <string name="summary_card_calories">kcal</string>
+    <string name="action_calories">Calories</string>
+    <string name="action_time">Workout time</string>
+
+
+    <!-- ### TUTORIAL DIALOG ### -->
+    <string name="slide1_heading">Welcome!</string>
+    <string name="slide1_text1">This app supports you during your circuit training session. It provides you with a configurable set of timers for the exercises and the rest phases.</string>
+    <string name="slide1_text2">Also, statistics of completed training sessions can be accessed.</string>
+
+    <string name="slide2_heading">Personalization</string>
+    <string name="slide2_text">In order to improve the calculation of the calories you have burned please customize your personal settings. Calories are counted for completed workout phases only.</string>
+
+    <string name="slide3_heading">Notifications</string>
+    <string name="slide3_text">The app can remind you about upcoming workout sessions. This can be configured inside the settings.</string>
+
+    <string name="slide4_heading">Block Periodization</string>
+    <string name="slide4_text_1">When scheduling the timers you may also choose the block periodization feature.</string>
+    <string name="slide4_text_2">This feature allows you to configure longer, separate breaks in between the exercises. This way the workout can be split into multiple high intensity workout cycles.</string>
+
+    <string name="okay">Okay</string>
+    <string name="viewhelp">View Help</string>
+    <string name="main_button_welcomedialog">Show Welcome</string>
+    <string name="next">Next</string>
+    <string name="skip">Skip</string>
+    <string name="title_activity_workout">Workout</string>
+    <string name="title_activity_statistics">Statistics</string>
+
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+</resources>

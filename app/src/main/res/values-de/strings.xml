@@ -1,0 +1,198 @@
+<resources>
+    <string name="app_name">Interval Timer</string>
+    <string name="app_name_long">Privacy Friendly Interval Timer</string>
+
+    <!-- ###GENERAL###-->
+    <string name="save">Speichern</string>
+    <string name="delete">Löschen</string>
+    <string name="edit">Bearbeiten</string>
+    <string name="set">Übernehmen</string>
+
+
+    <!-- ###DRAWER###-->
+    <string name="action_help">Hilfe</string>
+    <string name="action_about">Über</string>
+    <string name="action_tutorial">Tutorial</string>
+    <string name="action_settings">Einstellungen</string>
+    <string name="action_main">Hauptmenü</string>
+    <string name="action_statistics">Statistiken</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
+    <!-- ###MAIN### -->
+    <string name="main_button_text">Button volle Breite</string>
+    <string name="main_button_disabled_text">Inaktiver Button</string>
+    <string name="main_text_work_interval">Training Intervall</string>
+    <string name="main_text_rest_interval">Pause Intervall</string>
+    <string name="main_text_sets">Sätze</string>
+    <string name="main_text_start">START  ></string>
+    <string name="main_text_title">Bitte wählen:</string>
+    <string name="main_block_periodization_headline">Konfiguration:</string>
+    <string name="main_block_periodization">Blocktraining</string>
+    <string name="main_block_periodization_info">Blocktraining</string>
+    <string name="main_block_periodization_sets">Sätzeintervall nach denen die Pause startet:</string>
+    <string name="main_block_periodization_duration">Dauer der Pause:</string>
+    <string name="main_button_1">1</string>
+    <string name="main_button_2">2</string>
+    <string name="main_button_3">3</string>
+    <string name="main_button_4">4</string>
+    <string name="main_button_5">5</string>
+    <string name="main_text_fullwithbutton_desc">Ein Button mit voller breite sieht folgendermaßen aus:</string>
+    <string name="main_text_disabledbutton_desc">Ein inaktiver Button sieht folgendermaßen aus (jede Größe):</string>
+    <string name="main_text_normalbutton_desc">Es gibt verschiedene Möglichkeiten, um einfache Buttons darzustellen. Button 1 entspricht der Basisform. Wenn Buttons visual abgetrennt werden sollen, ist Button 2 zu verwenden. Die Buttons 3&#8211;5 sind Beispiels für hevorgehobene Buttons. Je nach App können auch andere Farben zum Highlighten verwendet werden.</string>
+    <string name="main_button_welcomedialog_text">Der Button in der Ecke unten links öffnet einen Beispiel-Welcome Dialog.</string>
+
+    <!-- ###WORKOUT###-->
+    <string name="workout_headline_start_timer">START IN</string>
+    <string name="workout_headline_workout">ÜBUNG</string>
+    <string name="workout_headline_rest">PAUSE</string>
+    <string name="workout_headline_done">FERTIG</string>
+    <string name="workout_info">Satz</string>
+    <string name="workout_finished_text">Du hast es geschafft!</string>
+    <string name="workout_finished_calories_text">Anzahl verbrannter Kalorien:</string>
+    <string name="workout_finished_calories_unit">kcal</string>
+    <string name="workout_block_periodization_headline">Block Pause</string>
+    <string name="workout_finish_button">BEENDEN</string>
+
+
+    <!-- ###NOTIFICATION###-->
+    <string name="workout_notification_time">Zeit</string>
+    <string name="workout_notification_pause">Pausieren</string>
+    <string name="workout_notification_resume">Fortsetzen</string>
+    <string name="reminder_notification_title">Zirkeltraining</string>
+
+
+    <!--###HELP###-->
+    <string name="help">Help</string>
+
+    <string name="help_whatis">Was ist Privacy Friendly Training?</string>
+    <string name="help_whatis_answer">Privacy Friendly Training unterstützt Sie während Ihres Zirkeltrainings. Die App bietet Ihnen hierfür sowohl konfigurierbare Stoppuhren für Ihre Übungen und Pausen als auch zahlreiche andere Funktionen.</string>
+    <string name="help_feature_workout_timer">Feature: Training Timer</string>
+    <string name="help_feature_workout_timer_answer">Nach der Konfiguration der Timer im Hauptmenü kann das Training mit dem Startbutton begonnen werden. Der Trainingsbildschirm beinhaltet verschiedene Animationen und Tonausgaben, die im Einstellungsmenü an- und ausgeschaltet werden können.</string>
+    <string name="help_feature_motivation_alert">Feature: Benachrichtigungen</string>
+    <string name="help_feature_motivation_alert_answer">Die App kann Sie über anstehende Trainingseinheiten benachrichtigen. Der Zeitpunkt der Benachrichtigung und der Motivationstext können im Einstellungsmenü konfiguriert werden.</string>
+    <string name="help_feature_block_periodization">Feature: Blocktraining</string>
+    <string name="help_feature_block_periodization_answer">Neben den Trainings- und Pausezeiten kann auch ein Blocktraining konfiguriert werden. Mit diesem Feature können Sie separate, längere Pausen zwischen den Übungen festlegen. Dadurch lässt sich das Training in mehrere feste Zyklen intensiven Trainings unterteilen.</string>
+    <string name="help_feature_workout_history">Feature: Statistiken</string>
+    <string name="help_feature_workout_history_answer">Die App kann Statistiken zu den durchgeführten Trainingseinheiten sammeln. Diese Daten bestehen aus der trainierten Zeit und den dabei verbrannten Kalorien. Die Genauigkeit der Kalorienberechnung kann verbessert werden, indem Daten des Nutzers wie Körpergröße und Gewicht in den Einstellungen eingetragen werden. Ferner können sämtliche Daten in den Einstellungen gelöscht und die weitere Sammlung dieser an- bzw. ausgeschaltet werden.</string>
+    <string name="help_privacy">Was macht die App privatsphäre-freundlich?</string>
+    <string name="help_privacy_answer">Diese App beinhaltet keinerlei Werbung oder Tracking-Mechanismen. Außerdem werden keine Nutzerinformationen, die in der App konfiguriert oder gesammelt wurden, weitergegeben.</string>
+    <string name="help_permission">Welche Berechtigungen braucht die App?</string>
+    <string name="help_permission_answer">Privacy Friendly Training benötigt die Berechtigung "Startvorgang abgeschlossen". Diese wird verwendet um die täglichen Motivationsbenachrichtigungen, nach einem Neustart, wieder einzuplannen. Wird die Berechtigung nicht gewährt so muss die App, nach einem Neustart, erst wieder einmal gestartet werden. </string>
+
+
+    <!--###ABOUT###-->
+    <string name="about">Über</string>
+    <string name="version_number">Version</string>
+    <string name="about_author">Autoren: </string>
+    <string name="about_author_contributors">und Mitwirkende.</string>
+    <string name="about_affiliation">In Zusammenarbeit mit</string>
+    <string name="privacy_friendly">Diese App gehört zur Gruppe der Privacy Friendly Apps entwickelt von der Technischen Universität Darmstadt. Quelltext lizenziert unter GPLv3. Bilder copyright TU Darmstadt und Google Inc.</string>
+    <string name="more_info">Weitere Infos unter:</string>
+    <string name="about_third_party_libs">Die App verwendet <a href="https://github.com/PhilJay/MPAndroidChart">MPAndroidChart</a> von Philipp Jahoda (Apache 2 License).</string>
+
+    <!-- ###SETTINGS### -->
+    <string name="title_activity_settings">Einstellungen</string>
+    <string name="pref_header_general">Allgemein</string>
+    <string name="pref_header_workout">Training</string>
+
+    <string name="pref_voice_countdown_workout_title">Ansage Countdown Training</string>
+    <string name="pref_voice_countdown_workout_summary">Eine Stimme zählt die letzten Sekunden des Trainings herunter.</string>
+    <string name="pref_voice_countdown_rest_title">Ansage Countdown Pause</string>
+    <string name="pref_voice_countdown_rest_summary">Eine Stimme zählt die letzten Sekunden der Pause herunter.</string>
+    <string name="pref_sound_rythm_title">Rythmussignal</string>
+    <string name="pref_sound_rythm_summary">Sekündlicher Ton während des Trainings.</string>
+    <string name="pref_voice_halftime_title">Ansage Halbzeit</string>
+    <string name="pref_voice_halftime_summary">Eine Stimme sagt die Halbzeit des Trainings an.</string>
+
+    <string name="pref_header_notification">Benachrichtigungen</string>
+    <string name="pref_header_statistics">Statistiken</string>
+    <string name="pref_header_personalization">Personalisierung</string>
+    <string name="pref_example_switch_summary">Beispiel Switch Summary</string>
+    <string name="pref_keep_screen_on_switch">Bildschirm bleibt an</string>
+    <string name="pref_keep_screen_on_switch_summary">Der Bildschrim bleibt während des Trainings an.</string>
+    <string name="pref_start_timer_switch">Starttimer vor Training</string>
+    <string name="pref_start_timer_switch_summary">Vor dem Beginn des Trainings wird ein Starttimer angezeigt.</string>
+    <string name="pref_blinking_progress_bar">Fortschrittsbalken blinkt</string>
+    <string name="pref_blinking_progress_bar_summary">Der Fortschrittsbalken der Zeitanzeige im Training blinkt während den letzten Sekunden.</string>
+    <string name="pref_voice_output">Sprachausgabe</string>
+    <string name="pref_voice_output_summary">Eine Stimme zählt die letzten Sekunden jeder Trainingseinheit und Pause herunter.</string>
+    <string name="pref_title_motivation_alert_switch">Motivationsbenachrichtigung</string>
+    <string name="pref_statistics_title">Statistiken</string>
+    <string name="pref_title_notification_motivation_alert_time">Zeitpunkt der Motivationsbenachrichtigung</string>
+    <string name="pref_title_notification_delete_statistics_alert">Statistiken löschen</string>
+    <string name="pref_notification_motivation_alert_texts">Motivationstexte</string>
+    <string name="pref_delete_statistics_dialog_title">Statistiken löschen</string>
+    <string name="pref_delete_statistics_dialog_info">Wollen Sie alle gespeicherten Statistiken löschen?</string>
+    <string name="pref_delete_statistics_dialog_toast">Die Statistiken wurden zurückgesetzt!</string>
+    <string name="pref_calories_counter_title">Kalorienzähler</string>
+    <string name="pref_calories_counter_summary">Zählen verbrannter Kalorien.</string>
+    <string name="pref_cancel_workout_check_title">Warnmeldung bei Abbruch</string>
+    <string name="pref_cancel_workout_check_summary">Zeige eine Warnmeldung beim vorzeitigen Verlassen des Trainings.</string>
+
+    <string name="pref_group_title_personal_settings">Personalisierung</string>
+    <string name="pref_title_weight">Gewicht (kg)</string>
+    <string name="pref_title_age">Alter</string>
+    <string name="pref_title_height">Größe (cm)</string>
+    <string name="pref_title_gender">Geschlecht</string>
+    <string-array name="pref_keys_gender">
+        <item>weiblich</item>
+        <item>männlich</item>
+    </string-array>
+
+    <!-- Alerts -->
+    <string name="motivation_alert_input_title">Motivationstext</string>
+    <string name="title_activity_motivation_alert_texts">Motivationsbenachrichtigungen</string>
+    <string name="motivation_alert_empty">Erstellen Sie persönliche Motivationsbenachrichtigungen, die erscheinen, wenn Sie an Trainingseinheiten erinnert werden.\n\nEs erscheint keine Benachrichtigung, wenn keine Texte angelegt sind.</string>
+    <string name="motivation_alert_input_msg">Speichern Sie eine persönliche Motivationsbenachrichtigung. Die Auswahl der Nachricht erfolgt zufällig.</string>
+    <string name="motivation_alert_input_empty">Bitte geben Sie eine Motivationsbenachrichtigung ein.</string>
+    <string-array name="pref_default_notification_motivation_alert_messages">
+        <item>Mach dich bereit! Zeit zum Trainieren!</item>
+    </string-array>
+    <string name="alert_confirm_dialog_positive">Ja</string>
+    <string name="alert_confirm_dialog_negative">Nein</string>
+    <string name="workout_canceled_info">Möchtest du das Training wirklich abbrechen?</string>
+    <string name="workout_canceled_check">Diese Nachricht nicht wieder anzeigen</string>
+    <string name="alert_personalization_title">Wollen Sie ihre App personalisieren?</string>
+    <string name="alert_personalization_message">Dies wird die Kalorienberechnung verbessern.</string>
+
+    <!-- ReportFragment -->
+    <string name="month">Monat</string>
+    <string name="week">Woche</string>
+    <string name="day">Tag</string>
+    <string name="report_workout_time">Trainingszeit in Minuten</string>
+    <string name="report_calories">Kalorien</string>
+    <string name="activity_chart_summary_subtitle">Detaillierte Übersicht aller Aktivitäten</string>
+    <string name="activity_summary_subtitle">Aktivitätenübersicht</string>
+    <string name="summary_card_calories">kcal</string>
+    <string name="action_calories">Kalorien</string>
+    <string name="action_time">Trainingszeit</string>
+
+
+    <!-- ### WELCOME DIALOG ### -->
+    <string name="okay">Okay</string>
+    <string name="viewhelp">Hilfe</string>
+    <string name="main_button_welcomedialog">Willkommen</string>
+
+    <!-- ### TUTORIAL DIALOG ### -->
+    <string name="slide1_heading">Willkommen!</string>
+    <string name="slide1_text1">Diese App unterstützt Sie während Ihres Zirkeltrainings. Sie bietet Ihnen hierfür konfigurierbare Stoppuhren für Ihre Übungen und Pausen.</string>
+    <string name="slide1_text2">Außerdem können Statistiken über erfolgte Trainingseinheiten gesammelt werden.</string>
+
+    <string name="slide2_heading">Personalisierung</string>
+    <string name="slide2_text">Um die Berechnung der verbrannten Kalorien zu verbessern, können Sie unter Einstellungen Ihre persönlichen Werte eingeben. Kalorien werden nur für abgeschlossene Trainingseinheiten angerechnet.</string>
+
+    <string name="slide3_heading">Benachrichtigungen</string>
+    <string name="slide3_text">Die App kann Sie über anstehende Trainingseinheiten benachrichtigen.  Der Zeitpunkt der Benachrichtigung und der Motivationstext können im Einstellungsmenü konfiguriert werden.</string>
+
+    <string name="slide4_heading">Blocktraining</string>
+    <string name="slide4_text_1">Neben den Trainings- und Pausezeiten kann auch ein Blocktraining konfiguriert werden.</string>
+    <string name="slide4_text_2">Mit diesem Feature können Sie separate, längere Pausen zwischen den Übungen festlegen. Dadurch lässt sich das Training in mehrere feste Zyklen intensiven Trainings unterteilen.</string>
+
+    <string name="next">Weiter</string>
+    <string name="skip">Skip</string>
+    <string name="title_activity_workout">Training</string>
+    <string name="title_activity_statistics">Statistiken</string>
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+</resources>
