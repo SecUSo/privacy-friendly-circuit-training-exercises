@@ -102,6 +102,16 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="org.secuso.privacyfriendlycircuittraining.activities.MainActivity" />
         </activity>
+
+        <activity
+            android:name="org.secuso.privacyfriendlycircuittraining.activities.ExerciseSetActivity"
+            android:label="@string/title_activity_exercises"
+            android:parentActivityName="org.secuso.privacyfriendlycircuittraining.activities.MainActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="org.secuso.privacyfriendlycircuittraining.activities.MainActivity" />
+        </activity>
     </application>
 
 </manifest>

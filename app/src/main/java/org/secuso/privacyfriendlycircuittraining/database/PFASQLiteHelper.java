@@ -21,6 +21,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
+import org.secuso.privacyfriendlycircuittraining.models.ExerciseSet;
 import org.secuso.privacyfriendlycircuittraining.models.WorkoutSessionData;
 
 import java.util.ArrayList;
@@ -48,12 +49,17 @@ public class PFASQLiteHelper extends SQLiteOpenHelper {
 
     //Name of the table in the database
     private static final String TABLE_DATA = "WORKOUT_SESSION";
+    private static final String TABLE_DATA_ES = "EXERCISE_SET";
 
     //Names of columns in the databases in this example we only use one table
     private static final String KEY_ID = "id";
     private static final String KEY_WORKOUT_TIME = "workoutTime";
     private static final String KEY_CALORIES = "calories";
     private static final String KEY_TIMESTAMP = "time";
+
+    private static final String KEY_ID_ES = "id";
+    private static final String KEY_NAME_ES = "name";
+    private static final String KEY_EXERCISES_ES = "exercises";
 
     public PFASQLiteHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -65,6 +71,14 @@ public class PFASQLiteHelper extends SQLiteOpenHelper {
         /**
          * Create the table data on the first start
          * */
+        String EXERCISE_SET_TABLE = "CREATE TABLE " + TABLE_DATA_ES +
+                "(" +
+                KEY_ID_ES + " INTEGER PRIMARY KEY AUTOINCREMENT," +
+                KEY_NAME_ES + " TEXT," +
+                KEY_EXERCISES_ES + " TEXT);";
+
+        sqLiteDatabase.execSQL(EXERCISE_SET_TABLE);
+
         String WORKOUT_SESSION_TABLE = "CREATE TABLE " + TABLE_DATA +
                 "(" +
                 KEY_ID + " INTEGER PRIMARY KEY AUTOINCREMENT," +
@@ -78,7 +92,7 @@ public class PFASQLiteHelper extends SQLiteOpenHelper {
     @Override
     public void onUpgrade(SQLiteDatabase sqLiteDatabase, int oldVersion, int newVersion) {
         sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + TABLE_DATA);
-
+        sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + TABLE_DATA_ES);
         onCreate(sqLiteDatabase);
     }
 
@@ -101,6 +115,26 @@ public class PFASQLiteHelper extends SQLiteOpenHelper {
         database.close();
     }
 
+
+    /**
+     * Adds a single sampleData to our Table
+     * As no ID is provided and KEY_ID is autoincremented (see line 50)
+     * the last available key of the table is taken and incremented by 1
+     * @param sampleData data that will be added
+     */
+    public long addExerciseSet(ExerciseSet sampleData) {
+        SQLiteDatabase database = this.getWritableDatabase();
+
+        //To adjust this class for your own data, please add your values here.
+        ContentValues values = new ContentValues();
+        values.put(KEY_NAME_ES, sampleData.getName());
+        values.put(KEY_EXERCISES_ES, sampleData.getExercises());
+
+        long id = database.insert(TABLE_DATA_ES, null, values);
+        database.close();
+        return id;
+    }
+
     /**
      * Adds a single sampleData to our Table
      * This method can be used for re-insertion for example an undo-action
@@ -118,6 +152,29 @@ public class PFASQLiteHelper extends SQLiteOpenHelper {
         values.put(KEY_CALORIES, sampleData.getCALORIES());
 
         database.insert(TABLE_DATA, null, values);
+
+        //always close the database after insertion
+        database.close();
+    }
+
+
+    /**
+     * Adds a single sampleData to our Table
+     * This method can be used for re-insertion for example an undo-action
+     * Therefore, the key of the sampleData will also be written into the database
+     * @param sampleData data that will be added
+     * Only use this for undo options and re-insertions
+     */
+    public void addExerciseSetWithID(ExerciseSet sampleData) {
+        SQLiteDatabase database = this.getWritableDatabase();
+
+        //To adjust this class for your own data, please add your values here.
+        ContentValues values = new ContentValues();
+        values.put(KEY_ID_ES, sampleData.getID());
+        values.put(KEY_NAME_ES, sampleData.getName());
+        values.put(KEY_EXERCISES_ES, sampleData.getExercises());
+
+        database.insert(TABLE_DATA_ES, null, values);
 
         //always close the database after insertion
         database.close();
@@ -146,6 +203,36 @@ public class PFASQLiteHelper extends SQLiteOpenHelper {
             data.setCALORIES(Integer.parseInt(cursor.getString(2)));
 
             Log.d("DATABASE", "Read " + cursor.getString(1) + " from DB");
+            
+            cursor.close();
+        }
+
+        return data;
+
+    }
+
+    /**
+     * This method gets a single sampleData entry based on its ID
+     * @param id of the sampleData that is requested, could be get by the get-method
+     * @return the sampleData that is requested.
+     */
+    public ExerciseSet getExerciseSet(int id) {
+        SQLiteDatabase database = this.getWritableDatabase();
+
+        Log.d("DATABASE", Integer.toString(id));
+
+        Cursor cursor = database.query(TABLE_DATA_ES, new String[]{KEY_ID_ES,
+                        KEY_NAME_ES, KEY_EXERCISES_ES}, KEY_ID + "=?",
+                new String[]{String.valueOf(id)}, null, null, null, null);
+
+        ExerciseSet data = new ExerciseSet();
+
+        if( cursor != null && cursor.moveToFirst() ){
+            data.setID(Integer.parseInt(cursor.getString(0)));
+            data.setName(cursor.getString(1));
+            data.setExercises(cursor.getString(2));
+
+            Log.d("DATABASE", "Read " + cursor.getString(1) + " from  ES DB");
 
             cursor.close();
         }
@@ -185,6 +272,40 @@ public class PFASQLiteHelper extends SQLiteOpenHelper {
         return sampleDataList;
     }
 
+
+    /**
+     * This method returns all data from the DB as a list
+     * This could be used for instance to fill a recyclerView
+     * @return A list of all available sampleData in the Database
+     */
+    public List<ExerciseSet> getAllExerciseSet() {
+        List<ExerciseSet> sampleDataList = new ArrayList<ExerciseSet>();
+
+        String selectQuery = "SELECT  * FROM " + TABLE_DATA_ES;
+
+        SQLiteDatabase database = this.getWritableDatabase();
+        Cursor cursor = database.rawQuery(selectQuery, null);
+
+        ExerciseSet sampleData = null;
+
+        if (cursor.moveToFirst()) {
+            do {
+                //To adjust this class for your own data, please add your values here.
+                //be careful to use the right get-method to get the data from the cursor
+                sampleData = new ExerciseSet();
+                sampleData.setID(Integer.parseInt(cursor.getString(0)));
+                sampleData.setName(cursor.getString(1));
+                sampleData.setExercises(cursor.getString(2));
+
+                sampleDataList.add(sampleData);
+            } while (cursor.moveToNext());
+        }
+
+        return sampleDataList;
+    }
+
+
+
     /**
      * Updates a database entry.
      * @param workoutData
@@ -203,6 +324,23 @@ public class PFASQLiteHelper extends SQLiteOpenHelper {
     }
 
     /**
+     * Updates a database entry.
+     * @param exerciseSet
+     * @return actually makes the update
+     */
+    public int updateExerciseSet(ExerciseSet exerciseSet) {
+        SQLiteDatabase database = this.getWritableDatabase();
+
+        //To adjust this class for your own data, please add your values here.
+        ContentValues values = new ContentValues();
+        values.put(KEY_NAME_ES, exerciseSet.getName());
+        values.put(KEY_EXERCISES_ES, exerciseSet.getExercises());
+
+        return database.update(TABLE_DATA_ES, values, KEY_ID + " = ?",
+                new String[] { String.valueOf(exerciseSet.getID()) });
+    }
+
+    /**
      * Deletes sampleData from the DB
      * This method takes the sampleData and extracts its key to build the delete-query
      * @param sampleData that will be deleted
@@ -216,12 +354,34 @@ public class PFASQLiteHelper extends SQLiteOpenHelper {
     }
 
     /**
+     * Deletes sampleData from the DB
+     * This method takes the sampleData and extracts its key to build the delete-query
+     * @param sampleData that will be deleted
+     */
+    public void deleteExerciseSet(ExerciseSet sampleData) {
+        SQLiteDatabase database = this.getWritableDatabase();
+        database.delete(TABLE_DATA_ES, KEY_ID + " = ?",
+                new String[] { Integer.toString(sampleData.getID()) });
+        //always close the DB after deletion of single entries
+        database.close();
+    }
+
+    /**
      * deletes all sampleData from the table.
      * This could be used in case of a reset of the app.
      */
     public void deleteAllWorkokutData() {
         SQLiteDatabase database = this.getWritableDatabase();
         database.execSQL("delete from "+ TABLE_DATA);
+    }
+
+    /**
+     * deletes all sampleData from the table.
+     * This could be used in case of a reset of the app.
+     */
+    public void deleteAllExerciseSet() {
+        SQLiteDatabase database = this.getWritableDatabase();
+        database.execSQL("delete from "+ TABLE_DATA_ES);
     }
 
 }

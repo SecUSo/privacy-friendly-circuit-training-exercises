@@ -14,6 +14,7 @@
     <string name="action_about">Über</string>
     <string name="action_tutorial">Tutorial</string>
     <string name="action_settings">Einstellungen</string>
+    <string name="action_exercises">Übungessets</string>
     <string name="action_main">Hauptmenü</string>
     <string name="action_statistics">Statistiken</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
@@ -53,6 +54,10 @@
     <string name="workout_finished_calories_unit">kcal</string>
     <string name="workout_block_periodization_headline">Block Pause</string>
     <string name="workout_finish_button">BEENDEN</string>
+
+    <!-- ###EXERCIES###-->
+    <string name="title_activity_exercises">Übungessets</string>
+    <string name="exercises_lists_empty">Du hast noch keine Übungssets</string>
 
 
     <!-- ###NOTIFICATION###-->
