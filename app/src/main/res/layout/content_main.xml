@@ -204,7 +204,7 @@
             android:layout_weight="0.05"
             android:elevation="0dp">
 
-            <TextView
+<!--            <TextView
                 android:id="@+id/main_text_sets"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -212,13 +212,64 @@
                 android:gravity="center"
                 android:text="@string/main_text_sets"
                 android:textColor="@color/black"
-                android:textSize="20sp" />
+                android:textSize="20sp" />-->
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="fill_vertical"
+                android:orientation="horizontal">
+
+                <Spinner
+                    android:id="@+id/workout_mode"
+                    android:layout_width="match_parent"
+                    android:layout_height="35dp"
+                    android:layout_marginLeft="80dp"
+                    android:layout_marginRight="80dp"
+                    android:layout_weight="1"
+                    android:entries="@array/workout_modes"
+                    android:gravity="center"
+                    android:textColor="@color/black"
+                    android:textSize="36sp" />
+
+            </LinearLayout>
         </TableRow>
 
         <TableRow
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_weight="0.2">
+            android:layout_weight="0.05"
+            android:elevation="0dp"
+            android:visibility="gone"
+            android:id="@+id/exerciesetsRow">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="fill_vertical"
+                android:orientation="horizontal">
+
+                <Spinner
+                    android:id="@+id/exerciseSets"
+                    android:layout_width="match_parent"
+                    android:layout_height="35dp"
+                    android:layout_marginLeft="80dp"
+                    android:layout_marginRight="80dp"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:textColor="@color/black"
+                    android:textSize="36sp" />
+
+            </LinearLayout>
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="0.2"
+            android:id="@+id/setsRow">
 
             <LinearLayout
                 android:layout_width="match_parent"

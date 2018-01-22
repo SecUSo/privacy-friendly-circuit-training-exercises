@@ -25,14 +25,15 @@ import android.view.View;
 import android.widget.CheckBox;
 import android.widget.LinearLayout;
 
+import org.json.JSONException;
 import org.secuso.privacyfriendlycircuittraining.R;
 import org.secuso.privacyfriendlycircuittraining.adapters.ExerciseSetAdapter;
 import org.secuso.privacyfriendlycircuittraining.database.PFASQLiteHelper;
+import org.secuso.privacyfriendlycircuittraining.fragments.ExerciseSetDialogFragment;
 import org.secuso.privacyfriendlycircuittraining.models.ExerciseSet;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 
 /**
  * Exercise Sets view
@@ -49,9 +50,9 @@ public class ExerciseSetActivity extends BaseActivity implements View.OnLongClic
     private FloatingActionButton newListFab;
     private FloatingActionButton deleteFab;
     private LinearLayout noListsLayout;
-    public boolean is_in_action_mode = false;
-    ArrayList<ExerciseSet> selection_list = new ArrayList<>();
-    PFASQLiteHelper db = new PFASQLiteHelper(this);
+    private boolean is_in_action_mode = false;
+    private ArrayList<ExerciseSet> selection_list = new ArrayList<>();
+    private PFASQLiteHelper db = new PFASQLiteHelper(this);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,6 +68,8 @@ public class ExerciseSetActivity extends BaseActivity implements View.OnLongClic
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext());
         recyclerView.setLayoutManager(mLayoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
+        //mLayoutManager.setReverseLayout(true);
+        //mLayoutManager.setStackFromEnd(true);
         recyclerView.setAdapter(mAdapter);
 
         newListFab = (FloatingActionButton) findViewById(R.id.fab_new_list);
@@ -80,26 +83,22 @@ public class ExerciseSetActivity extends BaseActivity implements View.OnLongClic
         newListFab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Random rand = new Random();
-                int n = rand.nextInt(10);
-                String name = "Übungsset" + n;
-                String exercises = "Squat, Push-ups, Sit-Ups";
 
-                int lastId = (int) db.addExerciseSet(new ExerciseSet(0, name, exercises));
-                exerciseSetsList.add(new ExerciseSet(lastId, name, exercises));
-
-                mAdapter.updateAdapter(selection_list);
-                setNoExererciseSetsMessage();
+                if ( !ExerciseSetDialogFragment.isOpened() )
+                {
+                    ExerciseSetDialogFragment listDialogFragment = ExerciseSetDialogFragment.newAddInstance();
+                    listDialogFragment.show(getSupportFragmentManager(), "DialogFragment");
+                }
                 }
         });
 
         deleteFab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                mAdapter.updateAdapter(selection_list);
                 for(ExerciseSet es : selection_list){
                     db.deleteExerciseSet(es);
                 }
+                mAdapter.updateAdapter(selection_list);
                 clearActionMode();
                 setNoExererciseSetsMessage();
             }
@@ -107,7 +106,26 @@ public class ExerciseSetActivity extends BaseActivity implements View.OnLongClic
 
     }
 
-    private void setNoExererciseSetsMessage(){
+
+    public void addExerciseSet(String name, ArrayList<String> exercises){
+        int lastId = (int) db.addExerciseSet(new ExerciseSet(0, name, exercises));
+        exerciseSetsList.add(new ExerciseSet(lastId, name, exercises));
+        ArrayList<ExerciseSet> empty = new ArrayList<>();
+        mAdapter.updateAdapter(empty);
+        recyclerView.getLayoutManager().scrollToPosition(exerciseSetsList.size()-1);
+    }
+
+    public void updateExerciseSet(int position, int id, String name, ArrayList<String> exercises) throws JSONException {
+        ExerciseSet temp = new ExerciseSet(id, name, exercises);
+        db.updateExerciseSet(temp);
+        exerciseSetsList.get(position).setName(name);
+        ArrayList<ExerciseSet> empty = new ArrayList<>();
+        mAdapter.updateAdapter(empty);
+        mAdapter.notifyItemChanged(position);
+    }
+
+
+    public void setNoExererciseSetsMessage(){
         if(mAdapter.getItemCount() == 0){
             findViewById(R.id.no_lists_layout).setVisibility(View.VISIBLE);
         }
@@ -123,6 +141,7 @@ public class ExerciseSetActivity extends BaseActivity implements View.OnLongClic
         newListFab.setVisibility(View.VISIBLE);
         deleteFab.setVisibility(View.GONE);
         getSupportActionBar().setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.colorPrimary)));
+        this.getWindow().setStatusBarColor(getResources().getColor(R.color.colorPrimary));
     }
 
     @Override
@@ -144,6 +163,7 @@ public class ExerciseSetActivity extends BaseActivity implements View.OnLongClic
         newListFab.setVisibility(View.GONE);
         deleteFab.setVisibility(View.VISIBLE);
         getSupportActionBar().setBackgroundDrawable(new ColorDrawable(Color.LTGRAY));
+        this.getWindow().setStatusBarColor(Color.LTGRAY);
         return true;
     }
 
@@ -168,9 +188,7 @@ public class ExerciseSetActivity extends BaseActivity implements View.OnLongClic
     {
         return deleteFab;
     }
-    public LinearLayout getNoListsLayout()
-    {
-        return noListsLayout;
-    }
+    public LinearLayout getNoListsLayout() {return noListsLayout;}
+    public boolean getIsInActionMode() {return is_in_action_mode;}
 
 }

@@ -43,6 +43,57 @@
             android:layout_below="@+id/name"
             />
 
+        <ImageView
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:scaleType="fitXY"
+            android:id="@+id/exercise_img_1"
+            android:layout_below="@+id/name"
+            android:layout_alignParentLeft="true"
+            />
+
+        <ImageView
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:scaleType="fitXY"
+            android:id="@+id/exercise_img_2"
+            android:layout_below="@+id/name"
+            android:layout_toRightOf="@+id/exercise_img_1"
+            />
+
+        <ImageView
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:scaleType="fitXY"
+            android:id="@+id/exercise_img_3"
+            android:layout_below="@+id/name"
+            android:layout_toRightOf="@+id/exercise_img_2"
+            />
+        <ImageView
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:scaleType="fitXY"
+            android:id="@+id/exercise_img_4"
+            android:layout_below="@+id/name"
+            android:layout_toRightOf="@+id/exercise_img_3"
+            />
+        <ImageView
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:scaleType="fitXY"
+            android:id="@+id/exercise_img_5"
+            android:layout_below="@+id/name"
+            android:layout_toRightOf="@+id/exercise_img_4"
+            />
+        <ImageView
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:scaleType="fitXY"
+            android:id="@+id/exercise_img_6"
+            android:layout_below="@+id/name"
+            android:layout_toRightOf="@+id/exercise_img_5"
+            />
+
         <CheckBox
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

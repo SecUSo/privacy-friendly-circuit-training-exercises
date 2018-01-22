@@ -14,6 +14,8 @@
 
 package org.secuso.privacyfriendlycircuittraining.models;
 
+import java.util.ArrayList;
+
 /**
  * Exercise Set model
  *
@@ -22,13 +24,14 @@ package org.secuso.privacyfriendlycircuittraining.models;
  */
 
 public class ExerciseSet {
-    private String NAME, EXERCISES;
+    private String NAME;
+    private ArrayList<String> EXERCISES;
     private int ID;
 
     public ExerciseSet() {
     }
 
-    public ExerciseSet(int id, String name, String exercises) {
+    public ExerciseSet(int id, String name, ArrayList<String> exercises) {
 
         this.ID = id;
         this.NAME = name;
@@ -49,11 +52,14 @@ public class ExerciseSet {
 
     public void setName(String name) { this.NAME = name; }
 
-    public String getExercises() {
+    public ArrayList<String> getExercises() {
         return EXERCISES;
     }
 
-    public void setExercises(String exercises) {
+    public void setExercises(ArrayList<String> exercises) {
         this.EXERCISES = exercises;
     }
+
+    public int getNumber() { return EXERCISES.size(); }
+
 }

@@ -101,6 +101,16 @@
                 android:textStyle="bold" />
 
 
+            <ImageView
+                android:id="@+id/workout_image"
+                android:visibility="gone"
+                android:layout_width="150dp"
+                android:layout_height="150dp"
+                android:layout_alignParentBottom="true"
+                android:layout_centerHorizontal="true"
+                android:layout_weight="0.3" />
+
+
         </RelativeLayout>
 
         <LinearLayout

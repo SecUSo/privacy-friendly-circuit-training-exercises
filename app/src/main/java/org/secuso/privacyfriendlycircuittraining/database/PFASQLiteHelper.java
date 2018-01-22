@@ -21,6 +21,9 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 import org.secuso.privacyfriendlycircuittraining.models.ExerciseSet;
 import org.secuso.privacyfriendlycircuittraining.models.WorkoutSessionData;
 
@@ -125,10 +128,20 @@ public class PFASQLiteHelper extends SQLiteOpenHelper {
     public long addExerciseSet(ExerciseSet sampleData) {
         SQLiteDatabase database = this.getWritableDatabase();
 
+
+        String exerciseList = "";
+        try {
+            JSONObject json = new JSONObject();
+            json.put("uniqueArrays", new JSONArray(sampleData.getExercises()));
+            exerciseList = json.toString();
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
         //To adjust this class for your own data, please add your values here.
         ContentValues values = new ContentValues();
         values.put(KEY_NAME_ES, sampleData.getName());
-        values.put(KEY_EXERCISES_ES, sampleData.getExercises());
+        values.put(KEY_EXERCISES_ES, exerciseList);
 
         long id = database.insert(TABLE_DATA_ES, null, values);
         database.close();
@@ -168,11 +181,20 @@ public class PFASQLiteHelper extends SQLiteOpenHelper {
     public void addExerciseSetWithID(ExerciseSet sampleData) {
         SQLiteDatabase database = this.getWritableDatabase();
 
+        String exerciseList = "";
+        try {
+            JSONObject json = new JSONObject();
+            json.put("uniqueArrays", new JSONArray(sampleData.getExercises()));
+            exerciseList = json.toString();
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
         //To adjust this class for your own data, please add your values here.
         ContentValues values = new ContentValues();
         values.put(KEY_ID_ES, sampleData.getID());
         values.put(KEY_NAME_ES, sampleData.getName());
-        values.put(KEY_EXERCISES_ES, sampleData.getExercises());
+        values.put(KEY_EXERCISES_ES, exerciseList);
 
         database.insert(TABLE_DATA_ES, null, values);
 
@@ -230,7 +252,19 @@ public class PFASQLiteHelper extends SQLiteOpenHelper {
         if( cursor != null && cursor.moveToFirst() ){
             data.setID(Integer.parseInt(cursor.getString(0)));
             data.setName(cursor.getString(1));
-            data.setExercises(cursor.getString(2));
+
+            ArrayList<String> exerciseList = new ArrayList<String>();
+            try {
+                JSONObject json = new JSONObject(cursor.getString(2));
+                JSONArray jArray = json.optJSONArray("uniqueArrays");
+                for (int i = 0; i < jArray.length(); i++) {
+                    exerciseList.add(jArray.getString(i));
+                }
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
+            data.setExercises(exerciseList);
 
             Log.d("DATABASE", "Read " + cursor.getString(1) + " from  ES DB");
 
@@ -295,9 +329,23 @@ public class PFASQLiteHelper extends SQLiteOpenHelper {
                 sampleData = new ExerciseSet();
                 sampleData.setID(Integer.parseInt(cursor.getString(0)));
                 sampleData.setName(cursor.getString(1));
-                sampleData.setExercises(cursor.getString(2));
+
+                ArrayList<String> exerciseList = new ArrayList<String>();
+                try {
+                    JSONObject json = new JSONObject(cursor.getString(2));
+                    JSONArray jArray = json.optJSONArray("uniqueArrays");
+                    for (int i = 0; i < jArray.length(); i++) {
+                        exerciseList.add(jArray.getString(i));
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+                sampleData.setExercises(exerciseList);
 
                 sampleDataList.add(sampleData);
+                Log.d("DATABASE", "Read " + cursor.getString(1) + " from  ES DB");
+
             } while (cursor.moveToNext());
         }
 
@@ -328,13 +376,17 @@ public class PFASQLiteHelper extends SQLiteOpenHelper {
      * @param exerciseSet
      * @return actually makes the update
      */
-    public int updateExerciseSet(ExerciseSet exerciseSet) {
+    public int updateExerciseSet(ExerciseSet exerciseSet) throws JSONException {
         SQLiteDatabase database = this.getWritableDatabase();
+
+        JSONObject json = new JSONObject();
+        json.put("uniqueArrays", new JSONArray(exerciseSet.getExercises()));
+        String exerciseList = json.toString();
 
         //To adjust this class for your own data, please add your values here.
         ContentValues values = new ContentValues();
         values.put(KEY_NAME_ES, exerciseSet.getName());
-        values.put(KEY_EXERCISES_ES, exerciseSet.getExercises());
+        values.put(KEY_EXERCISES_ES, exerciseList);
 
         return database.update(TABLE_DATA_ES, values, KEY_ID + " = ?",
                 new String[] { String.valueOf(exerciseSet.getID()) });

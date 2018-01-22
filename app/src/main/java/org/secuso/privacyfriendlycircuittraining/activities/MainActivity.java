@@ -25,17 +25,27 @@ import android.os.Bundle;
 import android.os.IBinder;
 import android.preference.PreferenceActivity;
 import android.preference.PreferenceManager;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CompoundButton;
+import android.widget.Spinner;
 import android.widget.Switch;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import org.secuso.privacyfriendlycircuittraining.R;
+import org.secuso.privacyfriendlycircuittraining.database.PFASQLiteHelper;
 import org.secuso.privacyfriendlycircuittraining.helpers.NotificationHelper;
+import org.secuso.privacyfriendlycircuittraining.models.ExerciseSet;
 import org.secuso.privacyfriendlycircuittraining.services.TimerService;
 import org.secuso.privacyfriendlycircuittraining.tutorial.PrefManager;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Main view that lets the user choose the timer intervals and has a button to start the workout
@@ -88,6 +98,12 @@ public class MainActivity extends BaseActivity {
     private TimerService timerService = null;
     private boolean serviceBound = false;
 
+    private Spinner workoutMode, exerciseSetSpinner;
+    private PFASQLiteHelper db = new PFASQLiteHelper(this);
+    ArrayList<String> exerciseNames = null;
+
+    private boolean isExerciseMode = false;
+    private static Toast toast;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -136,6 +152,62 @@ public class MainActivity extends BaseActivity {
             prefManager.setFirstTimeLaunch(false);
             showPersonalizationAlert();
         }
+
+        final List<ExerciseSet> exerciseSetslist = db.getAllExerciseSet();
+        workoutMode = (Spinner) findViewById(R.id.workout_mode);
+        workoutMode.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
+                if(pos == 1){
+                    if(exerciseSetslist.size() == 0){
+                        workoutMode.setSelection(0);
+                        toast = Toast.makeText(getApplication(), getResources().getString(R.string.no_exercise_sets), Toast.LENGTH_LONG);
+                        toast.setGravity(Gravity.CENTER, 0, 60);
+                        toast.show();
+                    }
+                    else {
+                        view.getRootView().findViewById(R.id.setsRow).setVisibility(View.GONE);
+                        view.getRootView().findViewById(R.id.exerciesetsRow).setVisibility(View.VISIBLE);
+                        isExerciseMode = true;
+                    }
+                }
+                else{
+                    view.getRootView().findViewById(R.id.setsRow).setVisibility(View.VISIBLE);
+                    view.getRootView().findViewById(R.id.exerciesetsRow).setVisibility(View.GONE);
+                    sets = setsDefault;
+                    setsText.setText(Integer.toString(sets));
+                    exerciseNames = null;
+                    isExerciseMode = false;
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parentView) {
+                // your code here
+            }
+
+        });
+
+        exerciseSetSpinner = (Spinner) findViewById(R.id.exerciseSets);
+        final List<String> exerciseSetsNames = new ArrayList<>();
+        for(ExerciseSet ex : exerciseSetslist){
+            exerciseSetsNames.add(ex.getName());
+        }
+        ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this,
+                android.R.layout.simple_spinner_item, exerciseSetsNames);
+        dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        exerciseSetSpinner.setAdapter(dataAdapter);
+        exerciseSetSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
+                sets = exerciseSetslist.get(pos).getNumber();
+                exerciseNames = exerciseSetslist.get(pos).getExercises();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parentView) {
+                // your code here
+            }
+
+        });
     }
 
 
@@ -205,11 +277,11 @@ public class MainActivity extends BaseActivity {
 
                 if (isStartTimerEnabled(this)) {
                     timerService.startWorkout(workoutTime, restTime, startTime, sets,
-                            isBlockPeriodization, blockPeriodizationTime, blockPeriodizationSets);
+                            isBlockPeriodization, blockPeriodizationTime, blockPeriodizationSets, exerciseNames, isExerciseMode);
                 }
                 else {
                     timerService.startWorkout(workoutTime, restTime, 0, sets,
-                            isBlockPeriodization, blockPeriodizationTime, blockPeriodizationSets);
+                            isBlockPeriodization, blockPeriodizationTime, blockPeriodizationSets, exerciseNames, isExerciseMode);
                 }
 
                 this.startActivity(intent);

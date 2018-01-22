@@ -200,4 +200,22 @@
     <string name="title_activity_statistics">Statistiken</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
 
+    <string-array name="spinner_exercises">
+        <item>-</item>
+        <item>Kniebeuge</item>
+        <item>Liegestütze</item>
+    </string-array>
+
+    <string-array name="workout_modes">
+        <item>Sätze</item>
+        <item>Übungssets</item>
+    </string-array>
+
+    <string name="exercise_dialog_hint">Name des Übungssets</string>
+    <string name="new_exercise_set">Neues Übungsset</string>
+    <string name="cancel">Abbrechen</string>
+    <string name="no_exercise_sets">Du hast keine Übungssets</string>
+    <string name="valid_exercise_set_name">Bitte gebe einen Namen ein</string>
+    <string name="choose_one_exercise">Bitte wähle eine Übung aus</string>
+
 </resources>

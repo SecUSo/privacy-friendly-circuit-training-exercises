@@ -231,4 +231,24 @@
 
     <string name="hello_blank_fragment">Hello blank fragment</string>
 
+    <string-array name="spinner_exercises">
+        <item>-</item>
+        <item>Squat</item>
+        <item>Push-Up</item>
+    </string-array>
+
+    <string-array name="workout_modes">
+        <item>Sets</item>
+        <item>Exercise Set</item>
+    </string-array>
+
+    <string name="exercise_dialog_hint">Name of Exercise Set</string>
+    <string name="new_exercise_set">New Exercise Set</string>
+    <string name="cancel">Cancel</string>
+    <string name="no_exercise_sets">You don\'t have any Exercise Sets</string>
+    <string name="valid_exercise_set_name">Please enter a name</string>
+    <string name="choose_one_exercise">Please choose one Exercise</string>
+
+
+
 </resources>

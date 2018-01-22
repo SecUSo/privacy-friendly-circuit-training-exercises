@@ -28,23 +28,33 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import org.secuso.privacyfriendlycircuittraining.R;
 import org.secuso.privacyfriendlycircuittraining.activities.ExerciseSetActivity;
+import org.secuso.privacyfriendlycircuittraining.database.PFASQLiteHelper;
+import org.secuso.privacyfriendlycircuittraining.fragments.ExerciseSetDialogFragment;
 import org.secuso.privacyfriendlycircuittraining.models.ExerciseSet;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class ExerciseSetAdapter extends RecyclerView.Adapter<ExerciseSetAdapter.MyViewHolder> {
 
     private List<ExerciseSet> exerciseSetsList;
-    ExerciseSetActivity exerciseSetActivity;
+    private ExerciseSetActivity exerciseSetActivity;
+    private Map<String, Integer> exerciseImages = new HashMap<String, Integer>();
+    private PFASQLiteHelper db = null;
 
     public ExerciseSetAdapter(List<ExerciseSet> exerciseSetsList, Context ctx) {
         this.exerciseSetsList = exerciseSetsList;
         exerciseSetActivity = (ExerciseSetActivity) ctx;
+        exerciseImages.put("pushup", R.drawable.ic_exercise_pushup);
+        exerciseImages.put("squat", R.drawable.ic_exercise_squat);
+        db = new PFASQLiteHelper(ctx);
     }
 
     @Override
@@ -59,14 +69,25 @@ public class ExerciseSetAdapter extends RecyclerView.Adapter<ExerciseSetAdapter.
     public void onBindViewHolder(MyViewHolder holder, int position) {
         ExerciseSet es = exerciseSetsList.get(position);
         holder.name.setText(es.getName());
-        holder.exercises.setText(es.getExercises());
+        setExerciseImages(holder, es);
 
-        if(!exerciseSetActivity.is_in_action_mode){
+        if(!exerciseSetActivity.getIsInActionMode()){
             holder.checkbox.setVisibility(View.GONE);
         }
         else{
             holder.checkbox.setVisibility(View.VISIBLE);
             holder.checkbox.setChecked(false);
+        }
+    }
+
+    public void setExerciseImages(MyViewHolder holder, ExerciseSet es){
+        int i = 0;
+        for(String ex : es.getExercises()){
+            holder.imageViews[i].setImageResource(exerciseImages.get(ex));
+            i++;
+        }
+        for(int j = i; j<6; j++){
+            holder.imageViews[j].setImageResource(0);
         }
     }
 
@@ -77,23 +98,38 @@ public class ExerciseSetAdapter extends RecyclerView.Adapter<ExerciseSetAdapter.
 
 
     public void updateAdapter(ArrayList<ExerciseSet> list){
+        exerciseSetsList = db.getAllExerciseSet();
         for(ExerciseSet es : list){
             exerciseSetsList.remove(es);
         }
         notifyDataSetChanged();
     }
 
+    public Map<String, Integer> getExerciseImages(){
+        return this.exerciseImages;
+    }
+
 
 
     public class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
-        public TextView name, number, exercises;
-        CheckBox checkbox;
-        ExerciseSetActivity exerciseSetActivity;
-        CardView cardView;
+        private TextView name, number;
+        private ImageView[] imageViews;
+        private ImageView exercise1, exercise2, exercise3, exercise4, exercise5, exercise6;
+        private CheckBox checkbox;
+        private ExerciseSetActivity exerciseSetActivity;
+        private CardView cardView;
         public MyViewHolder(View view, ExerciseSetActivity exerciseSetActivity) {
             super(view);
             name = (TextView) view.findViewById(R.id.name);
-            exercises = (TextView) view.findViewById(R.id.exercises);
+            exercise1 = (ImageView) view.findViewById(R.id.exercise_img_1);
+            exercise2 = (ImageView) view.findViewById(R.id.exercise_img_2);
+            exercise3 = (ImageView) view.findViewById(R.id.exercise_img_3);
+            exercise4 = (ImageView) view.findViewById(R.id.exercise_img_4);
+            exercise5 = (ImageView) view.findViewById(R.id.exercise_img_5);
+            exercise6 = (ImageView) view.findViewById(R.id.exercise_img_6);
+
+            imageViews = new ImageView[]{exercise1, exercise2, exercise3, exercise4, exercise5, exercise6};
+
             number = (TextView) view.findViewById(R.id.number);
             checkbox = (CheckBox) view.findViewById(R.id.check_list_item);
             checkbox.setOnClickListener(this);
@@ -101,13 +137,21 @@ public class ExerciseSetAdapter extends RecyclerView.Adapter<ExerciseSetAdapter.
             this.exerciseSetActivity = exerciseSetActivity;
             cardView = (CardView) itemView.findViewById(R.id.cardView);
             cardView.setOnLongClickListener(exerciseSetActivity);
-
+            cardView.setOnClickListener(this);
         }
 
         @Override
         public void onClick(View v) {
-            exerciseSetActivity.prepareSelection(v, getAdapterPosition());
+            if(exerciseSetActivity.getIsInActionMode())
+                exerciseSetActivity.prepareSelection(v, getAdapterPosition());
+            else {
+                if (!ExerciseSetDialogFragment.isOpened()) {
+                    ExerciseSetDialogFragment listDialogFragment = ExerciseSetDialogFragment.newEditInstance(getAdapterPosition());
+                    listDialogFragment.show(exerciseSetActivity.getSupportFragmentManager(), "DialogFragment");
+                }
+            }
         }
+
     }
 }
 

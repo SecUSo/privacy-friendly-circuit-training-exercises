@@ -39,6 +39,7 @@ import android.view.WindowManager;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.content.DialogInterface.OnCancelListener;
 
@@ -76,6 +77,7 @@ public class WorkoutActivity extends AppCompatActivity {
     //GUI Elements
     private ProgressBar progressBar = null;
     private View finishedView = null;
+    private ImageView workoutImage = null;
 
     // Service variables
     private final BroadcastReceiver timeReceiver = new BroadcastReceiver();
@@ -108,6 +110,7 @@ public class WorkoutActivity extends AppCompatActivity {
         this.nextTimer = (ImageView) this.findViewById(R.id.workout_next);
         this.finishedView = findViewById(R.id.finishedView);
         this.finishedView.setVisibility(View.GONE);
+        this.workoutImage = findViewById(R.id.workout_image);
 
         // Set the workout screen to remain on if so enabled in the settings
         if(isKeepScreenOnEnabled(this)) {
@@ -239,6 +242,18 @@ public class WorkoutActivity extends AppCompatActivity {
                 if (intent.getBooleanExtra("workout_finished", false) != false) {
                     showFinishedView();
                 }
+                if (intent.getStringExtra("exercise_name") != null) {
+                    String exercise = intent.getStringExtra("exercise_name");
+                    switch (exercise){
+                        case "squat":
+                            workoutImage.setImageResource(R.drawable.ic_exercise_squat);
+                            break;
+                        case "pushup":
+                            workoutImage.setImageResource(R.drawable.ic_exercise_pushup);
+                            break;
+                    }
+                }
+
                 if (intent.getLongExtra("new_timer", 0) != 0) {
                     long timerDuration = intent.getLongExtra("new_timer", 0);
                     int seconds = (int) Math.ceil(timerDuration / 1000.0);
@@ -303,6 +318,11 @@ public class WorkoutActivity extends AppCompatActivity {
         backgroundDrawable.setColorFilter(ContextCompat.getColor(this, progressBackgroundColor), PorterDuff.Mode.SRC_IN);
 
         //progressBar.setProgressBackgroundTintList(ColorStateList.valueOf(getResources().getColor(progressBackgroundColor)));
+
+        if(guiFlip)
+            workoutImage.setImageAlpha(255);
+        else
+            workoutImage.setImageAlpha(50);
     }
 
     /**
@@ -361,6 +381,26 @@ public class WorkoutActivity extends AppCompatActivity {
             long savedTime = timerService.getSavedTime();
             int sets = timerService.getSets();
             long timerDuration = 0;
+            String currentExerciseName = timerService.getCurrentExerciseName();
+
+
+            if(timerService.getisExerciseMode()){
+                float d = getApplicationContext().getResources().getDisplayMetrics().density;
+                int margin = (int) (d * 182);
+                RelativeLayout.LayoutParams timerlp = (RelativeLayout.LayoutParams) workoutTimer.getLayoutParams();
+                timerlp.setMargins(0,0,margin,margin);
+                timerlp.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
+                timerlp.addRule(RelativeLayout.ALIGN_PARENT_END);
+                timerlp.removeRule(RelativeLayout.CENTER_HORIZONTAL);
+                workoutTimer.setLayoutParams(timerlp);
+                workoutTimer.setTextSize(36);
+
+                RelativeLayout.LayoutParams barlp = (RelativeLayout.LayoutParams) progressBar.getLayoutParams();
+                barlp.addRule(RelativeLayout.ALIGN_BOTTOM, workoutTimer.getId());
+                barlp.addRule(RelativeLayout.ALIGN_END, workoutTimer.getId());
+
+                workoutImage.setVisibility(View.VISIBLE);
+            }
 
             if(title.equals(getResources().getString(R.string.workout_headline_workout))){
                 timerDuration = timerService.getWorkoutTime();
@@ -387,6 +427,17 @@ public class WorkoutActivity extends AppCompatActivity {
             progressBar.setMax((int) timerDuration);
             progressBar.setProgress((int) savedTime);
             progressBar.setAlpha(1.0f);
+
+            if(timerService.getisExerciseMode()) {
+                switch (currentExerciseName) {
+                    case "squat":
+                        workoutImage.setImageResource(R.drawable.ic_exercise_squat);
+                        break;
+                    case "pushup":
+                        workoutImage.setImageResource(R.drawable.ic_exercise_pushup);
+                        break;
+                }
+            }
 
             if (isPaused){
                 fab.setImageResource(R.drawable.ic_play_24dp);
