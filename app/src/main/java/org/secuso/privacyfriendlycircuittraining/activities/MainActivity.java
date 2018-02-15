@@ -25,6 +25,7 @@ import android.os.Bundle;
 import android.os.IBinder;
 import android.preference.PreferenceActivity;
 import android.preference.PreferenceManager;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -88,6 +89,7 @@ public class MainActivity extends BaseActivity {
     private long workoutTime = 0;
     private long restTime = 0;
     private int sets = 0;
+    private int setsPerRound = 0;
 
     // GUI text
     private TextView workoutIntervalText = null;
@@ -98,9 +100,11 @@ public class MainActivity extends BaseActivity {
     private TimerService timerService = null;
     private boolean serviceBound = false;
 
-    private Spinner workoutMode, exerciseSetSpinner;
+    private Spinner exerciseSetSpinner;
+    private Switch workoutMode;
     private PFASQLiteHelper db = new PFASQLiteHelper(this);
     ArrayList<String> exerciseNames = null;
+    ArrayList<String> ExerciseNamesForRounds = null;
 
     private boolean isExerciseMode = false;
     private static Toast toast;
@@ -154,37 +158,31 @@ public class MainActivity extends BaseActivity {
         }
 
         final List<ExerciseSet> exerciseSetslist = db.getAllExerciseSet();
-        workoutMode = (Spinner) findViewById(R.id.workout_mode);
-        workoutMode.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
-                if(pos == 1){
+        workoutMode = (Switch) findViewById(R.id.workout_mode_switch);
+
+        workoutMode.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                isExerciseMode = isChecked;
+                if(isExerciseMode){
                     if(exerciseSetslist.size() == 0){
-                        workoutMode.setSelection(0);
                         toast = Toast.makeText(getApplication(), getResources().getString(R.string.no_exercise_sets), Toast.LENGTH_LONG);
                         toast.setGravity(Gravity.CENTER, 0, 60);
                         toast.show();
+                        workoutMode.setChecked(false);
                     }
                     else {
-                        view.getRootView().findViewById(R.id.setsRow).setVisibility(View.GONE);
-                        view.getRootView().findViewById(R.id.exerciesetsRow).setVisibility(View.VISIBLE);
-                        isExerciseMode = true;
+                        buttonView.getRootView().findViewById(R.id.exerciesetsRow).setVisibility(View.VISIBLE);
+                        sets = 1;
+                        setsText.setText(Integer.toString(sets));
                     }
                 }
                 else{
-                    view.getRootView().findViewById(R.id.setsRow).setVisibility(View.VISIBLE);
-                    view.getRootView().findViewById(R.id.exerciesetsRow).setVisibility(View.GONE);
+                    buttonView.getRootView().findViewById(R.id.exerciesetsRow).setVisibility(View.GONE);
                     sets = setsDefault;
                     setsText.setText(Integer.toString(sets));
                     exerciseNames = null;
-                    isExerciseMode = false;
                 }
             }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parentView) {
-                // your code here
-            }
-
         });
 
         exerciseSetSpinner = (Spinner) findViewById(R.id.exerciseSets);
@@ -198,7 +196,7 @@ public class MainActivity extends BaseActivity {
         exerciseSetSpinner.setAdapter(dataAdapter);
         exerciseSetSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
-                sets = exerciseSetslist.get(pos).getNumber();
+                setsPerRound = exerciseSetslist.get(pos).getNumber();
                 exerciseNames = exerciseSetslist.get(pos).getExercises();
             }
 
@@ -272,16 +270,28 @@ public class MainActivity extends BaseActivity {
             case R.id.main_block_periodization_text:
                 this.blockPeriodizationSwitchButton.setChecked(!this.blockPeriodizationSwitchButton.isChecked());
                 break;
+            case R.id.main_use_exercise_sets_text:
+                this.workoutMode.setChecked(!this.workoutMode.isChecked());
+                break;
             case R.id.start_workout:
                 intent = new Intent(this, WorkoutActivity.class);
 
+                if(isExerciseMode){
+                    ExerciseNamesForRounds = getExercisesForRounds(exerciseNames, sets);
+                    setsPerRound = sets * exerciseNames.size();
+                }
+                else{
+                    ExerciseNamesForRounds = exerciseNames;
+                    setsPerRound = sets;
+                }
+
                 if (isStartTimerEnabled(this)) {
-                    timerService.startWorkout(workoutTime, restTime, startTime, sets,
-                            isBlockPeriodization, blockPeriodizationTime, blockPeriodizationSets, exerciseNames, isExerciseMode);
+                    timerService.startWorkout(workoutTime, restTime, startTime, setsPerRound,
+                            isBlockPeriodization, blockPeriodizationTime, blockPeriodizationSets, ExerciseNamesForRounds, isExerciseMode);
                 }
                 else {
-                    timerService.startWorkout(workoutTime, restTime, 0, sets,
-                            isBlockPeriodization, blockPeriodizationTime, blockPeriodizationSets, exerciseNames, isExerciseMode);
+                    timerService.startWorkout(workoutTime, restTime, 0, setsPerRound,
+                            isBlockPeriodization, blockPeriodizationTime, blockPeriodizationSets, ExerciseNamesForRounds, isExerciseMode);
                 }
 
                 this.startActivity(intent);
@@ -481,5 +491,12 @@ public class MainActivity extends BaseActivity {
         String time = String.format("%02d : %02d", min,sec);
 
         return time;
+    }
+
+    private ArrayList<String> getExercisesForRounds(ArrayList<String> exerciseNames, int rounds) {
+        ArrayList<String> temp = new ArrayList<String>();
+        for (int i = 0; i < rounds; i++)
+            temp.addAll(exerciseNames);
+        return temp;
     }
 }

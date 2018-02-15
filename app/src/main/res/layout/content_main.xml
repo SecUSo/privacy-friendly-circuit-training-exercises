@@ -221,17 +221,23 @@
                 android:gravity="fill_vertical"
                 android:orientation="horizontal">
 
-                <Spinner
-                    android:id="@+id/workout_mode"
-                    android:layout_width="match_parent"
-                    android:layout_height="35dp"
-                    android:layout_marginLeft="80dp"
-                    android:layout_marginRight="80dp"
-                    android:layout_weight="1"
-                    android:entries="@array/workout_modes"
-                    android:gravity="center"
+                <Switch
+                    android:id="@+id/workout_mode_switch"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.2" />
+
+
+                <TextView
+                    android:id="@+id/main_use_exercise_sets_text"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.6"
+                    android:onClick="onClick"
+                    android:text="Use Exercise Sets"
+                    android:textAlignment="center"
                     android:textColor="@color/black"
-                    android:textSize="36sp" />
+                    android:textSize="20sp" />
 
             </LinearLayout>
         </TableRow>

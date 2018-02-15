@@ -18,6 +18,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 
+import org.secuso.privacyfriendlycircuittraining.tutorial.PrefManager;
 import org.secuso.privacyfriendlycircuittraining.tutorial.TutorialActivity;
 
 /**
@@ -28,13 +29,23 @@ import org.secuso.privacyfriendlycircuittraining.tutorial.TutorialActivity;
 
 public class SplashActivity extends AppCompatActivity {
 
+    private PrefManager prefManager;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        Intent mainIntent = new Intent(SplashActivity.this, TutorialActivity.class);
-        SplashActivity.this.startActivity(mainIntent);
-        SplashActivity.this.finish();
+        prefManager = new PrefManager(this);
+        if (prefManager.isFirstTimeLaunch()) {
+            Intent mainIntent = new Intent(SplashActivity.this, TutorialActivity.class);
+            SplashActivity.this.startActivity(mainIntent);
+            SplashActivity.this.finish();
+        }
+        else{
+            Intent mainIntent = new Intent(SplashActivity.this, MainActivity.class);
+            SplashActivity.this.startActivity(mainIntent);
+            SplashActivity.this.finish();
+        }
 
     }
 

@@ -170,7 +170,7 @@ public abstract class BaseActivity extends AppCompatActivity implements OnNaviga
                 break;
             case R.id.nav_tutorial:
                 PrefManager prefManager = new PrefManager(getBaseContext());
-                prefManager.setFirstTimeLaunch(true);
+                //prefManager.setFirstTimeLaunch(true);
                 intent = new Intent(this, TutorialActivity.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(intent);
