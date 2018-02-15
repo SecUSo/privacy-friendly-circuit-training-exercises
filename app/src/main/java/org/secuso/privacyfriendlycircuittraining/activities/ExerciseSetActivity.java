@@ -30,6 +30,7 @@ import org.secuso.privacyfriendlycircuittraining.R;
 import org.secuso.privacyfriendlycircuittraining.adapters.ExerciseSetAdapter;
 import org.secuso.privacyfriendlycircuittraining.database.PFASQLiteHelper;
 import org.secuso.privacyfriendlycircuittraining.fragments.ExerciseSetDialogFragment;
+import org.secuso.privacyfriendlycircuittraining.models.Exercise;
 import org.secuso.privacyfriendlycircuittraining.models.ExerciseSet;
 
 import java.util.ArrayList;
@@ -107,7 +108,7 @@ public class ExerciseSetActivity extends BaseActivity implements View.OnLongClic
     }
 
 
-    public void addExerciseSet(String name, ArrayList<String> exercises){
+    public void addExerciseSet(String name, ArrayList<Integer> exercises){
         int lastId = (int) db.addExerciseSet(new ExerciseSet(0, name, exercises));
         exerciseSetsList.add(new ExerciseSet(lastId, name, exercises));
         ArrayList<ExerciseSet> empty = new ArrayList<>();
@@ -115,7 +116,7 @@ public class ExerciseSetActivity extends BaseActivity implements View.OnLongClic
         recyclerView.getLayoutManager().scrollToPosition(exerciseSetsList.size()-1);
     }
 
-    public void updateExerciseSet(int position, int id, String name, ArrayList<String> exercises) throws JSONException {
+    public void updateExerciseSet(int position, int id, String name, ArrayList<Integer> exercises) throws JSONException {
         ExerciseSet temp = new ExerciseSet(id, name, exercises);
         db.updateExerciseSet(temp);
         exerciseSetsList.get(position).setName(name);
@@ -168,16 +169,17 @@ public class ExerciseSetActivity extends BaseActivity implements View.OnLongClic
     }
 
     public void prepareSelection(View view, int position){
-        if(((CheckBox) view).isChecked()){
-            selection_list.add(exerciseSetsList.get(position));
-        }
-        else{
-            selection_list.remove(exerciseSetsList.get(position));
+        if(view instanceof CheckBox) {
+            if (((CheckBox) view).isChecked()) {
+                selection_list.add(exerciseSetsList.get(position));
+            } else {
+                selection_list.remove(exerciseSetsList.get(position));
+            }
         }
     }
 
     protected int getNavigationDrawerID() {
-        return R.id.nav_exercises;
+        return R.id.nav_exercisesets;
     }
 
     public FloatingActionButton getNewListFab()

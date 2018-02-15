@@ -98,6 +98,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/check_list_item"
+            android:scaleX="1.8"
+            android:scaleY="1.8"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"/>
 

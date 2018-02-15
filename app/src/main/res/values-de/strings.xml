@@ -14,7 +14,8 @@
     <string name="action_about">Über</string>
     <string name="action_tutorial">Tutorial</string>
     <string name="action_settings">Einstellungen</string>
-    <string name="action_exercises">Übungessets</string>
+    <string name="action_exercisesets">Übungessets</string>
+    <string name="action_exercises">Übungen</string>
     <string name="action_main">Hauptmenü</string>
     <string name="action_statistics">Statistiken</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
@@ -55,9 +56,13 @@
     <string name="workout_block_periodization_headline">Block Pause</string>
     <string name="workout_finish_button">BEENDEN</string>
 
-    <!-- ###EXERCIES###-->
-    <string name="title_activity_exercises">Übungessets</string>
-    <string name="exercises_lists_empty">Du hast noch keine Übungssets</string>
+    <!-- ###EXERCIESESETS###-->
+    <string name="title_activity_exercisesets">Übungessets</string>
+    <string name="exercisesets_lists_empty">Du hast noch keine Übungssets</string>
+
+    <!-- ###EXERCIESES###-->
+    <string name="title_activity_exercises">Übungen</string>
+    <string name="exercises_lists_empty">Du hast noch keine Übungen</string>
 
 
     <!-- ###NOTIFICATION###-->
@@ -200,22 +205,19 @@
     <string name="title_activity_statistics">Statistiken</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
 
-    <string-array name="spinner_exercises">
-        <item>-</item>
-        <item>Kniebeuge</item>
-        <item>Liegestütze</item>
-    </string-array>
-
-    <string-array name="workout_modes">
-        <item>Sätze</item>
-        <item>Übungssets</item>
-    </string-array>
-
-    <string name="exercise_dialog_hint">Name des Übungssets</string>
+    <string name="exerciseset_dialog_hint">Name des Übungssets</string>
+    <string name="exercise_dialog_hint">Name der Übung</string>
+    <string name="exercise_description_dialog_hint">Beschreibung</string>
     <string name="new_exercise_set">Neues Übungsset</string>
+    <string name="new_exercise">Neue Übung</string>
     <string name="cancel">Abbrechen</string>
     <string name="no_exercise_sets">Du hast keine Übungssets</string>
-    <string name="valid_exercise_set_name">Bitte gebe einen Namen ein</string>
+    <string name="valid_name">Bitte gebe einen Namen ein</string>
     <string name="choose_one_exercise">Bitte wähle eine Übung aus</string>
+
+    <string name="load_image_error">Es ist ein Fehler aufgetreten</string>
+    <string name="no_image_picked">Du hast kein Bild ausgewählt</string>
+
+    <string name="no_exercises">Bitte wähle eine Übung aus</string>
 
 </resources>

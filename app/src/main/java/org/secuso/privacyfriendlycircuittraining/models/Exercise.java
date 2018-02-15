@@ -14,28 +14,29 @@
 
 package org.secuso.privacyfriendlycircuittraining.models;
 
-import java.util.ArrayList;
+import java.io.Serializable;
 
 /**
- * Exercise Set model
+ * Exercise model
  *
  * @author Nils Schroth
  * @version 20180103
  */
 
-public class ExerciseSet {
+public class Exercise implements Serializable{
     private String NAME;
-    private ArrayList<Integer> EXERCISE_IDS;
+    private String DESCRIPTION;
+    private byte[] IMAGE;
     private int ID;
 
-    public ExerciseSet() {
-    }
+    private static final long serialVersionUID = 1L;
 
-    public ExerciseSet(int id, String name, ArrayList<Integer> exercise_ids) {
+    public Exercise(int id, String name, String description, byte[] image) {
 
         this.ID = id;
         this.NAME = name;
-        this.EXERCISE_IDS = exercise_ids;
+        this.DESCRIPTION = description;
+        this.IMAGE = image;
     }
 
     public int getID() {
@@ -52,12 +53,16 @@ public class ExerciseSet {
 
     public void setName(String name) { this.NAME = name; }
 
-    public ArrayList<Integer> getExercises() {
-        return EXERCISE_IDS;
+    public String getDescription() {
+        return DESCRIPTION;
     }
 
-    public void setExercises(ArrayList<Integer> exercise_ids) { this.EXERCISE_IDS = exercise_ids; }
+    public void setDescription(String description) {
+        this.DESCRIPTION = description;
+    }
 
-    public int getNumber() { return EXERCISE_IDS.size(); }
+    public byte[] getImage(){ return IMAGE; }
+
+    public void setImage(byte[] image) { this.IMAGE = image; }
 
 }

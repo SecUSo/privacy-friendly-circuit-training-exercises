@@ -22,6 +22,8 @@ package org.secuso.privacyfriendlycircuittraining.adapters;
  */
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -35,6 +37,8 @@ import org.secuso.privacyfriendlycircuittraining.R;
 import org.secuso.privacyfriendlycircuittraining.activities.ExerciseSetActivity;
 import org.secuso.privacyfriendlycircuittraining.database.PFASQLiteHelper;
 import org.secuso.privacyfriendlycircuittraining.fragments.ExerciseSetDialogFragment;
+import org.secuso.privacyfriendlycircuittraining.helpers.BitMapUtility;
+import org.secuso.privacyfriendlycircuittraining.models.Exercise;
 import org.secuso.privacyfriendlycircuittraining.models.ExerciseSet;
 
 import java.util.ArrayList;
@@ -46,14 +50,11 @@ public class ExerciseSetAdapter extends RecyclerView.Adapter<ExerciseSetAdapter.
 
     private List<ExerciseSet> exerciseSetsList;
     private ExerciseSetActivity exerciseSetActivity;
-    private Map<String, Integer> exerciseImages = new HashMap<String, Integer>();
     private PFASQLiteHelper db = null;
 
     public ExerciseSetAdapter(List<ExerciseSet> exerciseSetsList, Context ctx) {
         this.exerciseSetsList = exerciseSetsList;
         exerciseSetActivity = (ExerciseSetActivity) ctx;
-        exerciseImages.put("pushup", R.drawable.ic_exercise_pushup);
-        exerciseImages.put("squat", R.drawable.ic_exercise_squat);
         db = new PFASQLiteHelper(ctx);
     }
 
@@ -82,8 +83,8 @@ public class ExerciseSetAdapter extends RecyclerView.Adapter<ExerciseSetAdapter.
 
     public void setExerciseImages(MyViewHolder holder, ExerciseSet es){
         int i = 0;
-        for(String ex : es.getExercises()){
-            holder.imageViews[i].setImageResource(exerciseImages.get(ex));
+        for(Integer ex : es.getExercises()){
+            holder.imageViews[i].setImageBitmap(BitMapUtility.getImage(db.getExercise(ex).getImage()));
             i++;
         }
         for(int j = i; j<6; j++){
@@ -104,12 +105,6 @@ public class ExerciseSetAdapter extends RecyclerView.Adapter<ExerciseSetAdapter.
         }
         notifyDataSetChanged();
     }
-
-    public Map<String, Integer> getExerciseImages(){
-        return this.exerciseImages;
-    }
-
-
 
     public class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
         private TextView name, number;

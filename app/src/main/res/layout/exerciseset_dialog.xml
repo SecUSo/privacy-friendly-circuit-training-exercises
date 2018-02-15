@@ -2,21 +2,12 @@
 <LinearLayout xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
-    android:layout_width="match_parent"
+    android:layout_width="wrap_content"
     android:layout_height="wrap_content">
 
-    <TextView
-        android:id="@+id/dialog_title"
-        android:gravity="center"
-        android:text="@string/new_exercise_set"
-        android:background="@color/colorPrimaryDark"
-        android:textColor="@color/white"
-        android:layout_width="match_parent"
-        android:layout_height="30sp"
-        android:layout_marginBottom="10sp"
-        android:textStyle="bold"/>
     <ScrollView
         android:fadeScrollbars="false"
+        android:id="@+id/dialog_scrollview"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
@@ -46,49 +37,56 @@
                         android:selectAllOnFocus="true"
                         android:maxLength="40"
                         android:imeOptions="actionNext"
-                        android:hint="@string/exercise_dialog_hint"/>
+                        android:hint="@string/exerciseset_dialog_hint"/>
                 </android.support.design.widget.TextInputLayout>
 
 
             </RelativeLayout>
 
-            <Spinner
+            <android.support.design.widget.CoordinatorLayout
+                xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:tools="http://schemas.android.com/tools"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/ex1"
-                android:layout_marginBottom="10sp"
-                android:drawSelectorOnTop="true"
-                android:entries="@array/spinner_exercises"/>
-            <Spinner
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                tools:context="org.secuso.privacyfriendlycircuittraining.Fragments.ExerciseSetDialogFragment">
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/recyclerView_dialog"
                 android:layout_width="match_parent"
+                android:layout_height="150dp"
+                app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
+
+
+            <android.support.design.widget.FloatingActionButton
+                android:id="@+id/fab_add_exercise"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/ex2"
-                android:layout_marginBottom="10sp"
-                android:entries="@array/spinner_exercises"/>
-            <Spinner
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/ex3"
-                android:layout_marginBottom="10sp"
-                android:entries="@array/spinner_exercises"/>
-            <Spinner
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/ex4"
-                android:layout_marginBottom="10sp"
-                android:entries="@array/spinner_exercises"/>
-            <Spinner
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/ex5"
-                android:layout_marginBottom="10sp"
-                android:entries="@array/spinner_exercises"/>
-            <Spinner
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/ex6"
-                android:layout_marginBottom="10sp"
-                android:entries="@array/spinner_exercises"/>
+                android:layout_gravity="bottom|center"
+                android:layout_margin="@dimen/fab_margin"
+                android:src="@android:drawable/ic_input_add"
+                android:tint="@color/white"
+                app:fabSize="mini"
+                app:layout_anchor="@id/recyclerView_dialog"
+                app:layout_anchorGravity="bottom|center" />
+
+                <LinearLayout
+                    android:visibility="gone"
+                    android:id="@+id/no_exercises_layout"
+                    android:orientation="vertical"
+                    android:gravity="center"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <TextView
+                        android:layout_gravity="center"
+                        android:textAlignment="center"
+                        android:text="@string/exercises_lists_empty"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"/>
+                </LinearLayout>
+
+            </android.support.design.widget.CoordinatorLayout>
 
         </LinearLayout>
     </ScrollView>

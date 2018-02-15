@@ -92,8 +92,8 @@ public class TimerService extends Service {
     private int caloriesBurned = 0;
     private int caloriesPerExercise = 0;
 
-    private ArrayList<String> exerciseNames = null;
-    private String currentExerciseName = null;
+    private ArrayList<Integer> exerciseIds = null;
+    private Integer currentExerciseId = 0;
 
     private boolean isExerciseMode = false;
 
@@ -218,13 +218,13 @@ public class TimerService extends Service {
 
                 if(currentSet < sets) {
                     if(isExerciseMode)
-                        currentExerciseName =  exerciseNames.get(currentSet);
+                        currentExerciseId =  exerciseIds.get(currentSet);
                     if (isBlockPeriodization && currentSet % blockPeriodizationSets == 0) {
                         currentTitle = getResources().getString(R.string.workout_block_periodization_headline);
                         broadcast.putExtra("timer_title", currentTitle)
                                  .putExtra("countdown_seconds", (int) blockPeriodizationTime/1000)
                                  .putExtra("new_timer", blockPeriodizationTime)
-                                 .putExtra("exercise_name", currentExerciseName);
+                                 .putExtra("exercise_id", currentExerciseId);
 
                         restTimer = createRestTimer(blockPeriodizationTime);
                     } else {
@@ -232,7 +232,7 @@ public class TimerService extends Service {
                         broadcast.putExtra("timer_title", currentTitle)
                                   .putExtra("countdown_seconds", (int) restTime/1000)
                                   .putExtra("new_timer", restTime)
-                                  .putExtra("exercise_name", currentExerciseName);
+                                  .putExtra("exercise_id", currentExerciseId);
 
 
                         restTimer = createRestTimer(restTime);
@@ -313,14 +313,14 @@ public class TimerService extends Service {
                 }
                 currentTitle = getResources().getString(R.string.workout_headline_workout);
                 if(isExerciseMode)
-                    currentExerciseName =  exerciseNames.get(currentSet-1);
+                    currentExerciseId =  exerciseIds.get(currentSet-1);
 
                 broadcast.putExtra("timer_title", currentTitle)
                          .putExtra("current_set", currentSet)
                          .putExtra("sets", sets)
                          .putExtra("countdown_seconds", (int) workoutTime/1000)
                          .putExtra("new_timer", workoutTime)
-                         .putExtra("exercise_name", currentExerciseName);
+                         .putExtra("exercise_id", currentExerciseId);
 
                 sendBroadcast(broadcast);
                 isWorkout = true;
@@ -345,7 +345,7 @@ public class TimerService extends Service {
      * @param blockPeriodizationSets Interval determining after how many sets a block rest occurs
      */
     public void startWorkout(long workoutTime, long restTime, long startTime, int sets,
-                             boolean isBlockPeriodization, long blockPeriodizationTime, int blockPeriodizationSets, ArrayList<String> exerciseNames, boolean isExerciseMode) {
+                             boolean isBlockPeriodization, long blockPeriodizationTime, int blockPeriodizationSets, ArrayList<Integer> exerciseIds, boolean isExerciseMode) {
         this.blockPeriodizationTime = blockPeriodizationTime*1000;
         this.blockPeriodizationSets = blockPeriodizationSets;
         this.isBlockPeriodization = isBlockPeriodization;
@@ -361,11 +361,11 @@ public class TimerService extends Service {
         this.workoutTimer = createWorkoutTimer(this.workoutTime);
         this.restTimer = createRestTimer(this.startTime);
 
-        this.exerciseNames = exerciseNames;
+        this.exerciseIds = exerciseIds;
         this.isExerciseMode = isExerciseMode;
 
         if(isExerciseMode)
-            this.currentExerciseName = exerciseNames.get(0);
+            this.currentExerciseId = exerciseIds.get(0);
 
 
         //Use rest timer as a start timer before the workout begins
@@ -432,7 +432,7 @@ public class TimerService extends Service {
             this.workoutTimer.cancel();
             isWorkout = false;
             if(isExerciseMode)
-                currentExerciseName =  exerciseNames.get(currentSet);
+                currentExerciseId =  exerciseIds.get(currentSet);
 
             //Check if the next rest phase is normal or a block rest
             long time = (isBlockPeriodization && currentSet % blockPeriodizationSets == 0) ? this.blockPeriodizationTime : this.restTime;
@@ -442,7 +442,7 @@ public class TimerService extends Service {
             Intent broadcast = new Intent(COUNTDOWN_BROADCAST)
                     .putExtra("timer_title", currentTitle)
                     .putExtra("new_timer", time)
-                    .putExtra("exercise_name", currentExerciseName);
+                    .putExtra("exercise_id", currentExerciseId);
 
             if(isPaused){
                 this.savedTime = time;
@@ -467,14 +467,14 @@ public class TimerService extends Service {
             else { this.currentSet += 1; }
 
             if(isExerciseMode)
-                currentExerciseName =  exerciseNames.get(currentSet-1);
+                currentExerciseId =  exerciseIds.get(currentSet-1);
 
             Intent broadcast = new Intent(COUNTDOWN_BROADCAST)
                     .putExtra("timer_title", currentTitle)
                     .putExtra("current_set", currentSet)
                     .putExtra("new_timer", workoutTime)
                     .putExtra("sets", sets)
-                    .putExtra("exercise_name", currentExerciseName);
+                    .putExtra("exercise_id", currentExerciseId);
 
             if(isPaused){
                 this.savedTime = workoutTime;
@@ -499,7 +499,7 @@ public class TimerService extends Service {
             isWorkout = false;
             this.currentSet -= 1;
             if(isExerciseMode)
-                currentExerciseName =  exerciseNames.get(currentSet);
+                currentExerciseId =  exerciseIds.get(currentSet);
 
             long time = (isBlockPeriodization && currentSet % blockPeriodizationSets == 0) ? this.blockPeriodizationTime : this.restTime;
             this.currentTitle = (isBlockPeriodization && currentSet % blockPeriodizationSets == 0) ?
@@ -510,7 +510,7 @@ public class TimerService extends Service {
                     .putExtra("sets", sets)
                     .putExtra("new_timer", time)
                     .putExtra("current_set", currentSet)
-                    .putExtra("exercise_name", currentExerciseName);
+                    .putExtra("exercise_id", currentExerciseId);
 
             if(isPaused){
                 this.savedTime = time;
@@ -546,14 +546,14 @@ public class TimerService extends Service {
             this.currentTitle = getResources().getString(R.string.workout_headline_workout);
             this.currentSet = (restTime == 0) ? currentSet - 1 : currentSet;
             if(isExerciseMode)
-                currentExerciseName =  exerciseNames.get(currentSet-1);
+                currentExerciseId =  exerciseIds.get(currentSet-1);
 
             Intent broadcast = new Intent(COUNTDOWN_BROADCAST)
                     .putExtra("timer_title", currentTitle)
                     .putExtra("current_set", currentSet)
                     .putExtra("new_timer", workoutTime)
                     .putExtra("sets", sets)
-                    .putExtra("exercise_name", currentExerciseName);
+                    .putExtra("exercise_id", currentExerciseId);
 
             if(isPaused){
                 this.savedTime = workoutTime;
@@ -891,8 +891,8 @@ public class TimerService extends Service {
         this.currentTitle = title;
     }
 
-    public String getCurrentExerciseName(){
-        return this.currentExerciseName;
+    public Integer getCurrentExerciseId(){
+        return this.currentExerciseId;
     }
 
     public boolean getisExerciseMode(){

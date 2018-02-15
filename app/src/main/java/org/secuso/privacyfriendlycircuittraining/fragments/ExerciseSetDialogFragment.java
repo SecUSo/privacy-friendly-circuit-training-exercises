@@ -4,24 +4,31 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.DialogFragment;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
-import android.widget.Spinner;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import org.json.JSONException;
 import org.secuso.privacyfriendlycircuittraining.R;
+import org.secuso.privacyfriendlycircuittraining.activities.ExerciseActivity;
 import org.secuso.privacyfriendlycircuittraining.activities.ExerciseSetActivity;
+import org.secuso.privacyfriendlycircuittraining.adapters.DialogAdapter;
 import org.secuso.privacyfriendlycircuittraining.database.PFASQLiteHelper;
+import org.secuso.privacyfriendlycircuittraining.models.Exercise;
 import org.secuso.privacyfriendlycircuittraining.models.ExerciseSet;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import static android.app.Activity.RESULT_OK;
 
 /**
  * Created by Nils on 15.01.18.
@@ -35,14 +42,11 @@ public class ExerciseSetDialogFragment extends DialogFragment {
     private ExerciseSetActivity ea;
     private static int adapterPosition;
     private static int adapterId;
-    private static Spinner spinner1;
-    private static Spinner spinner2;
-    private static Spinner spinner3;
-    private static Spinner spinner4;
-    private static Spinner spinner5;
-    private static Spinner spinner6;
-    private static Toast toast;
     private PFASQLiteHelper db = null;
+    private RecyclerView mRecyclerView;
+    private DialogAdapter mAdapter;
+    private ArrayList<Exercise> exercises;
+    private Toast toast;
 
     public static ExerciseSetDialogFragment newEditInstance(int i)
     {
@@ -89,18 +93,36 @@ public class ExerciseSetDialogFragment extends DialogFragment {
     {
         ea = (ExerciseSetActivity) getActivity();
         db = new PFASQLiteHelper(ea);
+        exercises = new ArrayList<>();
+
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity(), R.style.AppTheme_Dialog);
         LayoutInflater inflater = (LayoutInflater) getActivity().getSystemService(getActivity().LAYOUT_INFLATER_SERVICE);
         v = inflater.inflate(R.layout.exerciseset_dialog, null);
 
-        builder.setView(v);
 
-        spinner1 = (Spinner) v.findViewById(R.id.ex1);
-        spinner2 = (Spinner) v.findViewById(R.id.ex2);
-        spinner3 = (Spinner) v.findViewById(R.id.ex3);
-        spinner4 = (Spinner) v.findViewById(R.id.ex4);
-        spinner5 = (Spinner) v.findViewById(R.id.ex5);
-        spinner6 = (Spinner) v.findViewById(R.id.ex6);
+        //RECYCER
+        mRecyclerView= (RecyclerView) v.findViewById(R.id.recyclerView_dialog);
+        mRecyclerView.setLayoutManager(new LinearLayoutManager(this.getActivity()));
+
+        //ADAPTER
+        mAdapter=new DialogAdapter(exercises, this.getActivity());
+        mRecyclerView.setAdapter(mAdapter);
+
+        mRecyclerView.setHasFixedSize(true);
+
+        builder.setView(v);
+        builder.setTitle(getResources().getString(R.string.new_exercise_set));
+
+        FloatingActionButton addExerciseFab = (FloatingActionButton) v.findViewById(R.id.fab_add_exercise);
+
+        addExerciseFab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent exercisePickerIntent = new Intent(getActivity(), ExerciseActivity.class);
+                exercisePickerIntent.putExtra("pickerMode", true);
+                startActivityForResult(exercisePickerIntent, 1);
+            }
+        });
 
         List<ExerciseSet> exerciseSetsList = new ArrayList<>();
         exerciseSetsList = db.getAllExerciseSet();
@@ -112,34 +134,19 @@ public class ExerciseSetDialogFragment extends DialogFragment {
         }
 
         if(editDialog){
-            TextView text = (TextView) v.findViewById(R.id.dialog_title);
-            text.setText(getResources().getString(R.string.edit));
+
+            builder.setTitle(getResources().getString(R.string.edit));
 
             EditText etext = (EditText) v.findViewById(R.id.list_name);
 
             etext.setText(db.getExerciseSet(adapterId).getName());
-
-            ArrayList<String> exercisesList = db.getExerciseSet(adapterId).getExercises();
-            ArrayList<Integer> exerciseId = new ArrayList<Integer>();
-            for(String ex : exercisesList){
-                if(ex.equals("squat"))
-                    exerciseId.add(1);
-                if(ex.equals("pushup"))
-                    exerciseId.add(2);
+            for(Integer ex: db.getExerciseSet(adapterId).getExercises()){
+                exercises.add(db.getExercise(ex));
             }
-            if(exercisesList.size() > 0)
-                spinner1.setSelection(exerciseId.get(0));
-            if(exercisesList.size() > 1)
-                spinner2.setSelection(exerciseId.get(1));
-            if(exercisesList.size() > 2)
-                spinner3.setSelection(exerciseId.get(2));
-            if(exercisesList.size() > 3)
-                spinner4.setSelection(exerciseId.get(3));
-            if(exercisesList.size() > 4)
-                spinner5.setSelection(exerciseId.get(4));
-            if(exercisesList.size() > 5)
-                spinner6.setSelection(exerciseId.get(5));
+            mAdapter.updateAdapter(exercises);
         }
+
+        setNoExererciseMessage();
 
         builder.setPositiveButton("okay", new DialogInterface.OnClickListener()
         {
@@ -168,29 +175,8 @@ public class ExerciseSetDialogFragment extends DialogFragment {
                 EditText text = (EditText) v.findViewById(R.id.list_name);
                 String name = text.getText().toString();
 
-                int selectedEx1 = spinner1.getSelectedItemPosition();
-                int selectedEx2 = spinner2.getSelectedItemPosition();
-                int selectedEx3 = spinner3.getSelectedItemPosition();
-                int selectedEx4 = spinner4.getSelectedItemPosition();
-                int selectedEx5 = spinner5.getSelectedItemPosition();
-                int selectedEx6 = spinner6.getSelectedItemPosition();
-
-                ArrayList<String> exercises = new ArrayList<String>();
-                if(selectedEx1 > 0)
-                    exercises.add(intToExerciseName(selectedEx1));
-                if(selectedEx2 > 0)
-                    exercises.add(intToExerciseName(selectedEx2));
-                if(selectedEx3 > 0)
-                    exercises.add(intToExerciseName(selectedEx3));
-                if(selectedEx4 > 0)
-                    exercises.add(intToExerciseName(selectedEx4));
-                if(selectedEx5 > 0)
-                    exercises.add(intToExerciseName(selectedEx5));
-                if(selectedEx6 > 0)
-                    exercises.add(intToExerciseName(selectedEx6));
-
                 if( name.length() == 0 ) {
-                    toast = Toast.makeText(ea, getResources().getString(R.string.valid_exercise_set_name), Toast.LENGTH_LONG);
+                    toast = Toast.makeText(ea, getResources().getString(R.string.valid_name), Toast.LENGTH_LONG);
                     toast.setGravity(Gravity.CENTER, 0, 0);
                     toast.show();
                 }
@@ -202,12 +188,12 @@ public class ExerciseSetDialogFragment extends DialogFragment {
                 else {
                     if (editDialog) {
                         try {
-                            ea.updateExerciseSet(adapterPosition, adapterId, name, exercises);
+                            ea.updateExerciseSet(adapterPosition, adapterId, name, exercisesToIds(exercises));
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
                     } else {
-                        ea.addExerciseSet(name, exercises);
+                        ea.addExerciseSet(name, exercisesToIds(exercises));
                     }
                     ea.setNoExererciseSetsMessage();
                     dialog.dismiss();
@@ -215,15 +201,35 @@ public class ExerciseSetDialogFragment extends DialogFragment {
             }
         });
 
-
         return dialog;
     }
 
-    private String intToExerciseName(int exerciseInt){
-        if(exerciseInt == 1)
-            return "squat";
-        if(exerciseInt == 2)
-            return "pushup";
-        return "";
+    public void setNoExererciseMessage(){
+        if(mAdapter.getItemCount() == 0){
+            v.findViewById(R.id.no_exercises_layout).setVisibility(View.VISIBLE);
+        }
+        else{
+            v.findViewById(R.id.no_exercises_layout).setVisibility(View.GONE);
+        }
+    }
+
+    @Override
+    public void onActivityResult(int reqCode, int resultCode, Intent data) {
+
+        if (resultCode == RESULT_OK) {
+            ArrayList<Exercise> tmp =  (ArrayList<Exercise>) data.getSerializableExtra("result");
+            exercises.addAll(tmp);
+            mAdapter.updateAdapter(exercises);
+            setNoExererciseMessage();
+        }
+
+    }
+
+    private ArrayList<Integer> exercisesToIds (ArrayList<Exercise> exercises){
+        ArrayList<Integer> ids = new ArrayList<>();
+        for(Exercise ex : exercises){
+            ids.add(ex.getID());
+        }
+        return ids;
     }
 }

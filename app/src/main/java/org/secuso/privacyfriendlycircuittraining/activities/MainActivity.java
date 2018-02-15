@@ -41,10 +41,12 @@ import android.widget.Toast;
 import org.secuso.privacyfriendlycircuittraining.R;
 import org.secuso.privacyfriendlycircuittraining.database.PFASQLiteHelper;
 import org.secuso.privacyfriendlycircuittraining.helpers.NotificationHelper;
+import org.secuso.privacyfriendlycircuittraining.models.Exercise;
 import org.secuso.privacyfriendlycircuittraining.models.ExerciseSet;
 import org.secuso.privacyfriendlycircuittraining.services.TimerService;
 import org.secuso.privacyfriendlycircuittraining.tutorial.PrefManager;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -103,8 +105,8 @@ public class MainActivity extends BaseActivity {
     private Spinner exerciseSetSpinner;
     private Switch workoutMode;
     private PFASQLiteHelper db = new PFASQLiteHelper(this);
-    ArrayList<String> exerciseNames = null;
-    ArrayList<String> ExerciseNamesForRounds = null;
+    ArrayList<Integer> exerciseIds = null;
+    ArrayList<Integer> ExerciseIdsForRounds = null;
 
     private boolean isExerciseMode = false;
     private static Toast toast;
@@ -180,11 +182,11 @@ public class MainActivity extends BaseActivity {
                     buttonView.getRootView().findViewById(R.id.exerciesetsRow).setVisibility(View.GONE);
                     sets = setsDefault;
                     setsText.setText(Integer.toString(sets));
-                    exerciseNames = null;
+                    exerciseIds = null;
                 }
             }
         });
-
+        exerciseIds = new ArrayList<>();
         exerciseSetSpinner = (Spinner) findViewById(R.id.exerciseSets);
         final List<String> exerciseSetsNames = new ArrayList<>();
         for(ExerciseSet ex : exerciseSetslist){
@@ -197,7 +199,7 @@ public class MainActivity extends BaseActivity {
         exerciseSetSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
                 setsPerRound = exerciseSetslist.get(pos).getNumber();
-                exerciseNames = exerciseSetslist.get(pos).getExercises();
+                exerciseIds = exerciseSetslist.get(pos).getExercises();
             }
 
             @Override
@@ -277,21 +279,21 @@ public class MainActivity extends BaseActivity {
                 intent = new Intent(this, WorkoutActivity.class);
 
                 if(isExerciseMode){
-                    ExerciseNamesForRounds = getExercisesForRounds(exerciseNames, sets);
-                    setsPerRound = sets * exerciseNames.size();
+                    ExerciseIdsForRounds = getExercisesForRounds(exerciseIds, sets);
+                    setsPerRound = sets * exerciseIds.size();
                 }
                 else{
-                    ExerciseNamesForRounds = exerciseNames;
+                    ExerciseIdsForRounds = exerciseIds;
                     setsPerRound = sets;
                 }
 
                 if (isStartTimerEnabled(this)) {
                     timerService.startWorkout(workoutTime, restTime, startTime, setsPerRound,
-                            isBlockPeriodization, blockPeriodizationTime, blockPeriodizationSets, ExerciseNamesForRounds, isExerciseMode);
+                            isBlockPeriodization, blockPeriodizationTime, blockPeriodizationSets, ExerciseIdsForRounds, isExerciseMode);
                 }
                 else {
                     timerService.startWorkout(workoutTime, restTime, 0, setsPerRound,
-                            isBlockPeriodization, blockPeriodizationTime, blockPeriodizationSets, ExerciseNamesForRounds, isExerciseMode);
+                            isBlockPeriodization, blockPeriodizationTime, blockPeriodizationSets, ExerciseIdsForRounds, isExerciseMode);
                 }
 
                 this.startActivity(intent);
@@ -493,10 +495,10 @@ public class MainActivity extends BaseActivity {
         return time;
     }
 
-    private ArrayList<String> getExercisesForRounds(ArrayList<String> exerciseNames, int rounds) {
-        ArrayList<String> temp = new ArrayList<String>();
+    private ArrayList<Integer> getExercisesForRounds(ArrayList<Integer> exerciseIds, int rounds) {
+        ArrayList<Integer> temp = new ArrayList<>();
         for (int i = 0; i < rounds; i++)
-            temp.addAll(exerciseNames);
+            temp.addAll(exerciseIds);
         return temp;
     }
 }

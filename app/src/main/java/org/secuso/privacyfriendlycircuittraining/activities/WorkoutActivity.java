@@ -22,6 +22,8 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.ServiceConnection;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.LayerDrawable;
@@ -44,6 +46,8 @@ import android.widget.TextView;
 import android.content.DialogInterface.OnCancelListener;
 
 import org.secuso.privacyfriendlycircuittraining.R;
+import org.secuso.privacyfriendlycircuittraining.database.PFASQLiteHelper;
+import org.secuso.privacyfriendlycircuittraining.helpers.BitMapUtility;
 import org.secuso.privacyfriendlycircuittraining.services.TimerService;
 
 import java.util.ArrayList;
@@ -83,6 +87,8 @@ public class WorkoutActivity extends AppCompatActivity {
     private final BroadcastReceiver timeReceiver = new BroadcastReceiver();
     private TimerService timerService = null;
     private boolean serviceBound = false;
+
+    private PFASQLiteHelper db = new PFASQLiteHelper(this);
 
 
     @Override
@@ -242,16 +248,9 @@ public class WorkoutActivity extends AppCompatActivity {
                 if (intent.getBooleanExtra("workout_finished", false) != false) {
                     showFinishedView();
                 }
-                if (intent.getStringExtra("exercise_name") != null) {
-                    String exercise = intent.getStringExtra("exercise_name");
-                    switch (exercise){
-                        case "squat":
-                            workoutImage.setImageResource(R.drawable.ic_exercise_squat);
-                            break;
-                        case "pushup":
-                            workoutImage.setImageResource(R.drawable.ic_exercise_pushup);
-                            break;
-                    }
+                if (intent.getIntExtra("exercise_id", -1) != -1) {
+                    Integer exercise = intent.getIntExtra("exercise_id", -1);
+                    workoutImage.setImageBitmap(BitMapUtility.getImage(db.getExercise(exercise).getImage()));
                 }
 
                 if (intent.getLongExtra("new_timer", 0) != 0) {
@@ -381,7 +380,7 @@ public class WorkoutActivity extends AppCompatActivity {
             long savedTime = timerService.getSavedTime();
             int sets = timerService.getSets();
             long timerDuration = 0;
-            String currentExerciseName = timerService.getCurrentExerciseName();
+            Integer currentExerciseId = timerService.getCurrentExerciseId();
 
 
             if(timerService.getisExerciseMode()){
@@ -429,14 +428,7 @@ public class WorkoutActivity extends AppCompatActivity {
             progressBar.setAlpha(1.0f);
 
             if(timerService.getisExerciseMode()) {
-                switch (currentExerciseName) {
-                    case "squat":
-                        workoutImage.setImageResource(R.drawable.ic_exercise_squat);
-                        break;
-                    case "pushup":
-                        workoutImage.setImageResource(R.drawable.ic_exercise_pushup);
-                        break;
-                }
+                workoutImage.setImageBitmap(BitMapUtility.getImage(db.getExercise(currentExerciseId).getImage()));
             }
 
             if (isPaused){

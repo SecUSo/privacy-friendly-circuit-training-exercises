@@ -17,7 +17,8 @@
     <string name="action_settings">Settings</string>
     <string name="action_main">Main</string>
     <string name="action_statistics">Statistics</string>
-    <string name="action_exercises">Exercise Sets</string>
+    <string name="action_exercisesets">Exercise Sets</string>
+    <string name="action_exercises">Exercises</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="main_button_text">Full Width Button</string>
@@ -55,9 +56,13 @@
     <string name="workout_finish_button">FINISH</string>
 
 
-    <!-- ###EXERCIES###-->
-    <string name="title_activity_exercises">Exercise Sets</string>
-    <string name="exercises_lists_empty">You don\'t have any exercise sets</string>
+    <!-- ###EXERCIESESETS###-->
+    <string name="title_activity_exercisesets">Exercise Sets</string>
+    <string name="exercisesets_lists_empty">You don\'t have any exercise sets</string>
+
+    <!-- ###EXERCIESES###-->
+    <string name="title_activity_exercises">Exercises</string>
+    <string name="exercises_lists_empty">You don\'t have any exercises</string>
 
     <!-- ###NOTIFICATIONS###-->
     <string name="workout_notification_time">Time</string>
@@ -231,24 +236,19 @@
 
     <string name="hello_blank_fragment">Hello blank fragment</string>
 
-    <string-array name="spinner_exercises">
-        <item>-</item>
-        <item>Squat</item>
-        <item>Push-Up</item>
-    </string-array>
-
-    <string-array name="workout_modes">
-        <item>Sets</item>
-        <item>Exercise Set</item>
-    </string-array>
-
-    <string name="exercise_dialog_hint">Name of Exercise Set</string>
+    <string name="exerciseset_dialog_hint">Name of the Exercise Set</string>
+    <string name="exercise_name_dialog_hint">Name of the Exercise</string>
+    <string name="exercise_description_dialog_hint">Description</string>
     <string name="new_exercise_set">New Exercise Set</string>
+    <string name="new_exercise">New Exercise</string>
     <string name="cancel">Cancel</string>
     <string name="no_exercise_sets">You don\'t have any Exercise Sets</string>
-    <string name="valid_exercise_set_name">Please enter a name</string>
+    <string name="valid_name">Please enter a name</string>
     <string name="choose_one_exercise">Please choose one Exercise</string>
 
+    <string name="load_image_error">Something went wrong</string>
+    <string name="no_image_picked">You haven\'t picked Image</string>
 
+    <string name="no_exercises">Please choose an exercise</string>
 
 </resources>

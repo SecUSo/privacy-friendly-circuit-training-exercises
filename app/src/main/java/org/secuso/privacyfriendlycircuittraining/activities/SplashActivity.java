@@ -15,11 +15,20 @@
 package org.secuso.privacyfriendlycircuittraining.activities;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 
+import org.secuso.privacyfriendlycircuittraining.R;
+import org.secuso.privacyfriendlycircuittraining.database.PFASQLiteHelper;
+import org.secuso.privacyfriendlycircuittraining.helpers.BitMapUtility;
+import org.secuso.privacyfriendlycircuittraining.models.Exercise;
+import org.secuso.privacyfriendlycircuittraining.models.ExerciseSet;
 import org.secuso.privacyfriendlycircuittraining.tutorial.PrefManager;
 import org.secuso.privacyfriendlycircuittraining.tutorial.TutorialActivity;
+
+import java.util.ArrayList;
 
 /**
  * @author Karola Marky
@@ -30,6 +39,7 @@ import org.secuso.privacyfriendlycircuittraining.tutorial.TutorialActivity;
 public class SplashActivity extends AppCompatActivity {
 
     private PrefManager prefManager;
+    private PFASQLiteHelper db = new PFASQLiteHelper(this);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,6 +47,18 @@ public class SplashActivity extends AppCompatActivity {
 
         prefManager = new PrefManager(this);
         if (prefManager.isFirstTimeLaunch()) {
+            byte[] ic_squat = BitMapUtility.getBytes(BitmapFactory.decodeResource(getResources(), R.drawable.ic_exercise_squat));
+            byte[] ic_pushup = BitMapUtility.getBytes(BitmapFactory.decodeResource(getResources(), R.drawable.ic_exercise_pushup));
+            Exercise defaultExercise1 = new Exercise(0, "Squat", "Example description", ic_squat);
+            Exercise defaultExercise2 = new Exercise(0, "Pushup", "Example description", ic_pushup);
+            db.addExercise(defaultExercise1);
+            db.addExercise(defaultExercise2);
+            ArrayList<Integer> tmp = new ArrayList<>();
+            tmp.add(db.getAllExercise().get(0).getID());
+            tmp.add(db.getAllExercise().get(1).getID());
+            ExerciseSet defaultExerciseSet = new ExerciseSet(0, "Example", tmp);
+
+            db.addExerciseSet(defaultExerciseSet);
             Intent mainIntent = new Intent(SplashActivity.this, TutorialActivity.class);
             SplashActivity.this.startActivity(mainIntent);
             SplashActivity.this.finish();

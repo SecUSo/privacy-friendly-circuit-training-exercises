@@ -21,24 +21,24 @@
         <include layout="@layout/toolbar"/>
 
         <android.support.v7.widget.RecyclerView
-            android:id="@+id/recyclerView"
+            android:id="@+id/recyclerView_ex"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
 
         <android.support.design.widget.FloatingActionButton
-            android:id="@+id/fab_new_list"
+            android:id="@+id/fab_new_list_ex"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom|end"
             android:layout_margin="@dimen/fab_margin"
             android:tint="@color/white"
             android:src="@android:drawable/ic_input_add"
-            app:layout_anchor="@id/recyclerView"
+            app:layout_anchor="@id/recyclerView_ex"
             app:layout_anchorGravity="bottom|right|end"/>
 
         <android.support.design.widget.FloatingActionButton
-            android:id="@+id/fab_delete_item"
+            android:id="@+id/fab_delete_item_ex"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom|end"
@@ -46,12 +46,22 @@
             android:tint="@color/white"
             app:backgroundTint="@color/red"
             android:src="@drawable/ic_delete_black_24px"
-            app:layout_anchor="@id/recyclerView"
+            app:layout_anchor="@id/recyclerView_ex"
+            app:layout_anchorGravity="bottom|right|end"/>
+
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/fab_accept_item_ex"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|end"
+            android:layout_margin="@dimen/fab_margin"
+            android:src="@drawable/ic_done"
+            app:layout_anchor="@id/recyclerView_ex"
             app:layout_anchorGravity="bottom|right|end"/>
 
         <LinearLayout
             android:visibility="gone"
-            android:id="@+id/no_lists_layout"
+            android:id="@+id/no_lists_layout_ex"
             android:orientation="vertical"
             android:gravity="center"
             android:layout_width="match_parent"
@@ -60,7 +70,7 @@
             <TextView
                 android:layout_gravity="center"
                 android:textAlignment="center"
-                android:text="@string/exercisesets_lists_empty"
+                android:text="@string/exercises_lists_empty"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>
         </LinearLayout>
