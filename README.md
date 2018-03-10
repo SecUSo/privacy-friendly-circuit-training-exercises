@@ -1,10 +1,10 @@
-﻿# Privacy Friendly Interval Timer
+﻿# Privacy Friendly Circuit Trainer
 
 This Android application manages the time during interval based training sessions, eg circuit training.
 It provides a configurable set of timers for the exercises and the rest phases.
 The app can remind the user about planned training sessions and offers statistics such as the time spend training or calories burnt.
 
-Privacy Friendly Interval Timer belongs to the group of Privacy Friendly Apps developed by the research group SECUSO at Technische Universität Darmstadt.
+Privacy Friendly Circuit Trainer belongs to the group of Privacy Friendly Apps developed by the research group SECUSO at Technische Universität Darmstadt.
 
 ## Motivation
 
@@ -19,12 +19,12 @@ https://www.fitness-gesundheit.uni-wuppertal.de/fileadmin/fitness-gesundheit/pdf
 ### API Reference
 
 Mininum SDK: 21
-Target SDK: 25 
+Target SDK: 26 
 
 ## License
 
-Privacy Friendly Interval Timer is licensed under the GPLv3.
-Copyright (C) 2017  Alexander Karakuz
+Privacy Friendly Circuit Trainer is licensed under the GPLv3.
+Copyright (C) 2018  Nils Schroth
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -49,5 +49,6 @@ Markus Hau<br />
 Github-Users: <br />
 alexkarakuz <br />
 Yonjuni (Karola Marky)<br />
-Kamuno
+Kamuno<br />
+nils243 (Nils Schroth)
 
