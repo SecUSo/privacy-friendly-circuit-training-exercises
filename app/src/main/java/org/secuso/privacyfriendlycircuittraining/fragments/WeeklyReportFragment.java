@@ -269,6 +269,8 @@ public class WeeklyReportFragment extends Fragment implements ReportAdapter.OnIt
                 menu.findItem(R.id.menu_calories).setChecked(true);
                 break;
             case TIME:
+                menu.findItem(R.id.menu_time).setChecked(true);
+                break;
             default:
                 menu.findItem(R.id.menu_time).setChecked(true);
         }

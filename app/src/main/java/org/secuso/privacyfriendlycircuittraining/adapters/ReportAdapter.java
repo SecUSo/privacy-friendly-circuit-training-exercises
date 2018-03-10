@@ -29,6 +29,7 @@ import android.widget.TextView;
 
 import com.github.mikephil.charting.charts.CombinedChart;
 import com.github.mikephil.charting.components.AxisBase;
+import com.github.mikephil.charting.components.Legend;
 import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.data.BarData;
@@ -120,6 +121,9 @@ public class ReportAdapter extends RecyclerView.Adapter<ReportAdapter.ViewHolder
                             barChartLabel = barChartViewHolder.context.getString(R.string.report_calories);
                             break;
                         case TIME:
+                            barChartDataMap = barChartData.getTime();
+                            barChartLabel = barChartViewHolder.context.getString(R.string.report_workout_time);
+                            break;
                         default:
                             barChartDataMap = barChartData.getTime();
                             barChartLabel = barChartViewHolder.context.getString(R.string.report_workout_time);
@@ -160,6 +164,9 @@ public class ReportAdapter extends RecyclerView.Adapter<ReportAdapter.ViewHolder
                 barChartViewHolder.mChart.setData(combinedData);
                 barChartViewHolder.mChart.getXAxis().setValueFormatter(new ArrayListAxisValueFormatter(barChartXValues));
                 barChartViewHolder.mChart.invalidate();
+
+                Legend legend = barChartViewHolder.mChart.getLegend();
+                legend.setYOffset(20f);
                 break;
             case TYPE_SUMMARY:
                 ActivitySummary summaryData = (ActivitySummary) mItems.get(position);

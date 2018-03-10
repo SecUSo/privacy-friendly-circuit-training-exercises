@@ -223,16 +223,26 @@ public class TimerService extends Service {
                         currentTitle = getResources().getString(R.string.workout_block_periodization_headline);
                         broadcast.putExtra("timer_title", currentTitle)
                                  .putExtra("countdown_seconds", (int) blockPeriodizationTime/1000)
-                                 .putExtra("new_timer", blockPeriodizationTime)
-                                 .putExtra("exercise_id", currentExerciseId);
+                                 .putExtra("new_timer", blockPeriodizationTime);
+                        if(isExerciseMode){
+                            broadcast.putExtra("timer_title", currentTitle)
+                                    .putExtra("countdown_seconds", (int) blockPeriodizationTime/1000)
+                                    .putExtra("new_timer", blockPeriodizationTime)
+                                    .putExtra("exercise_id", currentExerciseId);
+                        }
 
                         restTimer = createRestTimer(blockPeriodizationTime);
                     } else {
                         currentTitle = getResources().getString(R.string.workout_headline_rest);
                         broadcast.putExtra("timer_title", currentTitle)
                                   .putExtra("countdown_seconds", (int) restTime/1000)
-                                  .putExtra("new_timer", restTime)
-                                  .putExtra("exercise_id", currentExerciseId);
+                                  .putExtra("new_timer", restTime);
+                        if(isExerciseMode){
+                            broadcast.putExtra("timer_title", currentTitle)
+                                    .putExtra("countdown_seconds", (int) restTime/1000)
+                                    .putExtra("new_timer", restTime)
+                                    .putExtra("exercise_id", currentExerciseId);
+                        }
 
 
                         restTimer = createRestTimer(restTime);
@@ -319,8 +329,15 @@ public class TimerService extends Service {
                          .putExtra("current_set", currentSet)
                          .putExtra("sets", sets)
                          .putExtra("countdown_seconds", (int) workoutTime/1000)
-                         .putExtra("new_timer", workoutTime)
-                         .putExtra("exercise_id", currentExerciseId);
+                         .putExtra("new_timer", workoutTime);
+                if(isExerciseMode){
+                    broadcast.putExtra("timer_title", currentTitle)
+                            .putExtra("current_set", currentSet)
+                            .putExtra("sets", sets)
+                            .putExtra("countdown_seconds", (int) workoutTime/1000)
+                            .putExtra("new_timer", workoutTime)
+                            .putExtra("exercise_id", currentExerciseId);
+                }
 
                 sendBroadcast(broadcast);
                 isWorkout = true;
@@ -441,8 +458,13 @@ public class TimerService extends Service {
 
             Intent broadcast = new Intent(COUNTDOWN_BROADCAST)
                     .putExtra("timer_title", currentTitle)
-                    .putExtra("new_timer", time)
-                    .putExtra("exercise_id", currentExerciseId);
+                    .putExtra("new_timer", time);
+            if(isExerciseMode){
+                broadcast = new Intent(COUNTDOWN_BROADCAST)
+                        .putExtra("timer_title", currentTitle)
+                        .putExtra("new_timer", time)
+                        .putExtra("exercise_id", currentExerciseId);
+            }
 
             if(isPaused){
                 this.savedTime = time;
@@ -473,8 +495,15 @@ public class TimerService extends Service {
                     .putExtra("timer_title", currentTitle)
                     .putExtra("current_set", currentSet)
                     .putExtra("new_timer", workoutTime)
-                    .putExtra("sets", sets)
-                    .putExtra("exercise_id", currentExerciseId);
+                    .putExtra("sets", sets);
+            if(isExerciseMode){
+                broadcast = new Intent(COUNTDOWN_BROADCAST)
+                        .putExtra("timer_title", currentTitle)
+                        .putExtra("current_set", currentSet)
+                        .putExtra("new_timer", workoutTime)
+                        .putExtra("sets", sets)
+                        .putExtra("exercise_id", currentExerciseId);
+            }
 
             if(isPaused){
                 this.savedTime = workoutTime;
@@ -509,8 +538,15 @@ public class TimerService extends Service {
                     .putExtra("timer_title", currentTitle)
                     .putExtra("sets", sets)
                     .putExtra("new_timer", time)
-                    .putExtra("current_set", currentSet)
-                    .putExtra("exercise_id", currentExerciseId);
+                    .putExtra("current_set", currentSet);
+            if(isExerciseMode){
+                broadcast = new Intent(COUNTDOWN_BROADCAST)
+                        .putExtra("timer_title", currentTitle)
+                        .putExtra("sets", sets)
+                        .putExtra("new_timer", time)
+                        .putExtra("current_set", currentSet)
+                        .putExtra("exercise_id", currentExerciseId);
+            }
 
             if(isPaused){
                 this.savedTime = time;
@@ -552,8 +588,15 @@ public class TimerService extends Service {
                     .putExtra("timer_title", currentTitle)
                     .putExtra("current_set", currentSet)
                     .putExtra("new_timer", workoutTime)
-                    .putExtra("sets", sets)
-                    .putExtra("exercise_id", currentExerciseId);
+                    .putExtra("sets", sets);
+            if(isExerciseMode){
+                broadcast = new Intent(COUNTDOWN_BROADCAST)
+                        .putExtra("timer_title", currentTitle)
+                        .putExtra("current_set", currentSet)
+                        .putExtra("new_timer", workoutTime)
+                        .putExtra("sets", sets)
+                        .putExtra("exercise_id", currentExerciseId);
+            }
 
             if(isPaused){
                 this.savedTime = workoutTime;

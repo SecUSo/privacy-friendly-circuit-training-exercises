@@ -14,32 +14,38 @@
 
 
     <LinearLayout
-        android:layout_width="190dp"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom|right"
-        android:weightSum="1">
+        android:layout_width="match_parent"
+        android:orientation="horizontal"
+        android:layout_gravity="bottom|right|end"
+        android:layout_height="wrap_content">
 
         <TextView
             android:id="@+id/main_text_rest_interval"
             android:layout_width="83dp"
             android:layout_height="match_parent"
             android:layout_weight="0.01"
-            android:gravity="center"
+            android:textAlignment="viewEnd"
+            android:gravity="end|center_vertical"
             android:text="@string/main_text_start"
             android:textColor="@color/colorAccent"
             android:textSize="18sp"
-            android:textStyle="bold|italic" />
+            android:textStyle="bold|italic"
+           />
 
-        <android.support.design.widget.FloatingActionButton
-            android:id="@+id/start_workout"
-            android:layout_width="69dp"
-            android:layout_height="68dp"
-            android:layout_gravity="bottom|end"
-            android:layout_margin="@dimen/fab_margin"
-            android:background="@drawable/button_fullwidth"
-            android:onClick="onClick"
-            android:src="@drawable/ic_play_24dp"
-            app:backgroundTint="@color/colorPrimary" />
+
+
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/start_workout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
+        android:layout_margin="@dimen/fab_margin"
+        android:background="@drawable/button_fullwidth"
+        android:onClick="onClick"
+        android:src="@drawable/ic_play_24dp"
+        app:backgroundTint="@color/colorPrimary"
+        app:layout_anchorGravity="bottom|right|end" />
 
     </LinearLayout>
 

@@ -42,6 +42,7 @@
     <string name="main_text_disabledbutton_desc">A disabled button looks like this (any size):</string>
     <string name="main_text_normalbutton_desc">There are multiple ways to display basic buttons. Button 1 is the basic button. If you wish to separate a button visually, use button 2. The buttons 3&#8211;5 are examples for highlighted buttons. Depending on the app other colors are possible.</string>
     <string name="main_button_welcomedialog_text">Use the button in the lower left corner to call the Welcome Dialog.</string>
+    <string name="use_exercise_sets">Use Exercise Sets</string>
 
     <!-- ###WORKOUT###-->
     <string name="workout_headline_start_timer">START IN</string>
@@ -92,7 +93,7 @@
     <string name="about">About</string>
     <string name="version_number">Version</string>
     <string name="about_author">Authors: </string>
-    <string name="about_author_names" translatable="false">Alexander Karakuz, Karola Marky</string>
+    <string name="about_author_names" translatable="false">Alexander Karakuz, Karola Marky, Nils Schroth</string>
     <string name="about_author_contributors">and contributors.</string>
     <string name="about_affiliation">In affiliation with</string>
     <string name="privacy_friendly">This application belongs to the group of Privacy Friendly Apps developed by Technische Universität Darmstadt. Sourcecode licensed under GPLv3. Images copyright TU Darmstadt and Google Inc.</string>

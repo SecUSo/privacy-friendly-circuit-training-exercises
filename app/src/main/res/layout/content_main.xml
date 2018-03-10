@@ -234,8 +234,8 @@
                     android:layout_height="match_parent"
                     android:layout_weight="0.6"
                     android:onClick="onClick"
-                    android:text="Use Exercise Sets"
-                    android:textAlignment="center"
+                    android:text="@string/use_exercise_sets"
+                    android:textAlignment="viewStart"
                     android:textColor="@color/black"
                     android:textSize="20sp" />
 

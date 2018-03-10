@@ -22,8 +22,6 @@ package org.secuso.privacyfriendlycircuittraining.adapters;
  */
 
 import android.content.Context;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -38,13 +36,10 @@ import org.secuso.privacyfriendlycircuittraining.activities.ExerciseSetActivity;
 import org.secuso.privacyfriendlycircuittraining.database.PFASQLiteHelper;
 import org.secuso.privacyfriendlycircuittraining.fragments.ExerciseSetDialogFragment;
 import org.secuso.privacyfriendlycircuittraining.helpers.BitMapUtility;
-import org.secuso.privacyfriendlycircuittraining.models.Exercise;
 import org.secuso.privacyfriendlycircuittraining.models.ExerciseSet;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 public class ExerciseSetAdapter extends RecyclerView.Adapter<ExerciseSetAdapter.MyViewHolder> {
 
@@ -84,11 +79,24 @@ public class ExerciseSetAdapter extends RecyclerView.Adapter<ExerciseSetAdapter.
     public void setExerciseImages(MyViewHolder holder, ExerciseSet es){
         int i = 0;
         for(Integer ex : es.getExercises()){
-            holder.imageViews[i].setImageBitmap(BitMapUtility.getImage(db.getExercise(ex).getImage()));
+            if(i>=6){
+                holder.imageViews[5].setImageResource(R.drawable.ic_black_dots);
+                holder.imageViews[5].setScaleType(ImageView.ScaleType.CENTER_INSIDE);
+                holder.imageViews[5].setScaleX((float)0.7);
+                holder.imageViews[5].setScaleY((float)0.7);
+                return;
+            }
+            else {
+                holder.imageViews[i].setImageBitmap(BitMapUtility.getImage(db.getExercise(ex).getImage()));
+            }
             i++;
         }
         for(int j = i; j<6; j++){
             holder.imageViews[j].setImageResource(0);
+        }
+        if(holder.imageViews[5].getScaleX() < 1){
+            holder.imageViews[5].setScaleX((float)1);
+            holder.imageViews[5].setScaleY((float)1);
         }
     }
 

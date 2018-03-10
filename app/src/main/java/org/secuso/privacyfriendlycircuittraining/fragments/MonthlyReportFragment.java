@@ -265,6 +265,8 @@ public class MonthlyReportFragment extends Fragment implements ReportAdapter.OnI
                 menu.findItem(R.id.menu_calories).setChecked(true);
                 break;
             case TIME:
+                menu.findItem(R.id.menu_time).setChecked(true);
+                break;
             default:
                 menu.findItem(R.id.menu_time).setChecked(true);
         }

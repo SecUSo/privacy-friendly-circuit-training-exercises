@@ -385,7 +385,11 @@ public class WorkoutActivity extends AppCompatActivity {
 
             if(timerService.getisExerciseMode()){
                 float d = getApplicationContext().getResources().getDisplayMetrics().density;
-                int margin = (int) (d * 182);
+                int margin;
+                if(d > 2)
+                    margin = (int) (d * 182);
+                else
+                    margin = (int) (d * 140);
                 RelativeLayout.LayoutParams timerlp = (RelativeLayout.LayoutParams) workoutTimer.getLayoutParams();
                 timerlp.setMargins(0,0,margin,margin);
                 timerlp.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);

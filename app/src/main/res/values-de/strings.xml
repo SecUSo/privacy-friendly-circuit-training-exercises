@@ -43,6 +43,7 @@
     <string name="main_text_disabledbutton_desc">Ein inaktiver Button sieht folgendermaßen aus (jede Größe):</string>
     <string name="main_text_normalbutton_desc">Es gibt verschiedene Möglichkeiten, um einfache Buttons darzustellen. Button 1 entspricht der Basisform. Wenn Buttons visual abgetrennt werden sollen, ist Button 2 zu verwenden. Die Buttons 3&#8211;5 sind Beispiels für hevorgehobene Buttons. Je nach App können auch andere Farben zum Highlighten verwendet werden.</string>
     <string name="main_button_welcomedialog_text">Der Button in der Ecke unten links öffnet einen Beispiel-Welcome Dialog.</string>
+    <string name="use_exercise_sets">Übungssets verwenden</string>
 
     <!-- ###WORKOUT###-->
     <string name="workout_headline_start_timer">START IN</string>
@@ -206,7 +207,7 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
 
     <string name="exerciseset_dialog_hint">Name des Übungssets</string>
-    <string name="exercise_dialog_hint">Name der Übung</string>
+    <string name="exercise_name_dialog_hint">Name der Übung</string>
     <string name="exercise_description_dialog_hint">Beschreibung</string>
     <string name="new_exercise_set">Neues Übungsset</string>
     <string name="new_exercise">Neue Übung</string>

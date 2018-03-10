@@ -33,13 +33,16 @@ import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import org.json.JSONException;
 import org.secuso.privacyfriendlycircuittraining.R;
 import org.secuso.privacyfriendlycircuittraining.activities.ExerciseActivity;
 import org.secuso.privacyfriendlycircuittraining.database.PFASQLiteHelper;
 import org.secuso.privacyfriendlycircuittraining.fragments.ExerciseDialogFragment;
 import org.secuso.privacyfriendlycircuittraining.models.Exercise;
+import org.secuso.privacyfriendlycircuittraining.models.ExerciseSet;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class ExerciseAdapter extends RecyclerView.Adapter<ExerciseAdapter.MyViewHolder> {
@@ -88,8 +91,25 @@ public class ExerciseAdapter extends RecyclerView.Adapter<ExerciseAdapter.MyView
         exerciseList = db.getAllExercise();
         for(Exercise ex : list){
             exerciseList.remove(ex);
+            updateExerciseSets(list);
         }
         notifyDataSetChanged();
+    }
+
+    private void updateExerciseSets(ArrayList<Exercise> list){
+        List<ExerciseSet> tmp = db.getAllExerciseSet();
+        for(ExerciseSet es : tmp){
+            for(Exercise ex: list)
+                if(es.getExercises().contains(ex.getID())){
+                    ExerciseSet es_tmp = es;
+                    es_tmp.getExercises().removeAll(Collections.singleton(ex.getID()));
+                    try {
+                        db.updateExerciseSet(es_tmp);
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+        }
     }
 
 
