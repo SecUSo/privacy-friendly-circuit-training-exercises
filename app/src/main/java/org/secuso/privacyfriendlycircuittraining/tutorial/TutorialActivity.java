@@ -37,8 +37,8 @@ import org.secuso.privacyfriendlycircuittraining.activities.MainActivity;
 
 /**
  * Class structure taken from tutorial at http://www.androidhive.info/2016/05/android-build-intro-slider-app/
- * @author Karola Marky
- * @version 20161214
+ * @author Karola Marky, Nils Schroth
+ * @version 20180322
  */
 
 public class TutorialActivity extends AppCompatActivity {
@@ -81,7 +81,8 @@ public class TutorialActivity extends AppCompatActivity {
                 R.layout.tutorial_slide1,
                 R.layout.tutorial_slide2,
                 R.layout.tutorial_slide3,
-                R.layout.tutorial_slide4,};
+                R.layout.tutorial_slide4,
+                R.layout.tutorial_slide5};
 
         // adding bottom dots
         addBottomDots(0);

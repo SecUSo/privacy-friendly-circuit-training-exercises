@@ -84,6 +84,8 @@
     <string name="help_feature_block_periodization_answer">When scheduling the timers you may also choose the block periodization feature. This feature allows you to configure longer, separate breaks in between the exercises. This way the workout can be split into multiple high intensity workout cycles.</string>
     <string name="help_feature_workout_history">Feature: Workout history</string>
     <string name="help_feature_workout_history_answer">The app can collect statistics about your performed workout sessions. The collected data comprises of the time spend working out and the calories burnt while exercising. The accuracy of the calories calculation can be improved by configuring the necessary user data in the settings menu. The collection of this data can be deleted as well as turned on and off inside the settings menu.</string>
+    <string name="help_feature_own_exercises">Feature: Exercise Sets</string>
+    <string name="help_feature_own_exercises_answer">The app allows you to create your own Exercise Sets for the circuit training. Therefore you can combine your own exercises to exercise sets. The image assigned to an exercise is displayed during the workout. In addition, the exercise sets can be repeated during a workout. For this you can set the number of rounds before starting the workout.</string>
     <string name="help_privacy">What makes the app privacy-friendly?</string>
     <string name="help_privacy_answer">This app does not include any tracking mechanisms or advertisement. It further does not share any user information which may be collected during the usage of this app.</string>
     <string name="help_permission">Which permissions are required by the app?</string>
@@ -226,6 +228,9 @@
     <string name="slide4_heading">Block Periodization</string>
     <string name="slide4_text_1">When scheduling the timers you may also choose the block periodization feature.</string>
     <string name="slide4_text_2">This feature allows you to configure longer, separate breaks in between the exercises. This way the workout can be split into multiple high intensity workout cycles.</string>
+
+    <string name="slide5_heading">Exercise Sets</string>
+    <string name="slide5_text">You can create Exercise Sets from your own exercises and use them for circuit training.</string>
 
     <string name="okay">Okay</string>
     <string name="viewhelp">View Help</string>

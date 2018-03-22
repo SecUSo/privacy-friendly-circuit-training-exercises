@@ -25,6 +25,9 @@ import java.util.List;
 /**
  * Class structure taken from tutorial at http://www.journaldev.com/9942/android-expandablelistview-example-tutorial
  * last access 27th October 2016
+ *
+ * @author Nils Schroth
+ * @version 20180322
  */
 
 public class HelpDataDump {
@@ -63,6 +66,10 @@ public class HelpDataDump {
         feature4.add(context.getResources().getString(R.string.help_feature_workout_history_answer));
         expandableListDetail.put(context.getResources().getString(R.string.help_feature_workout_history), feature4);
 
+        List<String> feature5 = new ArrayList<String>();
+
+        feature5.add(context.getResources().getString(R.string.help_feature_own_exercises_answer));
+        expandableListDetail.put(context.getResources().getString(R.string.help_feature_own_exercises), feature5);
 
         List<String> privacy = new ArrayList<String>();
         privacy.add(context.getResources().getString(R.string.help_privacy_answer));
