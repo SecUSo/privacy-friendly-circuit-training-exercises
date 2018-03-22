@@ -17,7 +17,8 @@ package org.secuso.privacyfriendlycircuittraining.models;
 import java.util.ArrayList;
 
 /**
- * Exercise Set model
+ * This class holds the "data type" of a single exercise set.
+ * A exercise sets consists of a name, a list of exercise ids and the id of the exercise set.
  *
  * @author Nils Schroth
  * @version 20180103

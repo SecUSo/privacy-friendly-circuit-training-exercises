@@ -36,8 +36,8 @@ import org.secuso.privacyfriendlycircuittraining.tutorial.PrefManager;
 import org.secuso.privacyfriendlycircuittraining.tutorial.TutorialActivity;
 
 /**
- * @author Christopher Beckmann
- * @version 20161225
+ * @author Christopher Beckmann, Nils Schroth
+ * @version 20180321
  *
  * This class is a parent class of all activities that can be accessed from the
  * Navigation Drawer (example see MainActivity.java)

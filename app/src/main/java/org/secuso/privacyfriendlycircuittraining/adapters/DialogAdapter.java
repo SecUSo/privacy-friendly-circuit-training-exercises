@@ -15,7 +15,7 @@
 package org.secuso.privacyfriendlycircuittraining.adapters;
 
 /**
- * Adapter for Exercises
+ * Adapter for Exercise Sets Dialog
  *
  * @author Nils Schroth
  * @version 20180103
@@ -54,7 +54,6 @@ public class DialogAdapter extends RecyclerView.Adapter<DialogAdapter.MyViewHold
     public DialogAdapter(ArrayList<Exercise> exerciseList, Context ctx) {
         this.exerciseList = exerciseList;
         this.ctx = ctx;
-        //exerciseDialog = (ExerciseSetDialogFragment) ctx;
         db = new PFASQLiteHelper(ctx);
     }
 

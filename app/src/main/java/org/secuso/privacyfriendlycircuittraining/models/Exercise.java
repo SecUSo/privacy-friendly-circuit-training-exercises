@@ -17,7 +17,8 @@ package org.secuso.privacyfriendlycircuittraining.models;
 import java.io.Serializable;
 
 /**
- * Exercise model
+ * This class holds the "data type" of a single exercise.
+ * A exercise consists of a name, a description, an image and the id of the exercise.
  *
  * @author Nils Schroth
  * @version 20180103

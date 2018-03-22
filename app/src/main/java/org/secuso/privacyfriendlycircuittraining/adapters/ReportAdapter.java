@@ -58,8 +58,8 @@ import java.util.Map;
 /**
  * This adapter is used for ReportView.
  *
- * @author Tobias Neidig, Alexander Karakuz
- * @version 20170708
+ * @author Tobias Neidig, Alexander Karakuz, Nils Schroth
+ * @version 20180321
  */
 public class ReportAdapter extends RecyclerView.Adapter<ReportAdapter.ViewHolder> {
     private static final int TYPE_SUMMARY = 0;

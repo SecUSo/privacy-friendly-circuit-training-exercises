@@ -53,13 +53,12 @@ import org.secuso.privacyfriendlycircuittraining.services.TimerService;
 import java.util.ArrayList;
 
 /**
- * Workout view with a workout and rest timer.
+ * Workout view with a workout and rest timer and exercise image (if in exercise mode)
  * Timers can be paused and skipped. Once the workout is finished a message is shown and
  * the view navigates back to the main view.
  *
- * @author Alexander Karakuz
- * @version 20170809
- * @license GNU/GPLv3 http://www.gnu.org/licenses/gpl-3.0.html
+ * @author Alexander Karakuz, Nils Schroth
+ * @version 20180321
  */
 public class WorkoutActivity extends AppCompatActivity {
 

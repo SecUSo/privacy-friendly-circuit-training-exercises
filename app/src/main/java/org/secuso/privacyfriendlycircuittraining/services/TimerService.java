@@ -48,9 +48,8 @@ import java.util.Date;
  * Can play sounds depending ot the current settings.
  * Can pause, resume, skip and go back to the pervious timer.
  *
- * @author Alexander Karakuz
- * @version 20170809
- * @license GNU/GPLv3 http://www.gnu.org/licenses/gpl-3.0.html
+ * @author Alexander Karakuz, Nils Schroth
+ * @version 20180103
  */
 public class TimerService extends Service {
 

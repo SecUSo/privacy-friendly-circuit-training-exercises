@@ -51,10 +51,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Main view that lets the user choose the timer intervals and has a button to start the workout
+ * Main view that lets the user choose the timer intervals, training mode and has a button to start the workout
  *
- * @author Alexander Karakuz
- * @version 20170809
+ * @author Alexander Karakuz, Nils Schroth
+ * @version 20180321
  */
 public class MainActivity extends BaseActivity {
 

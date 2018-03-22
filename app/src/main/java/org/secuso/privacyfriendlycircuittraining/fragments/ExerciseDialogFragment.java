@@ -47,7 +47,10 @@ import java.util.List;
 import static android.app.Activity.RESULT_OK;
 
 /**
- * Created by Nils on 15.01.18.
+ * Displays the Dialog for creating new exercises and edit existing exercises
+ *
+ * @author Nils Schroth
+ * @version 20180103
  */
 
 public class ExerciseDialogFragment extends DialogFragment {

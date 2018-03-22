@@ -20,7 +20,10 @@ import android.graphics.BitmapFactory;
 import java.io.ByteArrayOutputStream;
 
 /**
- * Created by Nils on 15.02.18.
+ * Helper for converting images (byte arrays) and bitmaps
+ *
+ * @author Nils Schroth
+ * @version 20180103
  */
 
 public class BitMapUtility {

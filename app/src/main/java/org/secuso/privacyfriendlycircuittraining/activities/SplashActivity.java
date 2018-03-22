@@ -31,8 +31,8 @@ import org.secuso.privacyfriendlycircuittraining.tutorial.TutorialActivity;
 import java.util.ArrayList;
 
 /**
- * @author Karola Marky
- * @version 20161022
+ * @author Karola Marky, Nils Schroth
+ * @version 20180321
  */
 
 
@@ -47,6 +47,7 @@ public class SplashActivity extends AppCompatActivity {
 
         prefManager = new PrefManager(this);
         if (prefManager.isFirstTimeLaunch()) {
+            //add two example exercises
             byte[] ic_squat = BitMapUtility.getBytes(BitmapFactory.decodeResource(getResources(), R.drawable.ic_exercise_squat));
             byte[] ic_pushup = BitMapUtility.getBytes(BitmapFactory.decodeResource(getResources(), R.drawable.ic_exercise_pushup));
             Exercise defaultExercise1 = new Exercise(0, "Squat", "Example description", ic_squat);
