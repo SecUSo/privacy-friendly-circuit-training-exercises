@@ -24,7 +24,7 @@ import java.io.Serializable;
  * @version 20180103
  */
 
-public class Exercise implements Serializable{
+public class Exercise implements Serializable {
     private String NAME;
     private String DESCRIPTION;
     private byte[] IMAGE;

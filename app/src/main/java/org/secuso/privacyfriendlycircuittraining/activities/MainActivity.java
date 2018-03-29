@@ -287,6 +287,11 @@ public class MainActivity extends BaseActivity {
                     setsPerRound = sets;
                 }
 
+                if(setsPerRound == 0 || ExerciseIdsForRounds.size() == 0) {
+                    Toast.makeText(this, R.string.exercise_set_has_no_exercises, Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
                 if (isStartTimerEnabled(this)) {
                     timerService.startWorkout(workoutTime, restTime, startTime, setsPerRound,
                             isBlockPeriodization, blockPeriodizationTime, blockPeriodizationSets, ExerciseIdsForRounds, isExerciseMode);

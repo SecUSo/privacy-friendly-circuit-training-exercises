@@ -31,6 +31,8 @@ import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+
 import org.secuso.privacyfriendlycircuittraining.R;
 import org.secuso.privacyfriendlycircuittraining.activities.ExerciseSetActivity;
 import org.secuso.privacyfriendlycircuittraining.database.PFASQLiteHelper;
@@ -46,11 +48,13 @@ public class ExerciseSetAdapter extends RecyclerView.Adapter<ExerciseSetAdapter.
     private List<ExerciseSet> exerciseSetsList;
     private ExerciseSetActivity exerciseSetActivity;
     private PFASQLiteHelper db = null;
+    private Context context;
 
     public ExerciseSetAdapter(List<ExerciseSet> exerciseSetsList, Context ctx) {
         this.exerciseSetsList = exerciseSetsList;
         exerciseSetActivity = (ExerciseSetActivity) ctx;
         db = new PFASQLiteHelper(ctx);
+        context = ctx;
     }
 
     @Override
@@ -80,14 +84,14 @@ public class ExerciseSetAdapter extends RecyclerView.Adapter<ExerciseSetAdapter.
         int i = 0;
         for(Integer ex : es.getExercises()){
             if(i>=6){
-                holder.imageViews[5].setImageResource(R.drawable.ic_black_dots);
+                Glide.with(context).load(R.drawable.ic_black_dots).into(holder.imageViews[5]);
                 holder.imageViews[5].setScaleType(ImageView.ScaleType.CENTER_INSIDE);
                 holder.imageViews[5].setScaleX((float)0.7);
                 holder.imageViews[5].setScaleY((float)0.7);
                 return;
             }
             else {
-                holder.imageViews[i].setImageBitmap(BitMapUtility.getImage(db.getExercise(ex).getImage()));
+                Glide.with(context).load(db.getExercise(ex).getImage()).into(holder.imageViews[i]);
             }
             i++;
         }

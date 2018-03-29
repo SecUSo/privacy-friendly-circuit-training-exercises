@@ -15,11 +15,15 @@
 package org.secuso.privacyfriendlycircuittraining.activities;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBar;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -67,6 +71,7 @@ public class ExerciseActivity extends BaseActivity implements View.OnLongClickLi
 
         setContentView(R.layout.activity_exercise);
 
+        // TODO: Database calls on main thread?! This should be changed
         exerciseList = db.getAllExercise();
 
         recyclerView = (RecyclerView) findViewById(R.id.recyclerView_ex);
@@ -110,12 +115,22 @@ public class ExerciseActivity extends BaseActivity implements View.OnLongClickLi
         deleteFab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                for(Exercise ex : selection_list){
-                    db.deleteExercise(ex);
-                }
-                mAdapter.updateAdapter(selection_list);
-                clearActionMode();
-                setNoExererciseMessage();
+                AlertDialog.Builder builder = new AlertDialog.Builder(ExerciseActivity.this, 0);
+
+                builder.setPositiveButton(R.string.delete, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        for(Exercise ex : selection_list){
+                            db.deleteExercise(ex);
+                        }
+                        mAdapter.updateAdapter(selection_list);
+                        clearActionMode();
+                        setNoExererciseMessage();
+                    }
+                });
+                builder.setNegativeButton(R.string.cancel, null);
+                builder.setMessage(R.string.dialog_exercise_set_confirm_delete_message);
+                builder.create().show();
             }
         });
 
@@ -130,6 +145,41 @@ public class ExerciseActivity extends BaseActivity implements View.OnLongClickLi
             }
         });
 
+    }
+
+    @Override
+    protected void onPostCreate(Bundle savedInstanceState) {
+        super.onPostCreate(savedInstanceState);
+
+        setDrawerEnabled(!is_in_picker_mode);
+
+        mDrawerToggle.setToolbarNavigationClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(is_in_picker_mode)
+                    onBackPressed();
+            }
+        });
+    }
+
+    public void setDrawerEnabled(final boolean enabled) {
+
+        int lockMode = enabled ?
+                DrawerLayout.LOCK_MODE_UNLOCKED :
+                DrawerLayout.LOCK_MODE_LOCKED_CLOSED;
+
+        mDrawerLayout.setDrawerLockMode(lockMode);
+
+        mDrawerToggle.setDrawerIndicatorEnabled(enabled);
+
+        ActionBar actionBar = getSupportActionBar();
+        if (actionBar != null) {
+            actionBar.setDisplayHomeAsUpEnabled(!enabled);
+            actionBar.setDisplayShowHomeEnabled(enabled);
+            actionBar.setHomeButtonEnabled(enabled);
+        }
+
+        mDrawerToggle.syncState();
     }
 
 

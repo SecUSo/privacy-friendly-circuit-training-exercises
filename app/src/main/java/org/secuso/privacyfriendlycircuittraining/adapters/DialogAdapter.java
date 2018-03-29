@@ -34,6 +34,8 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+
 import org.secuso.privacyfriendlycircuittraining.R;
 import org.secuso.privacyfriendlycircuittraining.activities.ExerciseActivity;
 import org.secuso.privacyfriendlycircuittraining.database.PFASQLiteHelper;
@@ -69,7 +71,7 @@ public class DialogAdapter extends RecyclerView.Adapter<DialogAdapter.MyViewHold
     public void onBindViewHolder(MyViewHolder holder, final int position) {
         Exercise ex = exerciseList.get(position);
         holder.name.setText(ex.getName());
-        holder.exerciseImg.setImageBitmap(getImage(ex.getImage()));
+        Glide.with(ctx).load(ex.getImage()).into(holder.exerciseImg);
 
         holder.deleteButton.setOnClickListener(new View.OnClickListener(){
             @Override

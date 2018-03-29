@@ -75,9 +75,10 @@
             android:layout_marginTop="5dp"
             android:text="@string/about_author" />
 
-        <RelativeLayout
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:orientation="vertical"
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="5dp"
             android:gravity="center">
@@ -96,7 +97,7 @@
                 android:layout_toEndOf="@+id/textFieldAuthorNames"
                 android:text="@string/about_author_contributors" />
 
-        </RelativeLayout>
+        </LinearLayout>
 
 
         <TextView

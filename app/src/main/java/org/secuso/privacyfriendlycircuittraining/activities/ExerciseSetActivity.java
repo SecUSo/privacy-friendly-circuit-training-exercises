@@ -14,6 +14,8 @@
 
 package org.secuso.privacyfriendlycircuittraining.activities;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
@@ -96,15 +98,23 @@ public class ExerciseSetActivity extends BaseActivity implements View.OnLongClic
         deleteFab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                for(ExerciseSet es : selection_list){
-                    db.deleteExerciseSet(es);
-                }
-                mAdapter.updateAdapter(selection_list);
-                clearActionMode();
-                setNoExererciseSetsMessage();
+
+                AlertDialog.Builder builder = new AlertDialog.Builder(ExerciseSetActivity.this, 0);
+                builder.setMessage(R.string.dialog_exercise_set_confirm_delete_message)
+                        .setPositiveButton(R.string.delete, new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                for(ExerciseSet es : selection_list){
+                                    db.deleteExerciseSet(es);
+                                }
+                                mAdapter.updateAdapter(selection_list);
+                                clearActionMode();
+                                setNoExererciseSetsMessage();
+                            }
+                        })
+                        .setNegativeButton(R.string.cancel, null).create().show();
             }
         });
-
     }
 
 

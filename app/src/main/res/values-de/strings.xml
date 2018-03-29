@@ -225,5 +225,7 @@
     <string name="no_image_picked">Du hast kein Bild ausgewählt</string>
 
     <string name="no_exercises">Bitte wähle eine Übung aus</string>
+    <string name="dialog_exercise_set_confirm_delete_message">Möchten Sie die ausgewählten Elemente löschen?</string>
+    <string name="exercise_set_has_no_exercises">Das gewählte Übungsset enthält keine Übungen.</string>
 
 </resources>

@@ -33,6 +33,8 @@ import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+
 import org.json.JSONException;
 import org.secuso.privacyfriendlycircuittraining.R;
 import org.secuso.privacyfriendlycircuittraining.activities.ExerciseActivity;
@@ -50,11 +52,13 @@ public class ExerciseAdapter extends RecyclerView.Adapter<ExerciseAdapter.MyView
     private List<Exercise> exerciseList;
     private ExerciseActivity exerciseActivity;
     private PFASQLiteHelper db = null;
+    private Context context;
 
     public ExerciseAdapter(List<Exercise> exerciseList, Context ctx) {
         this.exerciseList = exerciseList;
         exerciseActivity = (ExerciseActivity) ctx;
         db = new PFASQLiteHelper(ctx);
+        context = ctx;
     }
 
     @Override
@@ -70,7 +74,8 @@ public class ExerciseAdapter extends RecyclerView.Adapter<ExerciseAdapter.MyView
         Exercise ex = exerciseList.get(position);
         holder.name.setText(ex.getName());
         holder.description.setText(ex.getDescription());
-        holder.exerciseImg.setImageBitmap(getImage(ex.getImage()));
+        Glide.with(context).load(ex.getImage()).into(holder.exerciseImg);
+        //holder.exerciseImg.setImageBitmap(getImage(ex.getImage()));
 
         if(!exerciseActivity.getIsInActionMode()){
             holder.checkbox.setVisibility(View.GONE);
