@@ -92,6 +92,8 @@ public class MainActivity extends BaseActivity {
     private long restTime = 0;
     private int sets = 0;
     private int setsPerRound = 0;
+    private boolean blockPeriodizationSwitchState = false;
+    private boolean workoutModeSwitchState = false;
 
     // GUI text
     private TextView workoutIntervalText = null;
@@ -131,9 +133,20 @@ public class MainActivity extends BaseActivity {
         this.workoutIntervalText = (TextView) this.findViewById(R.id.main_workout_interval_time);
         this.restIntervalText = (TextView) this.findViewById(R.id.main_rest_interval_time);
         this.setsText = (TextView) this.findViewById(R.id.main_sets_amount);
+        this.workoutMode = (Switch) findViewById(R.id.workout_mode_switch);
+        this.exerciseSetSpinner = (Spinner) findViewById(R.id.exerciseSets);
+        this.blockPeriodizationSwitchButton = (Switch) findViewById(R.id.main_block_periodization_switch);
+
+
         this.workoutIntervalText.setText(formatTime(workoutTime));
         this.restIntervalText.setText(formatTime(restTime));
         this.setsText.setText(Integer.toString(sets));
+        this.workoutMode.setChecked(workoutModeSwitchState);
+        this.blockPeriodizationSwitchButton.setChecked(blockPeriodizationSwitchState);
+
+        if(workoutModeSwitchState) {
+            findViewById(R.id.exerciesetsRow).setVisibility(View.VISIBLE);
+        }
 
         //Start timer service
         overridePendingTransition(0, 0);
@@ -145,10 +158,11 @@ public class MainActivity extends BaseActivity {
         }
 
         //Set the change listener for the switch button to turn block periodization on and off
-        blockPeriodizationSwitchButton = (Switch) findViewById(R.id.main_block_periodization_switch);
         blockPeriodizationSwitchButton.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 isBlockPeriodization = isChecked;
+                blockPeriodizationSwitchState = isChecked;
+                settings.edit().putBoolean("blockPeriodizationSwitchButton", isChecked).apply();
             }
         });
 
@@ -160,11 +174,12 @@ public class MainActivity extends BaseActivity {
         }
 
         final List<ExerciseSet> exerciseSetslist = db.getAllExerciseSet();
-        workoutMode = (Switch) findViewById(R.id.workout_mode_switch);
 
         workoutMode.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 isExerciseMode = isChecked;
+                workoutModeSwitchState = isChecked;
+                settings.edit().putBoolean("workoutMode", isChecked).apply();
                 if(isExerciseMode){
                     if(exerciseSetslist.size() == 0){
                         toast = Toast.makeText(getApplication(), getResources().getString(R.string.no_exercise_sets), Toast.LENGTH_LONG);
@@ -187,7 +202,6 @@ public class MainActivity extends BaseActivity {
             }
         });
         exerciseIds = new ArrayList<>();
-        exerciseSetSpinner = (Spinner) findViewById(R.id.exerciseSets);
         final List<String> exerciseSetsNames = new ArrayList<>();
         for(ExerciseSet ex : exerciseSetslist){
             exerciseSetsNames.add(ex.getName());
@@ -227,43 +241,42 @@ public class MainActivity extends BaseActivity {
     public void onClick(View view) {
         SharedPreferences.Editor editor = this.settings.edit();
 
-
         switch(view.getId()) {
             case R.id.main_workout_interval_minus:
                 workoutTime = (workoutTime <= workoutMinTime) ? workoutMaxTime : workoutTime - 10;
                 workoutIntervalText.setText(formatTime(workoutTime));
                 editor.putInt(this.getString(R.string.pref_timer_workout),(int) this.workoutTime);
-                editor.commit();
+                editor.apply();
                 break;
             case R.id.main_workout_interval_plus:
                 this.workoutTime = (workoutTime >= workoutMaxTime) ? workoutMinTime : this.workoutTime + 10;
                 this.workoutIntervalText.setText(formatTime(workoutTime));
                 editor.putInt(this.getString(R.string.pref_timer_workout),(int) this.workoutTime);
-                editor.commit();
+                editor.apply();
                 break;
             case R.id.main_rest_interval_minus:
                 this.restTime = (restTime <= restMinTime) ? restMaxTime : this.restTime - 10;
                 this.restIntervalText.setText(formatTime(restTime));
                 editor.putInt(this.getString(R.string.pref_timer_rest),(int) this.restTime);
-                editor.commit();
+                editor.apply();
                 break;
             case R.id.main_rest_interval_plus:
                 this.restTime = (restTime >= restMaxTime) ? restMinTime : this.restTime + 10;
                 this.restIntervalText.setText(formatTime(restTime));
                 editor.putInt(this.getString(R.string.pref_timer_rest),(int) this.restTime);
-                editor.commit();
+                editor.apply();
                 break;
             case R.id.main_sets_minus:
                 this.sets = (sets <= minSets) ? maxSets : this.sets - 1;
                 this.setsText.setText(Integer.toString(sets));
                 editor.putInt(this.getString(R.string.pref_timer_set), this.sets);
-                editor.commit();
+                editor.apply();
                 break;
             case R.id.main_sets_plus:
                 this.sets = (sets >= maxSets) ? minSets : this.sets + 1;
                 this.setsText.setText(Integer.toString(sets));
                 editor.putInt(this.getString(R.string.pref_timer_set), this.sets);
-                editor.commit();
+                editor.apply();
                 break;
             case R.id.main_block_periodization:
                 AlertDialog blockAlert = buildBlockAlert();
@@ -271,9 +284,13 @@ public class MainActivity extends BaseActivity {
                 break;
             case R.id.main_block_periodization_text:
                 this.blockPeriodizationSwitchButton.setChecked(!this.blockPeriodizationSwitchButton.isChecked());
+                editor.putBoolean("blockPeriodizationSwitchButton", this.blockPeriodizationSwitchButton.isChecked());
+                editor.apply();
                 break;
             case R.id.main_use_exercise_sets_text:
                 this.workoutMode.setChecked(!this.workoutMode.isChecked());
+                editor.putBoolean("workoutMode", this.workoutMode.isChecked());
+                editor.apply();
                 break;
             case R.id.start_workout:
                 intent = new Intent(this, WorkoutActivity.class);
@@ -444,6 +461,8 @@ public class MainActivity extends BaseActivity {
             this.sets = settings.getInt(this.getString(R.string.pref_timer_set), setsDefault);
             this.blockPeriodizationTime = settings.getInt(this.getString(R.string.pref_timer_periodization_time), blockPeriodizationTimeDefault);
             this.blockPeriodizationSets = settings.getInt(this.getString(R.string.pref_timer_periodization_set), blockPeriodizationSetsDefault);
+            this.blockPeriodizationSwitchState = settings.getBoolean("blockPeriodizationSwitchButton", false);
+            this.workoutModeSwitchState = settings.getBoolean("workoutMode", false);
         }
         else {
             this.workoutTime = workoutTimeDefault;
@@ -451,6 +470,8 @@ public class MainActivity extends BaseActivity {
             this.sets = setsDefault;
             this.blockPeriodizationTime = blockPeriodizationTimeDefault;
             this.blockPeriodizationSets = blockPeriodizationSetsDefault;
+            this.blockPeriodizationSwitchState = false;
+            this.workoutModeSwitchState = false;
         }
     }
 
