@@ -130,13 +130,12 @@ public class MainActivity extends BaseActivity {
         setDefaultTimerValues();
 
         //Set the GUI text
-        this.workoutIntervalText = (TextView) this.findViewById(R.id.main_workout_interval_time);
-        this.restIntervalText = (TextView) this.findViewById(R.id.main_rest_interval_time);
-        this.setsText = (TextView) this.findViewById(R.id.main_sets_amount);
-        this.workoutMode = (Switch) findViewById(R.id.workout_mode_switch);
-        this.exerciseSetSpinner = (Spinner) findViewById(R.id.exerciseSets);
-        this.blockPeriodizationSwitchButton = (Switch) findViewById(R.id.main_block_periodization_switch);
-
+        this.workoutIntervalText = this.findViewById(R.id.main_workout_interval_time);
+        this.restIntervalText = this.findViewById(R.id.main_rest_interval_time);
+        this.setsText = this.findViewById(R.id.main_sets_amount);
+        this.workoutMode = findViewById(R.id.workout_mode_switch);
+        this.exerciseSetSpinner = findViewById(R.id.exerciseSets);
+        this.blockPeriodizationSwitchButton = findViewById(R.id.main_block_periodization_switch);
 
         this.workoutIntervalText.setText(formatTime(workoutTime));
         this.restIntervalText.setText(formatTime(restTime));
@@ -217,13 +216,9 @@ public class MainActivity extends BaseActivity {
             }
 
             @Override
-            public void onNothingSelected(AdapterView<?> parentView) {
-                // your code here
-            }
-
+            public void onNothingSelected(AdapterView<?> parentView) { }
         });
     }
-
 
     /**
      * This method connects the Activity to the menu item
@@ -233,7 +228,6 @@ public class MainActivity extends BaseActivity {
     protected int getNavigationDrawerID() {
         return R.id.nav_main;
     }
-
 
     /**
      * Click functions for timer values, block periodization AlertDialog and workout start button
@@ -298,8 +292,7 @@ public class MainActivity extends BaseActivity {
                 if(isExerciseMode){
                     ExerciseIdsForRounds = getExercisesForRounds(exerciseIds, sets);
                     setsPerRound = sets * exerciseIds.size();
-                }
-                else{
+                } else {
                     ExerciseIdsForRounds = exerciseIds;
                     setsPerRound = sets;
                 }
@@ -312,8 +305,7 @@ public class MainActivity extends BaseActivity {
                 if (isStartTimerEnabled(this)) {
                     timerService.startWorkout(workoutTime, restTime, startTime, setsPerRound,
                             isBlockPeriodization, blockPeriodizationTime, blockPeriodizationSets, ExerciseIdsForRounds, isExerciseMode);
-                }
-                else {
+                } else {
                     timerService.startWorkout(workoutTime, restTime, 0, setsPerRound,
                             isBlockPeriodization, blockPeriodizationTime, blockPeriodizationSets, ExerciseIdsForRounds, isExerciseMode);
                 }
@@ -430,14 +422,11 @@ public class MainActivity extends BaseActivity {
 
         alertBuilder.setTitle(R.string.alert_personalization_title);
         alertBuilder.setMessage(R.string.alert_personalization_message);
-
         alertBuilder.setNegativeButton(getString(R.string.alert_confirm_dialog_negative), new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int id) {
                 dialog.dismiss();
             }
         });
-
-
         alertBuilder.setPositiveButton(getString(R.string.alert_confirm_dialog_positive), new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int id) {
                 Intent i = new Intent( MainActivity.this, SettingsActivity.class );
@@ -446,7 +435,6 @@ public class MainActivity extends BaseActivity {
                 startActivity(i);
             }
         });
-
         alertBuilder.create().show();
     }
 
@@ -463,8 +451,7 @@ public class MainActivity extends BaseActivity {
             this.blockPeriodizationSets = settings.getInt(this.getString(R.string.pref_timer_periodization_set), blockPeriodizationSetsDefault);
             this.blockPeriodizationSwitchState = settings.getBoolean("blockPeriodizationSwitchButton", false);
             this.workoutModeSwitchState = settings.getBoolean("workoutMode", false);
-        }
-        else {
+        } else {
             this.workoutTime = workoutTimeDefault;
             this.restTime = restTimeDefault;
             this.sets = setsDefault;
@@ -512,13 +499,11 @@ public class MainActivity extends BaseActivity {
         return false;
     }
 
-    private String formatTime(long seconds){
+    private String formatTime(long seconds) {
         long min = seconds/60;
         long sec = seconds%60;
 
-        String time = String.format("%02d : %02d", min,sec);
-
-        return time;
+        return String.format("%02d : %02d", min,sec);
     }
 
     private ArrayList<Integer> getExercisesForRounds(ArrayList<Integer> exerciseIds, int rounds) {
