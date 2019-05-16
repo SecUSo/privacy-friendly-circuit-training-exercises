@@ -19,6 +19,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.net.Uri;
 import android.util.Log;
 
 import org.json.JSONArray;
@@ -33,7 +34,7 @@ import java.util.List;
 
 /**
  *
- * @author Karola Marky, Alexander Karakuz, Nils Schroth
+ * @author Karola Marky, Alexander Karakuz, Nils Schroth, Christopher Beckmann
  * @version 20180321
  * Structure based on http://www.androidhive.info/2011/11/android-sqlite-database-tutorial/
  * accessed at 16th June 2016
@@ -42,8 +43,95 @@ import java.util.List;
  */
 
 public class PFASQLiteHelper extends SQLiteOpenHelper {
+    private interface Patch {
+         void apply(SQLiteDatabase db);
+         void revert(SQLiteDatabase db);
+    }
 
-    private static final int DATABASE_VERSION = 1;
+    private static final Patch[] PATCHES = new Patch[] {
+            new Patch() {
+                public void apply(SQLiteDatabase db) {
+                    String EXERCISE_SET_TABLE = "CREATE TABLE " + TABLE_DATA_ES +
+                            "(" +
+                            KEY_ID_ES + " INTEGER PRIMARY KEY AUTOINCREMENT," +
+                            KEY_NAME_ES + " TEXT," +
+                            KEY_EXERCISES_ES + " TEXT);";
+
+                    String EXERCISE_TABLE = "CREATE TABLE " + TABLE_DATA_EX +
+                            "(" +
+                            KEY_ID_EX + " INTEGER PRIMARY KEY AUTOINCREMENT," +
+                            KEY_NAME_EX + " TEXT," +
+                            KEY_DESCIRPTION_EX + " TEXT," +
+                            KEY_IMAGE_EX + " BLOB);";
+
+                    String WORKOUT_SESSION_TABLE = "CREATE TABLE " + TABLE_DATA +
+                            "(" +
+                            KEY_ID + " INTEGER PRIMARY KEY AUTOINCREMENT," +
+                            KEY_WORKOUT_TIME + " LONG," +
+                            KEY_CALORIES + " INTEGER," +
+                            KEY_TIMESTAMP + " INTEGER);";
+
+                    db.execSQL(EXERCISE_SET_TABLE);
+                    db.execSQL(EXERCISE_TABLE);
+                    db.execSQL(WORKOUT_SESSION_TABLE);
+                }
+                public void revert(SQLiteDatabase db) {
+                    db.execSQL("DROP TABLE " + TABLE_DATA + ";");
+                    db.execSQL("DROP TABLE " + TABLE_DATA_EX + ";");
+                    db.execSQL("DROP TABLE " + TABLE_DATA_ES + ";");
+                }
+            }
+            , new Patch() {
+                public void apply(SQLiteDatabase db) {
+                    db.beginTransaction();
+
+                    String RENAME_EXERCISE_TABLE = "ALTER TABLE " + TABLE_DATA_EX + " RENAME TO "+ TABLE_DATA_EX + "_old;";
+                    String EXERCISE_TABLE = "CREATE TABLE " + TABLE_DATA_EX +
+                            "(" +
+                            KEY_ID_EX + " INTEGER PRIMARY KEY AUTOINCREMENT," +
+                            KEY_NAME_EX + " TEXT," +
+                            KEY_DESCIRPTION_EX + " TEXT," +
+                            KEY_IMAGE_EX + " TEXT);";
+
+                    String COPY_EXERCISES = "INSERT INTO "+ TABLE_DATA_EX +
+                            "(" + KEY_ID_EX + "," + KEY_NAME_EX + "," + KEY_DESCIRPTION_EX + ")" +
+                            " SELECT " + KEY_ID_EX + "," + KEY_NAME_EX + "," + KEY_DESCIRPTION_EX +
+                            " FROM " + TABLE_DATA_EX + "_old;";
+
+                    db.execSQL(RENAME_EXERCISE_TABLE);
+                    db.execSQL(EXERCISE_TABLE);
+                    db.execSQL(COPY_EXERCISES);
+
+                    db.setTransactionSuccessful();
+                    db.endTransaction();
+                }
+                public void revert(SQLiteDatabase db) {
+                    db.beginTransaction();
+
+                    String RENAME_EXERCISE_TABLE = "ALTER TABLE " + TABLE_DATA_EX + " RENAME TO "+ TABLE_DATA_EX + "_old;";
+                    String EXERCISE_TABLE = "CREATE TABLE " + TABLE_DATA_EX +
+                            "(" +
+                            KEY_ID_EX + " INTEGER PRIMARY KEY AUTOINCREMENT," +
+                            KEY_NAME_EX + " TEXT," +
+                            KEY_DESCIRPTION_EX + " TEXT," +
+                            KEY_IMAGE_EX + " BLOB);";
+
+                    String COPY_EXERCISES = "INSERT INTO "+ TABLE_DATA_EX +
+                            "(" + KEY_ID_EX + "," + KEY_NAME_EX + "," + KEY_DESCIRPTION_EX + ")" +
+                            " SELECT " + KEY_ID_EX + "," + KEY_NAME_EX + "," + KEY_DESCIRPTION_EX +
+                            " FROM " + TABLE_DATA_EX + "_old;";
+
+                    db.execSQL(RENAME_EXERCISE_TABLE);
+                    db.execSQL(EXERCISE_TABLE);
+                    db.execSQL(COPY_EXERCISES);
+
+                    db.setTransactionSuccessful();
+                    db.endTransaction();
+                }
+            }
+    };
+
+    private static final int DATABASE_VERSION = PATCHES.length;
 
     /**
      * Use the following pattern for the name of the database
@@ -76,44 +164,24 @@ public class PFASQLiteHelper extends SQLiteOpenHelper {
     }
 
     @Override
-    public void onCreate(SQLiteDatabase sqLiteDatabase) {
-
-        /**
-         * Create the table data on the first start
-         * */
-        String EXERCISE_SET_TABLE = "CREATE TABLE " + TABLE_DATA_ES +
-                "(" +
-                KEY_ID_ES + " INTEGER PRIMARY KEY AUTOINCREMENT," +
-                KEY_NAME_ES + " TEXT," +
-                KEY_EXERCISES_ES + " TEXT);";
-
-        sqLiteDatabase.execSQL(EXERCISE_SET_TABLE);
-
-        String EXERCISE_TABLE = "CREATE TABLE " + TABLE_DATA_EX +
-                "(" +
-                KEY_ID_EX + " INTEGER PRIMARY KEY AUTOINCREMENT," +
-                KEY_NAME_EX + " TEXT," +
-                KEY_DESCIRPTION_EX + " TEXT," +
-                KEY_IMAGE_EX + " BLOB);";
-
-        sqLiteDatabase.execSQL(EXERCISE_TABLE);
-
-        String WORKOUT_SESSION_TABLE = "CREATE TABLE " + TABLE_DATA +
-                "(" +
-                KEY_ID + " INTEGER PRIMARY KEY AUTOINCREMENT," +
-                KEY_WORKOUT_TIME + " LONG," +
-                KEY_CALORIES + " INTEGER," +
-                KEY_TIMESTAMP + " INTEGER);";
-
-        sqLiteDatabase.execSQL(WORKOUT_SESSION_TABLE);
+    public void onCreate(SQLiteDatabase db) {
+        for (Patch patch : PATCHES) {
+            patch.apply(db);
+        }
     }
 
     @Override
-    public void onUpgrade(SQLiteDatabase sqLiteDatabase, int oldVersion, int newVersion) {
-        sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + TABLE_DATA);
-        sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + TABLE_DATA_ES);
-        sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + TABLE_DATA_EX);
-        onCreate(sqLiteDatabase);
+    public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
+        for (int i = oldVersion; i < newVersion; i++) {
+            PATCHES[i].apply(db);
+        }
+    }
+
+    @Override
+    public void onDowngrade(SQLiteDatabase db, int oldVersion, int newVersion) {
+        for (int i = oldVersion; i > newVersion; i--) {
+            PATCHES[i].revert(db);
+        }
     }
 
 
@@ -178,7 +246,7 @@ public class PFASQLiteHelper extends SQLiteOpenHelper {
         ContentValues values = new ContentValues();
         values.put(KEY_NAME_EX, sampleData.getName());
         values.put(KEY_DESCIRPTION_EX, sampleData.getDescription());
-        values.put(KEY_IMAGE_EX, sampleData.getImage());
+        values.put(KEY_IMAGE_EX, sampleData.getImage().toString());
 
         long id = database.insert(TABLE_DATA_EX, null, values);
         database.close();
@@ -255,7 +323,7 @@ public class PFASQLiteHelper extends SQLiteOpenHelper {
         values.put(KEY_ID_EX, sampleData.getID());
         values.put(KEY_NAME_EX, sampleData.getName());
         values.put(KEY_DESCIRPTION_EX, sampleData.getDescription());
-        values.put(KEY_IMAGE_EX, sampleData.getImage());
+        values.put(KEY_IMAGE_EX, sampleData.getImage().toString());
 
         database.insert(TABLE_DATA_EX, null, values);
 
@@ -291,7 +359,6 @@ public class PFASQLiteHelper extends SQLiteOpenHelper {
         }
 
         return data;
-
     }
 
     /**
@@ -331,11 +398,8 @@ public class PFASQLiteHelper extends SQLiteOpenHelper {
 
             cursor.close();
         }
-
         return data;
-
     }
-
 
     /**
      * This method gets a single sampleData entry based on its ID
@@ -357,7 +421,14 @@ public class PFASQLiteHelper extends SQLiteOpenHelper {
             data.setID(Integer.parseInt(cursor.getString(0)));
             data.setName(cursor.getString(1));
             data.setDescription(cursor.getString(2));
-            data.setImage(cursor.getBlob(3));
+
+
+            String uriString = cursor.getString(3);
+            if(uriString == null) {
+                uriString = "";
+            }
+
+            data.setImage(Uri.parse(uriString));
 
             Log.d("DATABASE", "Read " + cursor.getString(1) + " from  EX DB");
 
@@ -452,11 +523,14 @@ public class PFASQLiteHelper extends SQLiteOpenHelper {
      * @return A list of all available sampleData in the Database
      */
     public List<Exercise> getAllExercise() {
+        return getAllExercise(getWritableDatabase());
+    }
+
+    private static List<Exercise> getAllExercise(SQLiteDatabase database) {
         List<Exercise> sampleDataList = new ArrayList<Exercise>();
 
         String selectQuery = "SELECT  * FROM " + TABLE_DATA_EX;
 
-        SQLiteDatabase database = this.getWritableDatabase();
         Cursor cursor = database.rawQuery(selectQuery, null);
 
         Exercise sampleData = null;
@@ -469,7 +543,13 @@ public class PFASQLiteHelper extends SQLiteOpenHelper {
                 sampleData.setID(Integer.parseInt(cursor.getString(0)));
                 sampleData.setName(cursor.getString(1));
                 sampleData.setDescription(cursor.getString(2));
-                sampleData.setImage(cursor.getBlob(3));
+
+                String uriString = cursor.getString(3);
+                if(uriString == null) {
+                    uriString = "";
+                }
+
+                sampleData.setImage(Uri.parse(uriString));
 
                 sampleDataList.add(sampleData);
                 Log.d("DATABASE", "Read " + cursor.getString(1) + " from  ES DB");
@@ -533,7 +613,7 @@ public class PFASQLiteHelper extends SQLiteOpenHelper {
         ContentValues values = new ContentValues();
         values.put(KEY_NAME_EX, exercise.getName());
         values.put(KEY_DESCIRPTION_EX, exercise.getDescription());
-        values.put(KEY_IMAGE_EX, exercise.getImage());
+        values.put(KEY_IMAGE_EX, exercise.getImage().toString());
 
         return database.update(TABLE_DATA_EX, values, KEY_ID_EX + " = ?",
                 new String[] { String.valueOf(exercise.getID()) });

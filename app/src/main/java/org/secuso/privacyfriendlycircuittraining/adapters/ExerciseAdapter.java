@@ -74,8 +74,8 @@ public class ExerciseAdapter extends RecyclerView.Adapter<ExerciseAdapter.MyView
         Exercise ex = exerciseList.get(position);
         holder.name.setText(ex.getName());
         holder.description.setText(ex.getDescription());
+
         Glide.with(context).load(ex.getImage()).into(holder.exerciseImg);
-        //holder.exerciseImg.setImageBitmap(getImage(ex.getImage()));
 
         if(!exerciseActivity.getIsInActionMode()){
             holder.checkbox.setVisibility(View.GONE);
@@ -145,17 +145,12 @@ public class ExerciseAdapter extends RecyclerView.Adapter<ExerciseAdapter.MyView
                 exerciseActivity.prepareSelection(v, getAdapterPosition());
             else {
                 if (!ExerciseDialogFragment.isOpened()) {
-                    ExerciseDialogFragment listDialogFragment = ExerciseDialogFragment.newEditInstance(getAdapterPosition());
+                    ExerciseDialogFragment listDialogFragment = ExerciseDialogFragment.newEditInstance(getAdapterPosition(), exerciseList.get(getAdapterPosition()).getID());
                     listDialogFragment.show(exerciseActivity.getSupportFragmentManager(), "DialogFragment");
                 }
             }
         }
 
-    }
-
-    // convert from byte array to bitmap
-    public static Bitmap getImage(byte[] image) {
-        return BitmapFactory.decodeByteArray(image, 0, image.length);
     }
 }
 

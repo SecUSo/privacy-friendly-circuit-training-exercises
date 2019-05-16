@@ -17,6 +17,7 @@ package org.secuso.privacyfriendlycircuittraining.activities;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 
@@ -48,8 +49,9 @@ public class SplashActivity extends AppCompatActivity {
         prefManager = new PrefManager(this);
         if (prefManager.isFirstTimeLaunch()) {
             //add two example exercises
-            byte[] ic_squat = BitMapUtility.getBytes(BitmapFactory.decodeResource(getResources(), R.drawable.ic_exercise_squat));
-            byte[] ic_pushup = BitMapUtility.getBytes(BitmapFactory.decodeResource(getResources(), R.drawable.ic_exercise_pushup));
+
+            Uri ic_squat = Uri.parse("android.resource://" + this.getPackageName() + "/" + R.drawable.ic_exercise_squat);
+            Uri ic_pushup = Uri.parse("android.resource://" + this.getPackageName() + "/" + R.drawable.ic_exercise_pushup);
             Exercise defaultExercise1 = new Exercise(0, "Squat", "Example description", ic_squat);
             Exercise defaultExercise2 = new Exercise(0, "Pushup", "Example description", ic_pushup);
             db.addExercise(defaultExercise1);

@@ -1,4 +1,4 @@
-/**
+/*
  * This file is part of Privacy Friendly Circuit Trainer.
  * Privacy Friendly Circuit Trainer is free software:
  * you can redistribute it and/or modify it under the terms of the
@@ -11,7 +11,6 @@
  * You should have received a copy of the GNU General Public License
  * along with Privacy Friendly Interval Timer. If not, see <http://www.gnu.org/licenses/>.
  */
-
 package org.secuso.privacyfriendlycircuittraining.fragments;
 
 import android.app.Activity;
@@ -59,7 +58,6 @@ public class ExerciseSetDialogFragment extends DialogFragment {
     private ExerciseSetActivity ea;
     private static int adapterPosition;
     private static int adapterId;
-    private PFASQLiteHelper db = null;
     private RecyclerView mRecyclerView;
     private DialogAdapter mAdapter;
     private ArrayList<Exercise> exercises;
@@ -109,7 +107,7 @@ public class ExerciseSetDialogFragment extends DialogFragment {
     public Dialog onCreateDialog(Bundle savedInstanceState)
     {
         ea = (ExerciseSetActivity) getActivity();
-        db = new PFASQLiteHelper(ea);
+        PFASQLiteHelper db = new PFASQLiteHelper(ea);
         exercises = new ArrayList<>();
 
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity(), R.style.AppTheme_Dialog);

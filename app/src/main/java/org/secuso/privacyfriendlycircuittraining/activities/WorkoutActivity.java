@@ -45,6 +45,8 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.content.DialogInterface.OnCancelListener;
 
+import com.bumptech.glide.Glide;
+
 import org.secuso.privacyfriendlycircuittraining.R;
 import org.secuso.privacyfriendlycircuittraining.database.PFASQLiteHelper;
 import org.secuso.privacyfriendlycircuittraining.helpers.BitMapUtility;
@@ -249,7 +251,7 @@ public class WorkoutActivity extends AppCompatActivity {
                 }
                 if (intent.getIntExtra("exercise_id", -1) != -1) {
                     Integer exercise = intent.getIntExtra("exercise_id", -1);
-                    workoutImage.setImageBitmap(BitMapUtility.getImage(db.getExercise(exercise).getImage()));
+                    Glide.with(context).load(db.getExercise(exercise).getImage()).into(workoutImage);
                 }
 
                 if (intent.getLongExtra("new_timer", 0) != 0) {
@@ -431,7 +433,7 @@ public class WorkoutActivity extends AppCompatActivity {
             progressBar.setAlpha(1.0f);
 
             if(timerService.getisExerciseMode()) {
-                workoutImage.setImageBitmap(BitMapUtility.getImage(db.getExercise(currentExerciseId).getImage()));
+                Glide.with(this).load(db.getExercise(currentExerciseId).getImage()).into(workoutImage);
             }
 
             if (isPaused){

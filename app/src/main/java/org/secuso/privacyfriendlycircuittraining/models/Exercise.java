@@ -14,7 +14,9 @@
 
 package org.secuso.privacyfriendlycircuittraining.models;
 
-import java.io.Serializable;
+import android.net.Uri;
+import android.os.Parcel;
+import android.os.Parcelable;
 
 /**
  * This class holds the "data type" of a single exercise.
@@ -24,21 +26,39 @@ import java.io.Serializable;
  * @version 20180103
  */
 
-public class Exercise implements Serializable {
+public class Exercise implements Parcelable {
     private String NAME;
     private String DESCRIPTION;
-    private byte[] IMAGE;
+    private Uri IMAGE;
     private int ID;
 
-    private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 2L;
 
-    public Exercise(int id, String name, String description, byte[] image) {
-
+    public Exercise(int id, String name, String description, Uri image) {
         this.ID = id;
         this.NAME = name;
         this.DESCRIPTION = description;
         this.IMAGE = image;
     }
+
+    protected Exercise(Parcel in) {
+        NAME = in.readString();
+        DESCRIPTION = in.readString();
+        IMAGE = in.readParcelable(Uri.class.getClassLoader());
+        ID = in.readInt();
+    }
+
+    public static final Creator<Exercise> CREATOR = new Creator<Exercise>() {
+        @Override
+        public Exercise createFromParcel(Parcel in) {
+            return new Exercise(in);
+        }
+
+        @Override
+        public Exercise[] newArray(int size) {
+            return new Exercise[size];
+        }
+    };
 
     public int getID() {
         return ID;
@@ -62,8 +82,20 @@ public class Exercise implements Serializable {
         this.DESCRIPTION = description;
     }
 
-    public byte[] getImage(){ return IMAGE; }
+    public Uri getImage(){ return IMAGE; }
 
-    public void setImage(byte[] image) { this.IMAGE = image; }
+    public void setImage(Uri image) { this.IMAGE = image; }
 
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel parcel, int i) {
+        parcel.writeString(NAME);
+        parcel.writeString(DESCRIPTION);
+        parcel.writeParcelable(IMAGE, i);
+        parcel.writeInt(ID);
+    }
 }

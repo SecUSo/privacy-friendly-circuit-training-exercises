@@ -20,6 +20,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.widget.DrawerLayout;
@@ -183,20 +184,15 @@ public class ExerciseActivity extends BaseActivity implements View.OnLongClickLi
     }
 
 
-    public void addExercise(String name, String description, byte[] image){
-        int lastId = (int) db.addExercise(new Exercise(0, name, description, image));
-        exerciseList.add(new Exercise(lastId, name, description, image));
+    public void addExercise(Exercise exercise) {
+        exerciseList.add(exercise);
         ArrayList<Exercise> empty = new ArrayList<>();
         mAdapter.updateAdapter(empty);
         recyclerView.getLayoutManager().scrollToPosition(exerciseList.size()-1);
     }
 
-    public void updateExercise(int position, int id, String name, String description, byte[] image){
-        Exercise temp = new Exercise(id, name, description, image);
-        db.updateExercise(temp);
-        exerciseList.get(position).setName(name);
-        exerciseList.get(position).setDescription(description);
-        exerciseList.get(position).setImage(image);
+    public void updateExercise(int position, Exercise exercise){
+        exerciseList.set(position, exercise);
         ArrayList<Exercise> empty = new ArrayList<>();
         mAdapter.updateAdapter(empty);
         mAdapter.notifyItemChanged(position);
