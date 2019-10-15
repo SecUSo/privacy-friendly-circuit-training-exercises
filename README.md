@@ -1,4 +1,4 @@
-﻿# Privacy Friendly Circuit Trainer
+# Privacy Friendly Circuit Trainer
 
 This Android application manages the time during interval based training sessions, eg circuit training.
 It provides a configurable set of timers for the exercises and the rest phases.
@@ -11,6 +11,15 @@ Privacy Friendly Circuit Trainer belongs to the group of Privacy Friendly Apps d
 
 The motivation of this project is to provide users with an application which supports training sessions without advertisement or the demand of unnecessary permissions.
 Privacy Friendly Apps are a group of Android applications which are optimized regarding privacy. Further information can be found on https://secuso.org/pfa
+
+## Download
+
+[<img src="https://fdroid.gitlab.io/artwork/badge/get-it-on.png"
+     alt="Get it on F-Droid"
+     height="80">](https://f-droid.org/packages/org.secuso.privacyfriendlycircuittraining/)
+[<img src="https://play.google.com/intl/en_us/badges/images/generic/en-play-badge.png"
+     alt="Get it on Google Play"
+     height="80">](https://play.google.com/store/apps/details?id=org.secuso.privacyfriendlycircuittraining)
 
 ## Information
 
