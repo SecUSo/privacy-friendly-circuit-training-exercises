@@ -1,0 +1,26 @@
+Privacy Friendly Zirkeltraining unterstützt Sie während Ihres Zirkeltrainings. Die App bietet Ihnen hierfür sowohl konfigurierbare Stoppuhren für Ihre Übungen und Pausen als auch zahlreiche andere Funktionen.
+
+Training Timer
+Nach der Konfiguration der Timer im Hauptmenü kann das Training mit dem Startbutton begonnen werden. Der Trainingsbildschirm beinhaltet verschiedene Animationen und Tonausgaben, die im Einstellungsmenü an- und ausgeschaltet werden können.
+
+Benachrichtigungen
+Die App kann Sie über anstehende Trainingseinheiten benachrichtigen. Der Zeitpunkt der Benachrichtigung und der Motivationstext können im Einstellungsmenü konfiguriert werden.
+
+Blocktraining
+Neben den Trainings- und Pausenzeiten kann auch ein Blocktraining konfiguriert werden. Mit diesem Feature können Sie separate, längere Pausen zwischen den Übungen festlegen. Dadurch lässt sich das Training in mehrere feste Zyklen intensiven Trainings unterteilen.
+
+Statistiken
+Die App kann Statistiken zu den durchgeführten Trainingseinheiten sammeln. Diese Daten bestehen aus der trainierten Zeit und den dabei verbrannten Kalorien. Die Genauigkeit der Kalorienberechnung kann verbessert werden, indem Daten des Nutzers wie Körpergröße und Gewicht in den Einstellungen eingetragen werden. Ferner können sämtliche Daten in den Einstellungen gelöscht und die weitere Sammlung dieser an- bzw. ausgeschaltet werden.
+
+Übungssets
+Die App erlaubt es, eigene Übunssets für das Zirkel-Training anzulegen. Dafür können erstellte Übungen beliebig kombiniert werden. Das Bild, welches einer Übung zugewiesen wird, wird während dem Training angezeigt. Außerdem können die Übungssets während einem Training auch mehrfach durchlaufen werden. Dafür kann man vor dem Start des Workouts die Anzahl der Runden einstellen.
+
+Wie unterscheidet sich der Privacy Friendly Zirkeltraining von anderen ähnlichen Apps?
+
+1. Keine Berechtigungen
+Privacy Friendly Zirkeltraining benötigt keine Berechtigungen. Die Auswahl der Bilder erfolgt durch einen Aufruf der Galerie, so dass die App ohne die Kontrolle des Benutzers keinen Zugriff auf den Speicher des Geräts hat.
+
+2. Keine Werbung
+Viele andere kostenlose Apps im Google Play Store blenden nervige Werbung ein und verkürzen zudem die Akkulaufzeit.
+
+Die App gehört zur Gruppe der Privacy Friendly Apps, die von der Forschungsgruppe SECUSO der Technischen Universität Darmstadt entwickelt werden. Mehr Informationen unter: https://secuso.org/pfa
