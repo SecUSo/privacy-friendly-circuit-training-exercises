@@ -1,1 +1,1 @@
-Privacy Friendly Circuit Trainer is an Android App that supports the user during his/her circuit training session.
+PF Circuit Trainer supports the user during his/her circuit training session.
