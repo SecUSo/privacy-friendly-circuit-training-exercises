@@ -1,1 +1,1 @@
-PF Circuit Trainer supports the user during his/her circuit training session.
+(SECUSO) Circuit Trainer supports the user during circuit training sessions.
