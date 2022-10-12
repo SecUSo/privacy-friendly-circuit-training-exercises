@@ -17,6 +17,8 @@ package org.secuso.privacyfriendlycircuittraining.activities;
 
 import android.os.Bundle;
 
+import androidx.fragment.app.FragmentTransaction;
+
 import org.secuso.privacyfriendlycircuittraining.R;
 import org.secuso.privacyfriendlycircuittraining.fragments.DailyReportFragment;
 import org.secuso.privacyfriendlycircuittraining.fragments.MonthlyReportFragment;
@@ -39,7 +41,7 @@ public class StatisticsActivity extends BaseActivity implements DailyReportFragm
 
 
         // Load first view
-        final android.support.v4.app.FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+        final FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
         fragmentTransaction.replace(R.id.content_frame, new StatisticsFragment(), "StatisticsFragment");
         fragmentTransaction.commit();
     }

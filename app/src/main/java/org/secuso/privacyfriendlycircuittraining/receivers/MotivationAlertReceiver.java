@@ -20,9 +20,9 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
-import android.support.v4.app.NotificationCompat;
-import android.support.v4.content.ContextCompat;
-import android.support.v4.content.WakefulBroadcastReceiver;
+import androidx.core.app.NotificationCompat;
+import androidx.core.content.ContextCompat;
+import androidx.legacy.content.WakefulBroadcastReceiver;
 import android.util.Log;
 
 import org.secuso.privacyfriendlycircuittraining.R;

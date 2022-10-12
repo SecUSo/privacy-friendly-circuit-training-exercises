@@ -24,12 +24,13 @@ package org.secuso.privacyfriendlycircuittraining.adapters;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.support.v7.widget.CardView;
-import android.support.v7.widget.RecyclerView;
+
+import androidx.annotation.NonNull;
+import androidx.cardview.widget.CardView;
+import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.CheckBox;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -37,14 +38,11 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 
 import org.secuso.privacyfriendlycircuittraining.R;
-import org.secuso.privacyfriendlycircuittraining.activities.ExerciseActivity;
 import org.secuso.privacyfriendlycircuittraining.database.PFASQLiteHelper;
-import org.secuso.privacyfriendlycircuittraining.fragments.ExerciseDialogFragment;
 import org.secuso.privacyfriendlycircuittraining.fragments.ExerciseSetDialogFragment;
 import org.secuso.privacyfriendlycircuittraining.models.Exercise;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class DialogAdapter extends RecyclerView.Adapter<DialogAdapter.MyViewHolder> {
 
@@ -59,6 +57,7 @@ public class DialogAdapter extends RecyclerView.Adapter<DialogAdapter.MyViewHold
         db = new PFASQLiteHelper(ctx);
     }
 
+    @NonNull
     @Override
     public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View itemView = LayoutInflater.from(parent.getContext())
@@ -76,7 +75,7 @@ public class DialogAdapter extends RecyclerView.Adapter<DialogAdapter.MyViewHold
         holder.deleteButton.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
-                exerciseList.remove(position);
+                exerciseList.remove(holder.getAdapterPosition());
                 updateAdapter(exerciseList);
             }
         });

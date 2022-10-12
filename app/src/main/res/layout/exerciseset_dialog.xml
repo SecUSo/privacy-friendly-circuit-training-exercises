@@ -22,14 +22,14 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
-                <android.support.design.widget.TextInputLayout
+                <com.google.android.material.textfield.TextInputLayout
                     app:counterEnabled="true"
                     app:counterMaxLength="40"
                     app:errorEnabled="true"
                     android:id="@+id/list_name_input_layout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
-                    <android.support.design.widget.TextInputEditText
+                    <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/list_name"
                         android:inputType="text|textCapSentences"
                         android:layout_width="match_parent"
@@ -38,12 +38,12 @@
                         android:maxLength="40"
                         android:imeOptions="actionNext"
                         android:hint="@string/exerciseset_dialog_hint"/>
-                </android.support.design.widget.TextInputLayout>
+                </com.google.android.material.textfield.TextInputLayout>
 
 
             </RelativeLayout>
 
-            <android.support.design.widget.CoordinatorLayout
+            <androidx.coordinatorlayout.widget.CoordinatorLayout
                 xmlns:android="http://schemas.android.com/apk/res/android"
                 xmlns:tools="http://schemas.android.com/tools"
                 android:layout_width="match_parent"
@@ -51,14 +51,14 @@
                 android:orientation="vertical"
                 tools:context="org.secuso.privacyfriendlycircuittraining.Fragments.ExerciseSetDialogFragment">
 
-            <android.support.v7.widget.RecyclerView
+            <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recyclerView_dialog"
                 android:layout_width="match_parent"
                 android:layout_height="150dp"
                 app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
 
 
-            <android.support.design.widget.FloatingActionButton
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
                 android:id="@+id/fab_add_exercise"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -86,7 +86,7 @@
                         android:layout_height="wrap_content"/>
                 </LinearLayout>
 
-            </android.support.design.widget.CoordinatorLayout>
+            </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
         </LinearLayout>
     </ScrollView>

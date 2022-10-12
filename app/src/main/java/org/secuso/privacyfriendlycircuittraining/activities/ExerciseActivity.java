@@ -20,15 +20,14 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
-import android.net.Uri;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBar;
-import android.support.v7.widget.DefaultItemAnimator;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.util.Log;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.appcompat.app.ActionBar;
+import androidx.recyclerview.widget.DefaultItemAnimator;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.LinearLayout;
@@ -90,13 +89,13 @@ public class ExerciseActivity extends BaseActivity implements View.OnLongClickLi
         acceptFab = (FloatingActionButton) findViewById(R.id.fab_accept_item_ex);
         noListsLayout = (LinearLayout) findViewById(R.id.no_lists_layout_ex);
 
-        deleteFab.setVisibility(View.GONE);
+        ((View)deleteFab).setVisibility(View.GONE);
         if(is_in_picker_mode) {
-            acceptFab.setVisibility(View.VISIBLE);
-            newListFab.setVisibility(View.GONE);
+            ((View)acceptFab).setVisibility(View.VISIBLE);
+            ((View)newListFab).setVisibility(View.GONE);
         }else{
-            acceptFab.setVisibility(View.GONE);
-            newListFab.setVisibility(View.VISIBLE);
+            ((View)acceptFab).setVisibility(View.GONE);
+            ((View)newListFab).setVisibility(View.VISIBLE);
         }
         noListsLayout.setVisibility(View.VISIBLE);
         setNoExererciseMessage();
@@ -214,9 +213,9 @@ public class ExerciseActivity extends BaseActivity implements View.OnLongClickLi
         is_in_picker_mode = false;
         if(is_in_delete_mode)
             selection_list.clear();
-        newListFab.setVisibility(View.VISIBLE);
-        deleteFab.setVisibility(View.GONE);
-        acceptFab.setVisibility(View.GONE);
+        ((View)newListFab).setVisibility(View.VISIBLE);
+        ((View)deleteFab).setVisibility(View.GONE);
+        ((View)acceptFab).setVisibility(View.GONE);
         getSupportActionBar().setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.colorPrimary)));
         this.getWindow().setStatusBarColor(getResources().getColor(R.color.colorPrimary));
     }
@@ -238,9 +237,9 @@ public class ExerciseActivity extends BaseActivity implements View.OnLongClickLi
             is_in_delete_mode = true;
             mAdapter.notifyDataSetChanged();
             //getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-            newListFab.setVisibility(View.GONE);
-            deleteFab.setVisibility(View.VISIBLE);
-            acceptFab.setVisibility(View.GONE);
+            ((View)newListFab).setVisibility(View.GONE);
+            ((View)deleteFab).setVisibility(View.VISIBLE);
+            ((View)acceptFab).setVisibility(View.GONE);
             getSupportActionBar().setBackgroundDrawable(new ColorDrawable(Color.LTGRAY));
             this.getWindow().setStatusBarColor(Color.LTGRAY);
         }
