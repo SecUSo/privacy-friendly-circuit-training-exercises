@@ -21,6 +21,7 @@
         android:theme="@style/AppTheme">
         <activity
             android:name="org.secuso.privacyfriendlycircuittraining.activities.SplashActivity"
+            android:exported="true"
             android:theme="@style/SplashTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -85,7 +86,9 @@
             android:enabled="true"
             android:exported="true" />
 
-        <receiver android:name="org.secuso.privacyfriendlycircuittraining.receivers.OnBootCompletedBroadcastReceiver">
+        <receiver
+            android:name="org.secuso.privacyfriendlycircuittraining.receivers.OnBootCompletedBroadcastReceiver"
+            android:exported="false">
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
             </intent-filter>
