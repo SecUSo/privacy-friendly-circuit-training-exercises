@@ -1,5 +1,6 @@
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-kapt'
 
 android {
     compileSdkVersion 32
@@ -41,4 +42,17 @@ dependencies {
     implementation 'com.github.bumptech.glide:glide:4.11.0'
     annotationProcessor 'com.github.bumptech.glide:compiler:4.9.0'
     testImplementation 'junit:junit:4.13.2'
+
+    def room_version = "2.4.3"
+    implementation "androidx.room:room-runtime:$room_version"
+    annotationProcessor "androidx.room:room-compiler:$room_version"
+    kapt "androidx.room:room-compiler:$room_version"
+    implementation "androidx.room:room-ktx:$room_version"
+
+    // Backup API
+    implementation project(':backup-api')
+    def work_version = '2.7.1'
+    implementation "androidx.work:work-runtime:$work_version"
+    implementation "androidx.work:work-runtime-ktx:$work_version"
+    androidTestImplementation "androidx.work:work-testing:$work_version"
 }

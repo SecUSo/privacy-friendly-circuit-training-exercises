@@ -89,7 +89,7 @@
     <string name="help_privacy">What makes the app privacy-friendly?</string>
     <string name="help_privacy_answer">This app does not include any tracking mechanisms or advertisement. It further does not share any user information which may be collected during the usage of this app.</string>
     <string name="help_permission">Which permissions are required by the app?</string>
-    <string name="help_permission_answer">Privacy Friendly Training requires the permission "Receive Boot Completed". It is used to reschedule the motivation alert after a reboot. If the permission is not granted, the app has to be launched first to reschedule the daily reminder notification.</string>
+    <string name="help_permission_answer">Privacy Friendly Training requires the permission \"Receive Boot Completed\". It is used to reschedule the motivation alert after a reboot. If the permission is not granted, the app has to be launched first to reschedule the daily reminder notification.\n\nPrivacy Friendly Training requires the permission \"Schedule Exact Alarm\". It is used to schedule the motivation alerts.</string>
 
     <!--###ABOUT###-->
     <string name="about">About</string>
@@ -258,5 +258,7 @@
     <string name="no_exercises">Please choose an exercise</string>
     <string name="dialog_exercise_set_confirm_delete_message">Do you want to delete the selected items?</string>
     <string name="exercise_set_has_no_exercises">Chosen exercise set has no exercises.</string>
+    
+    <string name="request_schedule_exact_alarm_permission">In order to send you motivation alerts, the permission to set an alarm is needed. Do you want to grant the permission now?</string>
 
 </resources>

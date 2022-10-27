@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="org.secuso.privacyfriendlycircuittraining">
 
     <supports-screens
@@ -13,7 +14,10 @@
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
 
 
+    <uses-permission android:name="android.permission.SCHEDULE_EXACT_ALARM" />
+
     <application
+        android:name=".PFCircuitTrainingApplication"
         android:allowBackup="true"
         android:icon="@mipmap/icon"
         android:label="@string/app_name"
@@ -80,6 +84,44 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="org.secuso.privacyfriendlycircuittraining.activities.SettingsActivity" />
         </activity>
+        <activity
+            android:name="org.secuso.privacyfriendlycircuittraining.activities.StatisticsActivity"
+            android:label="@string/title_activity_statistics"
+            android:parentActivityName="org.secuso.privacyfriendlycircuittraining.activities.MainActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="org.secuso.privacyfriendlycircuittraining.activities.MainActivity" />
+        </activity>
+        <activity
+            android:name="org.secuso.privacyfriendlycircuittraining.activities.ExerciseSetActivity"
+            android:label="@string/title_activity_exercisesets"
+            android:parentActivityName="org.secuso.privacyfriendlycircuittraining.activities.MainActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="org.secuso.privacyfriendlycircuittraining.activities.MainActivity" />
+        </activity>
+        <activity
+            android:name="org.secuso.privacyfriendlycircuittraining.activities.ExerciseActivity"
+            android:label="@string/title_activity_exercises"
+            android:parentActivityName="org.secuso.privacyfriendlycircuittraining.activities.MainActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="org.secuso.privacyfriendlycircuittraining.activities.MainActivity" />
+        </activity>
+
+        <service
+            android:name=".backup.PFABackupService"
+            android:enabled="true"
+            android:exported="true"
+            android:process=":backup"
+            tools:ignore="ExportedService">
+            <intent-filter>
+                <action android:name="org.secuso.privacyfriendlybackup.api.pfa.PFAAuthService" />
+            </intent-filter>
+        </service>
 
         <service
             android:name="org.secuso.privacyfriendlycircuittraining.services.TimerService"
@@ -96,35 +138,10 @@
 
         <receiver android:name="org.secuso.privacyfriendlycircuittraining.receivers.MotivationAlertReceiver" />
 
-        <activity
-            android:name="org.secuso.privacyfriendlycircuittraining.activities.StatisticsActivity"
-            android:label="@string/title_activity_statistics"
-            android:parentActivityName="org.secuso.privacyfriendlycircuittraining.activities.MainActivity"
-            android:theme="@style/AppTheme.NoActionBar">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="org.secuso.privacyfriendlycircuittraining.activities.MainActivity" />
-        </activity>
-
-        <activity
-            android:name="org.secuso.privacyfriendlycircuittraining.activities.ExerciseSetActivity"
-            android:label="@string/title_activity_exercisesets"
-            android:parentActivityName="org.secuso.privacyfriendlycircuittraining.activities.MainActivity"
-            android:theme="@style/AppTheme.NoActionBar">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="org.secuso.privacyfriendlycircuittraining.activities.MainActivity" />
-        </activity>
-
-        <activity
-            android:name="org.secuso.privacyfriendlycircuittraining.activities.ExerciseActivity"
-            android:label="@string/title_activity_exercises"
-            android:parentActivityName="org.secuso.privacyfriendlycircuittraining.activities.MainActivity"
-            android:theme="@style/AppTheme.NoActionBar">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="org.secuso.privacyfriendlycircuittraining.activities.MainActivity" />
-        </activity>
+        <provider
+            android:name="androidx.startup.InitializationProvider"
+            android:authorities="${applicationId}.androidx-startup"
+            tools:node="remove" />
     </application>
 
 </manifest>
