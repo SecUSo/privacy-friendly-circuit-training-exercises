@@ -36,15 +36,14 @@ import java.util.ArrayList;
 
 public class SplashActivity extends AppCompatActivity {
 
-    private PrefManager prefManager;
     private PFASQLiteHelper db = new PFASQLiteHelper(this);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        prefManager = new PrefManager(this);
-        if (prefManager.isFirstTimeLaunch()) {
+        PrefManager.performMigrations(getBaseContext());
+        if (PrefManager.isFirstTimeLaunch(getBaseContext())) {
             //add two example exercises
 
             Uri ic_squat = Uri.parse("android.resource://" + this.getPackageName() + "/" + R.drawable.ic_exercise_squat);

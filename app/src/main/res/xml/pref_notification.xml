@@ -12,8 +12,8 @@
             android:title="@string/pref_title_notification_motivation_alert_time" />
 
         <Preference
-            android:title="@string/pref_notification_motivation_alert_texts"
-            android:key="@string/pref_notification_motivation_texts">
+            android:title="@string/pref_notification_motivation_alert_texts_title"
+            android:key="@string/pref_notification_motivation_alert_texts">
             <!--
                         <intent
                             android:targetClass="org.secuso.privacyfriendlytraining.activities.MotivationAlertTextsActivity"

@@ -34,6 +34,7 @@ import android.view.MenuItem;
 import org.secuso.privacyfriendlycircuittraining.R;
 import org.secuso.privacyfriendlycircuittraining.fragments.GrantExactAlarmPermissionDialogFragment;
 import org.secuso.privacyfriendlycircuittraining.helpers.NotificationHelper;
+import org.secuso.privacyfriendlycircuittraining.tutorial.PrefManager;
 
 import java.util.List;
 
@@ -103,9 +104,9 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
         // Trigger the listener immediately with the preference's
         // current value.
         sBindPreferenceSummaryToValueListener.onPreferenceChange(preference,
-                PreferenceManager
-                        .getDefaultSharedPreferences(preference.getContext())
+                PrefManager.getPreferences(preference.getContext())
                         .getString(preference.getKey(), ""));
+
     }
 
     @Override
@@ -248,7 +249,7 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
             }
 
             //Hotfix since I could not get the intent to launch from XML file
-            final Preference motivationText = (Preference) findPreference(getString(R.string.pref_notification_motivation_texts));
+            final Preference motivationText = (Preference) findPreference(getString(R.string.pref_notification_motivation_alert_texts));
 
             if (motivationText != null) {
                 motivationText.setOnPreferenceClickListener(new OnPreferenceClickListener() {

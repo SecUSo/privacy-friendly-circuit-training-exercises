@@ -1,7 +1,6 @@
 package org.secuso.privacyfriendlycircuittraining.backup
 
 import android.content.Context
-import android.preference.PreferenceManager
 import android.util.JsonWriter
 import android.util.Log
 import org.secuso.privacyfriendlybackup.api.backup.DatabaseUtil.getSupportSQLiteOpenHelper
@@ -9,6 +8,7 @@ import org.secuso.privacyfriendlybackup.api.backup.DatabaseUtil.writeDatabase
 import org.secuso.privacyfriendlybackup.api.backup.PreferenceUtil.writePreferences
 import org.secuso.privacyfriendlybackup.api.pfa.IBackupCreator
 import org.secuso.privacyfriendlycircuittraining.database.PFASQLiteHelper
+import org.secuso.privacyfriendlycircuittraining.tutorial.PrefManager
 import java.io.OutputStream
 import java.io.OutputStreamWriter
 
@@ -33,7 +33,8 @@ class BackupCreator : IBackupCreator {
             Log.d(TAG, "Writing preferences")
             writer.name("preferences")
 
-            val pref = PreferenceManager.getDefaultSharedPreferences(context.applicationContext)
+            PrefManager.performMigrations(context)
+            val pref = PrefManager.getPreferences(context)
             writePreferences(writer, pref)
 
             writer.endObject()
