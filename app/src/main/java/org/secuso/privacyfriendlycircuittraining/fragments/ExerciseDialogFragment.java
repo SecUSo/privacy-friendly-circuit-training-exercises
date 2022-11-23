@@ -17,20 +17,14 @@ package org.secuso.privacyfriendlycircuittraining.fragments;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
-import android.content.ClipData;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.v4.app.DialogFragment;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.DialogFragment;
 import android.view.Gravity;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -41,14 +35,7 @@ import com.bumptech.glide.Glide;
 import org.secuso.privacyfriendlycircuittraining.R;
 import org.secuso.privacyfriendlycircuittraining.activities.ExerciseActivity;
 import org.secuso.privacyfriendlycircuittraining.database.PFASQLiteHelper;
-import org.secuso.privacyfriendlycircuittraining.helpers.BitMapUtility;
 import org.secuso.privacyfriendlycircuittraining.models.Exercise;
-
-import java.io.ByteArrayOutputStream;
-import java.io.FileNotFoundException;
-import java.io.InputStream;
-import java.util.ArrayList;
-import java.util.List;
 
 import static android.app.Activity.RESULT_OK;
 
@@ -60,6 +47,8 @@ import static android.app.Activity.RESULT_OK;
  */
 
 public class ExerciseDialogFragment extends DialogFragment {
+
+    private static final int SELECT_IMAGE_REQUEST = 1;
 
     private boolean editDialog = false;
     private static boolean opened;
@@ -175,7 +164,11 @@ public class ExerciseDialogFragment extends DialogFragment {
 
                 intent.setType("image/*");
 
-                startActivityForResult(Intent.createChooser(intent, ""), 1);
+                intent.setFlags(Intent.FLAG_GRANT_PERSISTABLE_URI_PERMISSION
+                        | Intent.FLAG_GRANT_READ_URI_PERMISSION
+                        | Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
+
+                startActivityForResult(Intent.createChooser(intent, ""), SELECT_IMAGE_REQUEST);
 
 //                Intent photoPickerIntent = new Intent(Intent.ACTION_PICK);
 //                photoPickerIntent.setType("image/*");
@@ -195,7 +188,7 @@ public class ExerciseDialogFragment extends DialogFragment {
     @Override
     public void onActivityResult(int reqCode, int resultCode, Intent data) {
 
-        if (resultCode == RESULT_OK && data != null) {
+        if (reqCode == SELECT_IMAGE_REQUEST && resultCode == RESULT_OK && data != null) {
             Uri imageUri = data.getData();
             Activity a = getActivity();
 
@@ -204,8 +197,7 @@ public class ExerciseDialogFragment extends DialogFragment {
                 return;
             }
 
-            final int takeFlags = data.getFlags() & (Intent.FLAG_GRANT_READ_URI_PERMISSION | Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
-            a.getContentResolver().takePersistableUriPermission(imageUri, takeFlags);
+            a.getContentResolver().takePersistableUriPermission(imageUri, Intent.FLAG_GRANT_READ_URI_PERMISSION);
 
             loadedExercise.setImage(imageUri);
             Glide.with(a).load(imageUri).into(fragment_img);

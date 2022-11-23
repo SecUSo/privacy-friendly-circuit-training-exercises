@@ -14,15 +14,17 @@
 
 package org.secuso.privacyfriendlycircuittraining.receivers;
 
+import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.Build;
 import android.preference.PreferenceManager;
-import android.support.v4.app.NotificationCompat;
-import android.support.v4.content.ContextCompat;
-import android.support.v4.content.WakefulBroadcastReceiver;
+import androidx.core.app.NotificationCompat;
+import androidx.core.content.ContextCompat;
+import androidx.legacy.content.WakefulBroadcastReceiver;
 import android.util.Log;
 
 import org.secuso.privacyfriendlycircuittraining.R;
@@ -52,15 +54,17 @@ public class MotivationAlertReceiver extends WakefulBroadcastReceiver {
     private Context context;
     public static final int NOTIFICATION_ID = 0;
 
+    private static final String NOTIFICATION_CHANNEL = "Circuit_Training_Notifications";
+
 
     public void onReceive(Context context, Intent intent) {
         this.context = context;
         if(NotificationHelper.isMotivationAlertEnabled(context)){
-            motivate();
+            motivate(context);
         }
     }
 
-    private void motivate() {
+    private void motivate(Context context) {
 
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
 
@@ -89,9 +93,15 @@ public class MotivationAlertReceiver extends WakefulBroadcastReceiver {
         intent.setAction(Intent.ACTION_MAIN);
         intent.addCategory(Intent.CATEGORY_LAUNCHER);
 
-        PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, intent, 0);
+        PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, intent, PendingIntent.FLAG_IMMUTABLE);
 
-        NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(context.getApplicationContext())
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            NotificationChannel notificationChannel = new NotificationChannel(NOTIFICATION_CHANNEL, context.getString(R.string.app_name), NotificationManager.IMPORTANCE_HIGH);
+            notificationChannel.setDescription(context.getString(R.string.app_name));
+            notificationManager.createNotificationChannel(notificationChannel);
+        }
+
+        NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(context.getApplicationContext(), NOTIFICATION_CHANNEL)
                 .setSmallIcon(R.drawable.ic_circletraining_logo_white_24dp)
                 .setContentTitle(context.getString(R.string.reminder_notification_title))
                 .setContentText(motivationText)

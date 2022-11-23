@@ -91,7 +91,7 @@
     <string name="help_privacy">Was macht die App privatsphäre-freundlich?</string>
     <string name="help_privacy_answer">Diese App beinhaltet keinerlei Werbung oder Tracking-Mechanismen. Außerdem werden keine Nutzerinformationen, die in der App konfiguriert oder gesammelt wurden, weitergegeben.</string>
     <string name="help_permission">Welche Berechtigungen braucht die App?</string>
-    <string name="help_permission_answer">Privacy Friendly Training benötigt die Berechtigung "Startvorgang abgeschlossen". Diese wird verwendet um die täglichen Motivationsbenachrichtigungen, nach einem Neustart, wieder einzuplannen. Wird die Berechtigung nicht gewährt so muss die App, nach einem Neustart, erst wieder einmal gestartet werden. </string>
+    <string name="help_permission_answer">Privacy Friendly Training benötigt die Berechtigung \"Startvorgang abgeschlossen\". Diese wird verwendet um die täglichen Motivationsbenachrichtigungen, nach einem Neustart, wieder einzuplannen. Wird die Berechtigung nicht gewährt so muss die App, nach einem Neustart, erst wieder einmal gestartet werden.\n\nPrivacy Friendly Training benötigt die Berechtigung \"Genauen Wecker planen\". Diese wird verwendet um die Motivationsbenachrichtigungen zu planen.</string>
 
 
     <!--###ABOUT###-->
@@ -227,5 +227,6 @@
     <string name="no_exercises">Bitte wähle eine Übung aus</string>
     <string name="dialog_exercise_set_confirm_delete_message">Möchten Sie die ausgewählten Elemente löschen?</string>
     <string name="exercise_set_has_no_exercises">Das gewählte Übungsset enthält keine Übungen.</string>
+    <string name="request_schedule_exact_alarm_permission">Um Ihnen Motivationsbenachrichtigungen senden zu können, wird die Erlaubnis benötigt, einen Alarm einzustellen. Möchten Sie die Erlaubnis jetzt erteilen?</string>
 
 </resources>

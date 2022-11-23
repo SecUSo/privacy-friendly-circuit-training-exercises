@@ -15,6 +15,7 @@
 package org.secuso.privacyfriendlycircuittraining.activities;
 
 import android.annotation.TargetApi;
+import android.app.AlarmManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
@@ -27,10 +28,11 @@ import android.preference.PreferenceActivity;
 import android.preference.PreferenceFragment;
 import android.preference.PreferenceManager;
 import android.preference.SwitchPreference;
-import android.support.v7.app.ActionBar;
+import androidx.appcompat.app.ActionBar;
 import android.view.MenuItem;
 
 import org.secuso.privacyfriendlycircuittraining.R;
+import org.secuso.privacyfriendlycircuittraining.fragments.GrantExactAlarmPermissionDialogFragment;
 import org.secuso.privacyfriendlycircuittraining.helpers.NotificationHelper;
 
 import java.util.List;
@@ -225,7 +227,17 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
                     @Override
                     public boolean onPreferenceChange(Preference preference, Object newValue) {
                         if((Boolean) newValue){
-                            NotificationHelper.setMotivationAlert(preference.getContext());
+                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+                                AlarmManager am = (AlarmManager) getContext().getSystemService(Context.ALARM_SERVICE);
+                                if (!am.canScheduleExactAlarms()) { //Check permission to schedule exact alarm on versions >= Android S
+                                    new GrantExactAlarmPermissionDialogFragment().show(getChildFragmentManager(), GrantExactAlarmPermissionDialogFragment.TAG);
+                                    return false;
+                                } else {
+                                    NotificationHelper.setMotivationAlert(preference.getContext());
+                                }
+                            } else {
+                                NotificationHelper.setMotivationAlert(preference.getContext());
+                            }
                         }
                         else{
                             NotificationHelper.cancelMotivationAlert(preference.getContext());

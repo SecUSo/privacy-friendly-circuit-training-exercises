@@ -14,6 +14,7 @@
 
 package org.secuso.privacyfriendlycircuittraining.activities;
 
+import android.app.AlarmManager;
 import android.app.AlertDialog;
 import android.content.ComponentName;
 import android.content.Context;
@@ -21,6 +22,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.ServiceConnection;
 import android.content.SharedPreferences;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.preference.PreferenceActivity;
@@ -40,6 +42,7 @@ import android.widget.Toast;
 
 import org.secuso.privacyfriendlycircuittraining.R;
 import org.secuso.privacyfriendlycircuittraining.database.PFASQLiteHelper;
+import org.secuso.privacyfriendlycircuittraining.fragments.GrantExactAlarmPermissionDialogFragment;
 import org.secuso.privacyfriendlycircuittraining.helpers.NotificationHelper;
 import org.secuso.privacyfriendlycircuittraining.models.Exercise;
 import org.secuso.privacyfriendlycircuittraining.models.ExerciseSet;
@@ -153,7 +156,16 @@ public class MainActivity extends BaseActivity {
 
         //Schedule the next motivation notification (necessary if permission was not granted)
         if(NotificationHelper.isMotivationAlertEnabled(this)){
-            NotificationHelper.setMotivationAlert(this);
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+                AlarmManager am = (AlarmManager) getApplicationContext().getSystemService(Context.ALARM_SERVICE);
+                if (!am.canScheduleExactAlarms()) { //Check permission to schedule exact alarm on versions >= Android S
+                    new GrantExactAlarmPermissionDialogFragment().show(getFragmentManager(), GrantExactAlarmPermissionDialogFragment.TAG);
+                } else {
+                    NotificationHelper.setMotivationAlert(this);
+                }
+            } else {
+                NotificationHelper.setMotivationAlert(this);
+            }
         }
 
         //Set the change listener for the switch button to turn block periodization on and off

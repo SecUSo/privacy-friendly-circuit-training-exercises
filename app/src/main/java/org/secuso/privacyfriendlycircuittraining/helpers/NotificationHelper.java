@@ -21,6 +21,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Build;
 import android.preference.PreferenceManager;
+import android.provider.Settings;
 import android.util.Log;
 
 import org.secuso.privacyfriendlycircuittraining.R;
@@ -41,13 +42,14 @@ public class NotificationHelper {
 
     /**
      * Schedules (or updates) the motivation alert notification alarm
+     *
      * @param context The application context
      */
-    public static void setMotivationAlert(Context context){
+    public static void setMotivationAlert(Context context) {
         Log.i(LOG_CLASS, "Setting motivation alert alarm");
 
         Intent motivationAlertIntent = new Intent(context, MotivationAlertReceiver.class);
-        PendingIntent motivationAlertPendingIntent = PendingIntent.getBroadcast(context, 1, motivationAlertIntent, 0);
+        PendingIntent motivationAlertPendingIntent = PendingIntent.getBroadcast(context, 1, motivationAlertIntent, PendingIntent.FLAG_IMMUTABLE);
         AlarmManager am = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
 
         SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(context);
@@ -62,29 +64,36 @@ public class NotificationHelper {
         calendar.set(Calendar.DAY_OF_MONTH, Calendar.getInstance().get(Calendar.DAY_OF_MONTH));
         calendar.set(Calendar.SECOND, 0);
         calendar.set(Calendar.MILLISECOND, 0);
-        if(calendar.before(Calendar.getInstance())){
+        if (calendar.before(Calendar.getInstance())) {
             calendar.add(Calendar.DAY_OF_MONTH, 1);
         }
 
         // Set alarm
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            am.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), motivationAlertPendingIntent);
-        }else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+                if (!am.canScheduleExactAlarms()) {
+                    Log.i(LOG_CLASS, "Motivation alert cannot be scheduled because of missing permission.");
+                } else {
+                    am.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), motivationAlertPendingIntent);
+                }
+            } else {
+                am.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), motivationAlertPendingIntent);
+            }
+        } else {
             am.setExact(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), motivationAlertPendingIntent);
-        }else{
-            am.set(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), motivationAlertPendingIntent);
         }
         Log.i(LOG_CLASS, "Scheduled motivation alert at start time " + calendar.toString());
     }
 
     /**
      * Checks if the motivation alert is enabled in the settings
+     *
      * @param context The application context
      */
-    public static boolean isMotivationAlertEnabled(Context context){
+    public static boolean isMotivationAlertEnabled(Context context) {
         SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(context);
 
-        if(sharedPref != null){
+        if (sharedPref != null) {
             return sharedPref.getBoolean(context.getString(R.string.pref_notification_motivation_alert_enabled), false);
         }
         return false;
@@ -92,12 +101,13 @@ public class NotificationHelper {
 
     /**
      * Cancels the motivation alert
+     *
      * @param context The application context
      */
-    public static void cancelMotivationAlert(Context context){
+    public static void cancelMotivationAlert(Context context) {
         Log.i(LOG_CLASS, "Canceling motivation alert alarm");
         Intent motivationAlertIntent = new Intent(context, MotivationAlertReceiver.class);
-        PendingIntent motivationAlertPendingIntent = PendingIntent.getBroadcast(context, 1, motivationAlertIntent, 0);
+        PendingIntent motivationAlertPendingIntent = PendingIntent.getBroadcast(context, 1, motivationAlertIntent, PendingIntent.FLAG_IMMUTABLE);
         AlarmManager am = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
         am.cancel(motivationAlertPendingIntent);
     }
