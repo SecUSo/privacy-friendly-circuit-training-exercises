@@ -14,31 +14,28 @@
 
 package org.secuso.privacyfriendlycircuittraining.receivers;
 
+import static org.secuso.privacyfriendlycircuittraining.activities.MotivationAlertTextsActivity.LOG_CLASS;
+
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Build;
-import android.preference.PreferenceManager;
+import android.util.Log;
+
 import androidx.core.app.NotificationCompat;
 import androidx.core.content.ContextCompat;
 import androidx.legacy.content.WakefulBroadcastReceiver;
-import android.util.Log;
 
 import org.secuso.privacyfriendlycircuittraining.R;
 import org.secuso.privacyfriendlycircuittraining.activities.MainActivity;
 import org.secuso.privacyfriendlycircuittraining.helpers.NotificationHelper;
+import org.secuso.privacyfriendlycircuittraining.tutorial.PrefManager;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
-
-import static org.secuso.privacyfriendlycircuittraining.activities.MotivationAlertTextsActivity.LOG_CLASS;
 
 /**
  * Receives the motivation alert event and notifies the user.
@@ -66,11 +63,8 @@ public class MotivationAlertReceiver extends WakefulBroadcastReceiver {
 
     private void motivate(Context context) {
 
-        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
-
         //Choose a motivation text
-        Set<String> defaultStringSet = new HashSet<>(Arrays.asList(context.getResources().getStringArray(R.array.pref_default_notification_motivation_alert_messages)));
-        List<String> motivationTexts = new ArrayList<>(preferences.getStringSet(context.getString(R.string.pref_notification_motivation_alert_texts),  defaultStringSet));
+        List<String> motivationTexts = new ArrayList<>(PrefManager.getNotificationMotivationAlertTexts(context));
 
         if (motivationTexts.size() == 0) {
             Log.e(LOG_CLASS, "Motivation texts are empty. Cannot notify the user.");

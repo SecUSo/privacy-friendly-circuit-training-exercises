@@ -18,20 +18,15 @@ import android.app.AlertDialog;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.DialogInterface.OnCancelListener;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.ServiceConnection;
-import android.content.SharedPreferences;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.LayerDrawable;
 import android.os.Bundle;
 import android.os.IBinder;
-import android.preference.PreferenceManager;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import androidx.core.content.ContextCompat;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnTouchListener;
@@ -41,13 +36,18 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.content.DialogInterface.OnCancelListener;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.core.content.ContextCompat;
 
 import com.bumptech.glide.Glide;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import org.secuso.privacyfriendlycircuittraining.R;
 import org.secuso.privacyfriendlycircuittraining.database.PFASQLiteHelper;
 import org.secuso.privacyfriendlycircuittraining.services.TimerService;
+import org.secuso.privacyfriendlycircuittraining.tutorial.PrefManager;
 
 import java.util.ArrayList;
 
@@ -60,9 +60,6 @@ import java.util.ArrayList;
  * @version 20180321
  */
 public class WorkoutActivity extends AppCompatActivity {
-
-    //General
-    private SharedPreferences settings;
 
     // GUI Text
     private TextView currentSetsInfo = null;
@@ -110,7 +107,6 @@ public class WorkoutActivity extends AppCompatActivity {
         this.progressBar = (ProgressBar) this.findViewById(R.id.progressBar);
         this.workoutTimer = (TextView) this.findViewById(R.id.workout_timer);
         this.workoutTitle = (TextView) this.findViewById(R.id.workout_title);
-        this.settings = PreferenceManager.getDefaultSharedPreferences(this);
         this.nextTimer = (ImageView) this.findViewById(R.id.workout_next);
         this.finishedView = findViewById(R.id.finishedView);
         this.finishedView.setVisibility(View.GONE);
@@ -471,10 +467,10 @@ public class WorkoutActivity extends AppCompatActivity {
             public void onClick(DialogInterface dialog, int indexSelected, boolean isChecked) {
                 if (isChecked) {
                     selectedItem.add(indexSelected);
-                    settings.edit().putBoolean(getString(R.string.pref_cancel_workout_check), false).commit();
+                    PrefManager.setCancelWorkoutCheck(getBaseContext(), false);
                 } else if (selectedItem.contains(indexSelected)) {
                     selectedItem.remove(Integer.valueOf(indexSelected));
-                    settings.edit().putBoolean(getString(R.string.pref_cancel_workout_check), true).commit();
+                    PrefManager.setCancelWorkoutCheck(getBaseContext(), true);
                 }
             }
         });
@@ -641,55 +637,33 @@ public class WorkoutActivity extends AppCompatActivity {
      * @param mute Flag to mute or unmute all sounds
      */
     private void muteAllSounds(boolean mute){
-        if(this.settings != null) {
-            SharedPreferences.Editor editor = settings.edit();
-            editor.putBoolean(getResources().getString(R.string.pref_sounds_muted), mute);
-            editor.apply();
-        }
+        PrefManager.setSoundsMuted(getBaseContext(), mute);
     }
 
     /*
     * Multiple checks for what was enabled inside the settings
     */
     public boolean isKeepScreenOnEnabled(Context context){
-        if(this.settings != null){
-            return settings.getBoolean(context.getString(R.string.pref_keep_screen_on_switch_enabled), true);
-        }
-        return false;
+        return  PrefManager.getKeepScreenOnSwitchEnabled(context);
     }
 
     public boolean isStartTimerEnabled(Context context) {
-        if (this.settings != null) {
-            return settings.getBoolean(context.getString(R.string.pref_start_timer_switch_enabled), true);
-        }
-        return false;
+        return PrefManager.getStartTimerSwitchEnabled(context);
     }
 
     public boolean isBlinkingProgressBarEnabled(Context context) {
-        if (this.settings != null) {
-            return settings.getBoolean(context.getString(R.string.pref_blinking_progress_bar), false);
-        }
-        return false;
+        return PrefManager.getBlinkingProgressBar(context);
     }
 
     public boolean isCaloriesEnabled(Context context) {
-        if (this.settings != null) {
-            return settings.getBoolean(context.getString(R.string.pref_calories_counter), true);
-        }
-        return false;
+        return PrefManager.getCaloriesCounter(context);
     }
 
     public boolean isSoundsMuted(Context context) {
-        if (this.settings != null) {
-            return settings.getBoolean(context.getString(R.string.pref_sounds_muted), true);
-        }
-        return true;
+        return PrefManager.getSoundsMuted(context);
     }
 
     public boolean isCancelDialogEnabled(Context context) {
-        if (this.settings != null) {
-            return settings.getBoolean(context.getString(R.string.pref_cancel_workout_check), true);
-        }
-        return true;
+        return PrefManager.getCancelWorkoutCheck(context);
     }
 }

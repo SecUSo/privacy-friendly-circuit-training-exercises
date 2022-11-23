@@ -22,20 +22,20 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.content.SharedPreferences;
 import android.media.MediaPlayer;
 import android.os.Binder;
 import android.os.CountDownTimer;
 import android.os.Handler;
 import android.os.IBinder;
-import android.preference.PreferenceManager;
-import androidx.core.app.NotificationCompat;
 import android.widget.RemoteViews;
+
+import androidx.core.app.NotificationCompat;
 
 import org.secuso.privacyfriendlycircuittraining.R;
 import org.secuso.privacyfriendlycircuittraining.activities.WorkoutActivity;
 import org.secuso.privacyfriendlycircuittraining.database.PFASQLiteHelper;
 import org.secuso.privacyfriendlycircuittraining.models.WorkoutSessionData;
+import org.secuso.privacyfriendlycircuittraining.tutorial.PrefManager;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -52,9 +52,6 @@ import java.util.Date;
  * @version 20180103
  */
 public class TimerService extends Service {
-
-    //General
-    private SharedPreferences settings;
 
     //Broadcast action identifier for the broadcasted service messages
     public static final String COUNTDOWN_BROADCAST = "org.secuso.privacyfriendlytraining.COUNTDOWN";
@@ -117,7 +114,6 @@ public class TimerService extends Service {
 
         this.restTimer = createRestTimer(this.startTime);
         this.workoutTimer = createWorkoutTimer(this.workoutTime);
-        this.settings = PreferenceManager.getDefaultSharedPreferences(this);
 
         registerReceiver(notificationReceiver, new IntentFilter(NOTIFICATION_BROADCAST));
 
@@ -680,13 +676,11 @@ public class TimerService extends Service {
         int weight = 0;
         int circleTrainingMET = 8;
 
-        if(this.settings != null) {
-            age = Integer.parseInt(settings.getString(this.getString(R.string.pref_age), "25"));
-            height = Integer.parseInt(settings.getString(this.getString(R.string.pref_height), "170"));
-            weight = (int)Double.parseDouble(settings.getString(this.getString(R.string.pref_weight), "70"));
-        }
+        age = Integer.parseInt(PrefManager.getAge(getBaseContext()));
+        height = Integer.parseInt(PrefManager.getHeight(getBaseContext()));
+        weight = (int) Double.parseDouble(PrefManager.getWeight(getBaseContext()));
 
-        float caloriesPerExercise = circleTrainingMET * (weight * workoutDurationSeconds/3600);
+        float caloriesPerExercise = circleTrainingMET * (weight * workoutDurationSeconds / 3600);
 
         return (int) caloriesPerExercise;
     }
@@ -850,45 +844,27 @@ public class TimerService extends Service {
      * Multiple checks for what was enabled inside the settings
      */
     public boolean isVoiceCountdownWorkoutEnabled(Context context){
-        if(this.settings != null){
-            return settings.getBoolean(context.getString(R.string.pref_voice_countdown_workout), false);
-        }
-        return false;
+        return PrefManager.getVoiceCountdownWorkout(context);
     }
 
     public boolean isVoiceCountdownRestEnabled(Context context){
-        if(this.settings != null){
-            return settings.getBoolean(context.getString(R.string.pref_voice_countdown_rest), false);
-        }
-        return false;
+        return PrefManager.getVoiceCountdownRest(context);
     }
 
     public boolean isWorkoutRythmEnabled(Context context){
-        if(this.settings != null){
-            return settings.getBoolean(context.getString(R.string.pref_sound_rythm), false);
-        }
-        return false;
+        return PrefManager.getSoundRythm(context);
     }
 
     public boolean isVoiceHalfTimeEnabled(Context context){
-        if(this.settings != null){
-            return settings.getBoolean(context.getString(R.string.pref_voice_halftime), false);
-        }
-        return false;
+        return PrefManager.getVoiceHalftime(context);
     }
 
     public boolean isCaloriesEnabled(Context context) {
-        if (this.settings != null) {
-            return settings.getBoolean(context.getString(R.string.pref_calories_counter), false);
-        }
-        return false;
+        return PrefManager.getCaloriesCounter(context);
     }
 
     public boolean isSoundsMuted(Context context) {
-        if (this.settings != null) {
-            return settings.getBoolean(context.getString(R.string.pref_sounds_muted), true);
-        }
-        return true;
+        return PrefManager.getSoundsMuted(context);
     }
 
 

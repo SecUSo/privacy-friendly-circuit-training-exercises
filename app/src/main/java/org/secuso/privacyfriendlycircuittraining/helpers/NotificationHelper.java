@@ -14,22 +14,19 @@
 
 package org.secuso.privacyfriendlycircuittraining.helpers;
 
+import static org.secuso.privacyfriendlycircuittraining.activities.MotivationAlertTextsActivity.LOG_CLASS;
+
 import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Build;
-import android.preference.PreferenceManager;
-import android.provider.Settings;
 import android.util.Log;
 
-import org.secuso.privacyfriendlycircuittraining.R;
 import org.secuso.privacyfriendlycircuittraining.receivers.MotivationAlertReceiver;
+import org.secuso.privacyfriendlycircuittraining.tutorial.PrefManager;
 
 import java.util.Calendar;
-
-import static org.secuso.privacyfriendlycircuittraining.activities.MotivationAlertTextsActivity.LOG_CLASS;
 
 /**
  * Sets the motivation alert event to notify the user about a workout.
@@ -52,9 +49,7 @@ public class NotificationHelper {
         PendingIntent motivationAlertPendingIntent = PendingIntent.getBroadcast(context, 1, motivationAlertIntent, PendingIntent.FLAG_IMMUTABLE);
         AlarmManager am = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
 
-        SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(context);
-
-        long timestamp = sharedPref.getLong(context.getString(R.string.pref_notification_motivation_alert_time), 64800000);
+        long timestamp = PrefManager.getNotificationMotivationAlertTime(context);
 
 
         Calendar calendar = Calendar.getInstance();
@@ -91,12 +86,7 @@ public class NotificationHelper {
      * @param context The application context
      */
     public static boolean isMotivationAlertEnabled(Context context) {
-        SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(context);
-
-        if (sharedPref != null) {
-            return sharedPref.getBoolean(context.getString(R.string.pref_notification_motivation_alert_enabled), false);
-        }
-        return false;
+        return PrefManager.getNotificationMotivationAlertEnabled(context);
     }
 
     /**

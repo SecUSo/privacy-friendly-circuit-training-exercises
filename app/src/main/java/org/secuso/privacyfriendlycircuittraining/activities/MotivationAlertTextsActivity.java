@@ -15,23 +15,24 @@
 package org.secuso.privacyfriendlycircuittraining.activities;
 
 import android.content.DialogInterface;
-import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-import androidx.recyclerview.widget.ItemTouchHelper;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.ItemTouchHelper;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
 import org.secuso.privacyfriendlycircuittraining.R;
 import org.secuso.privacyfriendlycircuittraining.adapters.MotivationAlertTextsAdapter;
+import org.secuso.privacyfriendlycircuittraining.tutorial.PrefManager;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -122,9 +123,7 @@ public class MotivationAlertTextsActivity extends AppCompatActivity implements M
      * If motivation texts set is empty the view will be set to 'empty view'
      */
     protected void showMotivationAlertTexts() {
-        SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
-        Set<String> defaultStringSet = new HashSet<>(Arrays.asList(getResources().getStringArray(R.array.pref_default_notification_motivation_alert_messages)));
-        Set<String> stringSet = sharedPref.getStringSet(this.getString(R.string.pref_notification_motivation_alert_texts), defaultStringSet);
+        Set<String> stringSet = PrefManager.getNotificationMotivationAlertTexts(getBaseContext());
         motivationTexts = new ArrayList<>(Arrays.asList(stringSet.toArray(new String[stringSet.size()])));
 
         this.mAdapter.setItems(motivationTexts);
@@ -139,10 +138,7 @@ public class MotivationAlertTextsActivity extends AppCompatActivity implements M
      * Stores the motivation texts to shared preferences
      */
     protected void save() {
-        SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
-        SharedPreferences.Editor editor = sharedPref.edit();
-        editor.putStringSet(this.getString(R.string.pref_notification_motivation_alert_texts), new HashSet<>(motivationTexts));
-        editor.apply();
+        PrefManager.setNotificationMotivationAlertTexts(getBaseContext(), new HashSet<>(motivationTexts));
     }
 
     /**

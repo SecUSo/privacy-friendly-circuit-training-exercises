@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- ###NAME OF THE PREFERENCE FILE### -->
+    <string name="preference_file_name" translatable="false">org.secuso.privacyfriendlycircuittraining_preferences</string>
+
+
+    <!-- ###PREFERENCES NOT TRANSLATABLE### -->
+
+    <!-- boolean -->
+    <string name="pref_is_first_time_launch" translatable="false">IsFirstTimeLaunch</string>
+    <string name="pref_workout_mode" translatable="false">workoutMode</string>
+    <string name="pref_blinking_progress_bar" translatable="false">org.secuso.privacyfriendlytraining.pref_blinking_progress_bar</string>
+    <string name="pref_block_periodization_switch_button" translatable="false">blockPeriodizationSwitchButton</string>
+    <string name="pref_keep_screen_on_switch_enabled" translatable="false">org.secuso.privacyfriendlytraining.pref_keep_screen_on_switch_enabled</string>
+    <string name="pref_start_timer_switch_enabled" translatable="false">org.secuso.privacyfriendlytraining.pref_start_timer_switch_enabled</string>
+    <string name="pref_calories_counter" translatable="false">org.secuso.privacyfriendlytraining.pref.calories</string>
+    <string name="pref_sounds_muted" translatable="false">org.secuso.privacyfriendlytraining.pref.sounds_muted</string>
+    <string name="pref_cancel_workout_dialog" translatable="false">org.secuso.privacyfriendlytraining.pref_cancel_workout_dialog</string>
+    <string name="pref_notification_motivation_alert_enabled" translatable="false">org.secuso.privacyfriendlytraining.pref.motivation_alert_enabled</string>
+    <string name="pref_voice_countdown_workout" translatable="false">org.secuso.privacyfriendlytraining.pref.voicecountdownworkout</string>
+    <string name="pref_voice_countdown_rest" translatable="false">org.secuso.privacyfriendlytraining.pref.voicecountdownrest</string>
+    <string name="pref_sound_rythm" translatable="false">org.secuso.privacyfriendlytraining.pref.soundrythm</string>
+    <string name="pref_voice_halftime" translatable="false">org.secuso.privacyfriendlytraining.pref.voicehalftime</string>
+    <string name="pref_cancel_workout_check" translatable="false">org.secuso.privacyfriendlytraining.pref.cancel_workout_check</string>
+
+
+    <!-- int -->
+    <string name="pref_timer_workout" translatable="false">org.secuso.privacyfriendlytraining.pref.timer_workout</string>
+    <string name="pref_timer_rest" translatable="false">org.secuso.privacyfriendlytraining.pref.timer_rest</string>
+    <string name="pref_timer_set" translatable="false">org.secuso.privacyfriendlytraining.pref.timer_set</string>
+    <string name="pref_timer_periodization_set" translatable="false">org.secuso.privacyfriendlytraining.pref.timer_periodization_set</string>
+    <string name="pref_timer_periodization_time" translatable="false">org.secuso.privacyfriendlytraining.pref.timer_periodization_time</string>
+
+
+    <!-- long -->
+    <string name="pref_notification_motivation_alert_time" translatable="false">org.secuso.privacyfriendlytraining.pref.motivation_alert_time</string>
+
+
+    <!-- string -->
+    <string name="pref_age" translatable="false">org.secuso.privacyfriendlytraining.pref.age</string>
+    <string name="pref_height" translatable="false">org.secuso.privacyfriendlytraining.pref.height</string>
+    <string name="pref_weight" translatable="false">org.secuso.privacyfriendlytraining.pref.weight</string>
+    <string name="pref_gender" translatable="false">org.secuso.privacyfriendlytraining.pref.gender</string>
+
+
+    <!-- string set -->
+    <string name="pref_notification_motivation_alert_texts" translatable="false">org.secuso.privacyfriendlytraining.pref.motivation_texts</string>
+
+
+    <!-- no category -->
+    <string name="pref_delete_statistics_dialog" translatable="false">org.secuso.privacyfriendlytraining.pref.delete_dialog</string>
+
+</resources>

@@ -126,7 +126,7 @@
     <string name="pref_keep_screen_on_switch_summary">Der Bildschrim bleibt während des Trainings an.</string>
     <string name="pref_start_timer_switch">Starttimer vor Training</string>
     <string name="pref_start_timer_switch_summary">Vor dem Beginn des Trainings wird ein Starttimer angezeigt.</string>
-    <string name="pref_blinking_progress_bar">Fortschrittsbalken blinkt</string>
+    <string name="pref_blinking_progress_bar_title">Fortschrittsbalken blinkt</string>
     <string name="pref_blinking_progress_bar_summary">Der Fortschrittsbalken der Zeitanzeige im Training blinkt während den letzten Sekunden.</string>
     <string name="pref_voice_output">Sprachausgabe</string>
     <string name="pref_voice_output_summary">Eine Stimme zählt die letzten Sekunden jeder Trainingseinheit und Pause herunter.</string>
@@ -134,7 +134,7 @@
     <string name="pref_statistics_title">Statistiken</string>
     <string name="pref_title_notification_motivation_alert_time">Zeitpunkt der Motivationsbenachrichtigung</string>
     <string name="pref_title_notification_delete_statistics_alert">Statistiken löschen</string>
-    <string name="pref_notification_motivation_alert_texts">Motivationstexte</string>
+    <string name="pref_notification_motivation_alert_texts_title">Motivationstexte</string>
     <string name="pref_delete_statistics_dialog_title">Statistiken löschen</string>
     <string name="pref_delete_statistics_dialog_info">Wollen Sie alle gespeicherten Statistiken löschen?</string>
     <string name="pref_delete_statistics_dialog_toast">Die Statistiken wurden zurückgesetzt!</string>
