@@ -228,5 +228,6 @@
     <string name="dialog_exercise_set_confirm_delete_message">Möchten Sie die ausgewählten Elemente löschen?</string>
     <string name="exercise_set_has_no_exercises">Das gewählte Übungsset enthält keine Übungen.</string>
     <string name="request_schedule_exact_alarm_permission">Um Ihnen Motivationsbenachrichtigungen senden zu können, wird die Erlaubnis benötigt, einen Alarm einzustellen. Möchten Sie die Erlaubnis jetzt erteilen?</string>
+    <string name="exercise_set_has_no_sets">Das gewählte Übungsset hat keine sets.</string>
 
 </resources>

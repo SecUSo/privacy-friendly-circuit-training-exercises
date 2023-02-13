@@ -275,8 +275,12 @@ public class MainActivity extends BaseActivity {
                 setsPerRound = sets;
             }
 
-            if (setsPerRound == 0 || ExerciseIdsForRounds.size() == 0) {
-                Toast.makeText(this, R.string.exercise_set_has_no_exercises, Toast.LENGTH_SHORT).show();
+            if (setsPerRound == 0) {
+                if (isExerciseMode && ExerciseIdsForRounds.size() == 0) {
+                    Toast.makeText(this, R.string.exercise_set_has_no_exercises, Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(this, R.string.exercise_set_has_no_sets, Toast.LENGTH_SHORT).show();
+                }
                 return;
             }
 
