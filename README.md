@@ -21,7 +21,7 @@
 
 This Android application manages the time during interval based training sessions, eg circuit training.
 It provides a configurable set of timers for the exercises and the rest phases.
-The user can create his own exercises and combine them into exercise set which can be used for circuit training.
+The user can create their own exercises and combine them into exercise set which can be used for circuit training.
 The app can remind the user about planned training sessions and offers statistics such as the time spend training or calories burnt.
 
 Privacy Friendly Circuit Trainer belongs to the group of Privacy Friendly Apps developed by the research group SECUSO at Technische Universität Darmstadt.

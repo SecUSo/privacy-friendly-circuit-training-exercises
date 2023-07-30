@@ -162,7 +162,7 @@ public class MainActivity extends BaseActivity {
             }
         });
 
-        //Suggest the user to enter his body data
+        //Suggest the user to enter their body data
         PrefManager.performMigrations(getBaseContext());
         if(PrefManager.isFirstTimeLaunch(getBaseContext())){
             PrefManager.setFirstTimeLaunch(getBaseContext(), false);
