@@ -1,29 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:padding="1dp">
 
     <androidx.cardview.widget.CardView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
         android:id="@+id/cardView_dialog"
-        >
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
 
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="4dp"
-            >
+            android:padding="4dp">
 
 
             <ImageView
+                android:id="@+id/exercise_img"
                 android:layout_width="30dp"
                 android:layout_height="30dp"
-                android:scaleType="fitXY"
-                android:id="@+id/exercise_img"
                 android:layout_alignParentLeft="true"
-                />
+                android:scaleType="fitXY" />
 
             <TextView
                 android:id="@+id/exercise_name"
@@ -40,9 +38,9 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
-                android:tint="@color/middlegrey"
                 android:backgroundTint="@color/white"
-                android:src="@drawable/ic_delete_black_24px" />
+                android:src="@drawable/ic_delete_black_24px"
+                app:tint="@color/middlegrey" />
 
         </RelativeLayout>
 
