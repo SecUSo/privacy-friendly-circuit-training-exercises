@@ -1,0 +1,51 @@
+name: Android Emulator Tests
+on: [push, pull_request]
+
+jobs:
+  check-if-tests-exist:
+    runs-on: ubuntu-latest
+    outputs:
+      status: ${{ steps.check-androidTest.outputs.NOT_EMPTY }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          submodules: "recursive"
+      - name: Check if androidTest folder is not empty
+        run: |
+          echo "NOT_EMPTY=$([ "$(ls -A app/src/androidTest)" ] && echo 'true' || echo 'false')"
+          echo "NOT_EMPTY=$([ "$(ls -A app/src/androidTest)" ] && echo 'true' || echo 'false')" >> $GITHUB_OUTPUT
+        id: check-androidTest
+  test:
+    needs: check-if-tests-exist
+    if: needs.check-if-tests-exist.outputs.status == 'true'
+    runs-on: macos-latest
+    strategy:
+      matrix:
+        api-level: [29]
+        target: [default]
+        arch: [x86_64]
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          submodules: "recursive"
+
+      - name: Set up JDK environment
+        uses: actions/setup-java@v3
+        with:
+          distribution: "zulu"
+          java-version: 17
+
+      - name: Gradle cache
+        uses: gradle/gradle-build-action@v2
+
+      - name: Run connected tests
+        uses: ReactiveCircus/android-emulator-runner@v2
+        with:
+          api-level: ${{ matrix.api-level }}
+          target: ${{ matrix.target }}
+          arch: ${{ matrix.arch }}
+          profile: Nexus 6
+          disable-animations: true
+          script: ./gradlew :app:connectedCheck --stacktrace
