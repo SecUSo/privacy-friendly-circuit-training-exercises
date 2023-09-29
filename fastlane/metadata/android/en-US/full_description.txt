@@ -1,4 +1,4 @@
-Privacy Friendly Circuit Trainer is an Android App that supports the user during his/her circuit training session. It provides a configurable set of timers for the exercises and the rest phases as well as multiple other features.
+Privacy Friendly Circuit Trainer is an Android App that supports the user during their circuit training session. It provides a configurable set of timers for the exercises and the rest phases as well as multiple other features.
 
 Workout Timer
 After configuring the set of timers in the main menu you can start the workout routine by pressing the start button. The workout view has animations and sound output features which can be turned on and off inside the settings menu.

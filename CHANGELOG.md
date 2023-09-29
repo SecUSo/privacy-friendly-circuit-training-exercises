@@ -28,7 +28,7 @@
 <a name="v1.0"></a>
 ## [Privacy Friendly Circuit Training v1.0 (v1.0)](https://github.com/SecUSo/privacy-friendly-circuit-training-exercises/releases/tag/v1.0) - 29 Mar 2018
 
-Privacy Friendly Circuit Trainer is an Android App that supports the user during his/her circuit training session. It provides a configurable set of timers for the exercises and the rest phases as well as multiple other features.
+Privacy Friendly Circuit Trainer is an Android App that supports the user during their circuit training session. It provides a configurable set of timers for the exercises and the rest phases as well as multiple other features.
 
 [Changes][v1.0]
 
