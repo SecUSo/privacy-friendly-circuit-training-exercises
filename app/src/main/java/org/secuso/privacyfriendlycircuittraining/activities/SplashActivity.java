@@ -17,6 +17,7 @@ package org.secuso.privacyfriendlycircuittraining.activities;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+
 import androidx.appcompat.app.AppCompatActivity;
 
 import org.secuso.privacyfriendlycircuittraining.R;
@@ -36,7 +37,7 @@ import java.util.ArrayList;
 
 public class SplashActivity extends AppCompatActivity {
 
-    private PFASQLiteHelper db = new PFASQLiteHelper(this);
+    private final PFASQLiteHelper db = new PFASQLiteHelper(this);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,13 +62,23 @@ public class SplashActivity extends AppCompatActivity {
             Intent mainIntent = new Intent(SplashActivity.this, TutorialActivity.class);
             SplashActivity.this.startActivity(mainIntent);
             SplashActivity.this.finish();
-        }
-        else{
+        } else {
+            //Update icons for default exercises
+            Exercise defaultExercise1 = db.getExercise(1);
+            Exercise defaultExercise2 = db.getExercise(2);
+            if (defaultExercise1 != null && defaultExercise1.getImage() != null && defaultExercise1.getImage().toString().startsWith("android.resource://" + this.getPackageName() + "/")) {
+                defaultExercise1.setImage(Uri.parse("android.resource://" + this.getPackageName() + "/" + R.drawable.ic_exercise_squat));
+                db.updateExercise(defaultExercise1);
+            }
+            if (defaultExercise2 != null && defaultExercise2.getImage() != null && defaultExercise2.getImage().toString().startsWith("android.resource://" + this.getPackageName() + "/")) {
+                defaultExercise2.setImage(Uri.parse("android.resource://" + this.getPackageName() + "/" + R.drawable.ic_exercise_pushup));
+                db.updateExercise(defaultExercise2);
+            }
+
+
             Intent mainIntent = new Intent(SplashActivity.this, MainActivity.class);
             SplashActivity.this.startActivity(mainIntent);
             SplashActivity.this.finish();
         }
-
     }
-
 }
