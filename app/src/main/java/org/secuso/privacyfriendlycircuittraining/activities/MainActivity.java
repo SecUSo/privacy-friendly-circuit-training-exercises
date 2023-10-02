@@ -133,6 +133,7 @@ public class MainActivity extends BaseActivity {
 
         if(workoutModeSwitchState) {
             findViewById(R.id.exerciesetsRow).setVisibility(View.VISIBLE);
+            isExerciseMode = true;
         }
 
         //Start timer service
@@ -171,30 +172,25 @@ public class MainActivity extends BaseActivity {
 
         final List<ExerciseSet> exerciseSetslist = db.getAllExerciseSet();
 
-        workoutMode.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                isExerciseMode = isChecked;
-                workoutModeSwitchState = isChecked;
-                PrefManager.setWorkoutMode(getBaseContext(), isChecked);
-                if(isExerciseMode){
-                    if(exerciseSetslist.size() == 0){
-                        toast = Toast.makeText(getApplication(), getResources().getString(R.string.no_exercise_sets), Toast.LENGTH_LONG);
-                        toast.setGravity(Gravity.CENTER, 0, 60);
-                        toast.show();
-                        workoutMode.setChecked(false);
-                    }
-                    else {
-                        buttonView.getRootView().findViewById(R.id.exerciesetsRow).setVisibility(View.VISIBLE);
-                        sets = 1;
-                        setsText.setText(Integer.toString(sets));
-                    }
-                }
-                else{
-                    buttonView.getRootView().findViewById(R.id.exerciesetsRow).setVisibility(View.GONE);
-                    sets = PrefManager.setsDefault;
+        workoutMode.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            isExerciseMode = isChecked;
+            workoutModeSwitchState = isChecked;
+            PrefManager.setWorkoutMode(getBaseContext(), isChecked);
+            if (isExerciseMode) {
+                if (exerciseSetslist.size() == 0) {
+                    toast = Toast.makeText(getApplication(), getResources().getString(R.string.no_exercise_sets), Toast.LENGTH_LONG);
+                    toast.setGravity(Gravity.CENTER, 0, 60);
+                    toast.show();
+                    workoutMode.setChecked(false);
+                } else {
+                    buttonView.getRootView().findViewById(R.id.exerciesetsRow).setVisibility(View.VISIBLE);
+                    sets = 1;
                     setsText.setText(Integer.toString(sets));
-                    exerciseIds = null;
                 }
+            } else {
+                buttonView.getRootView().findViewById(R.id.exerciesetsRow).setVisibility(View.GONE);
+                sets = PrefManager.setsDefault;
+                setsText.setText(Integer.toString(sets));
             }
         });
         exerciseIds = new ArrayList<>();
