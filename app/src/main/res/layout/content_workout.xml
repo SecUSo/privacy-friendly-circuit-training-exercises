@@ -1,176 +1,179 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/workout_content"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_weight="1"
-    android:orientation="vertical"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context="org.secuso.privacyfriendlycircuittraining.activities.WorkoutActivity"
-    tools:showIn="@layout/activity_workout">
+    tools:context="org.secuso.privacyfriendlycircuittraining.activities.WorkoutActivity">
 
 
-    <LinearLayout
+    <TextView
+        android:id="@+id/workout_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/workout_headline_workout"
+        android:textAllCaps="false"
+        android:textAppearance="@style/TextAppearance.AppCompat.Headline"
+        android:textColor="@color/colorPrimaryDark"
+        android:textSize="50sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="0.15"
-        android:orientation="horizontal">
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="16dp"
+        android:elevation="1dp"
+        app:layout_constraintBottom_toTopOf="@id/current_sets_info"
+        app:layout_constraintTop_toBottomOf="@id/workout_title">
 
-        <TextView
-            android:id="@+id/workout_title"
+
+        <ImageView
+            android:id="@+id/workout_previous"
             android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_alignParentTop="true"
-            android:layout_centerHorizontal="true"
-            android:layout_weight="1"
-            android:gravity="top|center"
-            android:text="@string/workout_headline_workout"
-            android:textAllCaps="false"
-            android:textAppearance="@style/TextAppearance.AppCompat.Headline"
-            android:textColor="@color/colorPrimaryDark"
-            android:textSize="50sp"
-            android:textStyle="bold"
-            tools:layout_editor_absoluteX="0dp"
-            tools:layout_editor_absoluteY="0dp" />
-    </LinearLayout>
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_weight="0.3"
+            android:onClick="onClick"
+            android:rotation="180"
+            android:src="@drawable/ic_skip_previous_24dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:tint="@color/darkblue" />
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="0.55"
-        android:elevation="1dp">
-
-        <LinearLayout
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/workout_center_view_constraint_layout"
             android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="0.2"
-            android:gravity="bottom|right"
-            android:orientation="vertical">
+            android:layout_height="0dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/workout_next"
+            app:layout_constraintStart_toEndOf="@id/workout_previous"
+            app:layout_constraintTop_toTopOf="parent">
 
-            <Space
-                android:layout_width="match_parent"
+            <RelativeLayout
+                android:id="@+id/relativeLayout"
+                android:layout_width="0dp"
                 android:layout_height="0dp"
-                android:layout_weight="0.8" />
+                app:layout_constraintBottom_toTopOf="@id/workout_image"
+                app:layout_constraintDimensionRatio="1:1"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHeight_min="75dp"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintWidth_min="75dp">
 
-            <ImageView
-                android:id="@+id/workout_previous"
-                android:layout_width="wrap_content"
-                android:layout_height="0dp"
-                android:layout_alignTop="@+id/workout_previous"
-                android:layout_alignParentEnd="true"
-                android:layout_weight="0.3"
-                android:onClick="onClick"
-                android:rotation="180"
-                android:src="@drawable/ic_skip_previous_24dp"
-                app:tint="@color/darkblue" />
+                <ProgressBar
+                    android:id="@+id/progressBar"
+                    style="?android:attr/progressBarStyleHorizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_centerHorizontal="true"
+                    android:progressDrawable="@drawable/circular"
+                    android:rotation="270" />
 
-            <Space
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="0.1" />
-        </LinearLayout>
+                <TextView
+                    android:id="@+id/workout_timer"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_centerHorizontal="true"
+                    android:gravity="center"
+                    android:padding="25dp"
+                    android:text="00"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Large"
+                    android:textColor="@color/colorPrimaryDark"
+                    android:textStyle="bold"
+                    app:autoSizeTextType="uniform" />
 
-        <RelativeLayout
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="0.9"
-            tools:layout_editor_absoluteX="8dp"
-            tools:layout_editor_absoluteY="8dp">
-
-            <ProgressBar
-                android:id="@+id/progressBar"
-                style="?android:attr/progressBarStyleHorizontal"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_centerHorizontal="true"
-                android:progressDrawable="@drawable/circular"
-                android:rotation="270" />
-
-            <TextView
-                android:id="@+id/workout_timer"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_centerHorizontal="true"
-                android:gravity="center"
-                android:text="00"
-                android:textAppearance="@style/TextAppearance.AppCompat.Large"
-                android:textColor="@color/colorPrimaryDark"
-                android:textSize="80dp"
-                android:textStyle="bold" />
-
+            </RelativeLayout>
 
             <ImageView
                 android:id="@+id/workout_image"
-                android:layout_width="150dp"
-                android:layout_height="150dp"
-                android:layout_alignParentBottom="true"
-                android:layout_centerHorizontal="true"
-                android:layout_weight="0.3"
-                android:visibility="gone" />
-
-
-        </RelativeLayout>
-
-        <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="0.2"
-            android:gravity="bottom|left"
-            android:orientation="vertical">
-
-            <Space
-                android:layout_width="match_parent"
+                android:layout_width="0dp"
                 android:layout_height="0dp"
-                android:layout_weight="0.8" />
+                android:layout_gravity="center_horizontal"
+                android:layout_marginBottom="8dp"
+                android:visibility="gone"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintDimensionRatio="1:1"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:visibility="visible" />
 
-            <ImageView
-                android:id="@+id/workout_next"
+            <TextView
+                android:id="@+id/workout_name"
                 android:layout_width="wrap_content"
-                android:layout_height="0dp"
-                android:layout_alignTop="@+id/workout_previous"
-                android:layout_alignParentEnd="true"
-                android:layout_weight="0.3"
-                android:onClick="onClick"
-                android:src="@drawable/ic_skip_next_24dp"
-                app:tint="@color/darkblue" />
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginBottom="8dp"
+                android:text="Exercise"
+                android:textAlignment="center"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:visibility="gone"
+                app:layout_constraintBottom_toTopOf="@id/workout_description"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/workout_image"
+                app:layout_constraintVertical_bias="0.0"
+                tools:visibility="visible" />
 
-            <Space
+            <TextView
+                android:id="@+id/workout_description"
                 android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="0.1" />
+                android:layout_height="wrap_content"
+                android:text="Desctiotion"
+                android:textSize="15sp"
+                android:textStyle="bold"
+                android:visibility="gone"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/workout_name"
+                tools:visibility="visible" />
 
-        </LinearLayout>
-    </LinearLayout>
 
-    <LinearLayout
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+        <ImageView
+            android:id="@+id/workout_next"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="16dp"
+            android:layout_weight="0.3"
+            android:onClick="onClick"
+            android:src="@drawable/ic_skip_next_24dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:tint="@color/darkblue" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <TextView
+        android:id="@+id/current_sets_info"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="0.30"
-        android:orientation="vertical">
+        android:layout_marginBottom="64dp"
+        android:text="@string/workout_info"
+        android:textAlignment="center"
+        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+        android:textColor="@color/colorPrimaryDark"
+        android:textSize="30sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
-        <TextView
-            android:id="@+id/current_sets_info"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/progressBar"
-            android:layout_centerHorizontal="true"
-            android:layout_weight="0.50"
-            android:gravity="center"
-            android:text="@string/workout_info"
-            android:textAlignment="center"
-            android:textAppearance="@style/TextAppearance.AppCompat.Large"
-            android:textColor="@color/colorPrimaryDark"
-            android:textSize="30sp"
-            android:textStyle="bold"
-            tools:layout_editor_absoluteX="0dp"
-            tools:layout_editor_absoluteY="0dp" />
 
-        <Space
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="0.50" />
-    </LinearLayout>
-
-</LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
