@@ -46,6 +46,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import org.secuso.privacyfriendlycircuittraining.R;
 import org.secuso.privacyfriendlycircuittraining.database.PFASQLiteHelper;
+import org.secuso.privacyfriendlycircuittraining.models.Exercise;
 import org.secuso.privacyfriendlycircuittraining.services.TimerService;
 import org.secuso.privacyfriendlycircuittraining.tutorial.PrefManager;
 
@@ -66,6 +67,8 @@ public class WorkoutActivity extends AppCompatActivity {
     private TextView workoutTimer = null;
     private TextView workoutTitle = null;
     private TextView caloriesNumber = null;
+    private TextView workoutName = null;
+    private TextView workoutDescription = null;
 
     // GUI Buttons
     private FloatingActionButton fab = null;
@@ -83,7 +86,7 @@ public class WorkoutActivity extends AppCompatActivity {
     private TimerService timerService = null;
     private boolean serviceBound = false;
 
-    private PFASQLiteHelper db = new PFASQLiteHelper(this);
+    private final PFASQLiteHelper db = new PFASQLiteHelper(this);
 
 
     @Override
@@ -111,30 +114,29 @@ public class WorkoutActivity extends AppCompatActivity {
         this.finishedView = findViewById(R.id.finishedView);
         this.finishedView.setVisibility(View.GONE);
         this.workoutImage = findViewById(R.id.workout_image);
+        this.workoutName = findViewById(R.id.workout_name);
+        this.workoutDescription = findViewById(R.id.workout_description);
 
         // Set the workout screen to remain on if so enabled in the settings
-        if(isKeepScreenOnEnabled(this)) {
+        if (isKeepScreenOnEnabled(this)) {
             getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
         }
 
         // Set the gui to workout gui colors if start timer wasn't enabled
-        if(!isStartTimerEnabled(this)) {
+        if (!isStartTimerEnabled(this)) {
             setWorkoutGuiColors(true);
         }
 
         // Register the function of the pause button
         fab = (FloatingActionButton) findViewById(R.id.fab_pause_resume);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                fab.setSelected(!fab.isSelected());
-                if (fab.isSelected() && timerService != null){
-                    fab.setImageResource(R.drawable.ic_play_24dp);
-                    timerService.pauseTimer();
-                } else if (timerService != null) {
-                    fab.setImageResource(R.drawable.ic_pause_24dp);
-                    timerService.resumeTimer();
-                }
+        fab.setOnClickListener(view -> {
+            fab.setSelected(!fab.isSelected());
+            if (fab.isSelected() && timerService != null) {
+                fab.setImageResource(R.drawable.ic_play_24dp);
+                timerService.pauseTimer();
+            } else if (timerService != null) {
+                fab.setImageResource(R.drawable.ic_pause_24dp);
+                timerService.resumeTimer();
             }
         });
 
@@ -144,17 +146,14 @@ public class WorkoutActivity extends AppCompatActivity {
         volumeButton.setSelected(isSoundsMuted(this));
 
         // Register the function of the volume button
-        volumeButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                volumeButton.setSelected(!volumeButton.isSelected());
-                if (volumeButton.isSelected()){
-                    volumeButton.setImageResource(R.drawable.ic_volume_mute_24dp);
-                    muteAllSounds(true);
-                } else {
-                    volumeButton.setImageResource(R.drawable.ic_volume_loud_24dp);
-                    muteAllSounds(false);
-                }
+        volumeButton.setOnClickListener(view -> {
+            volumeButton.setSelected(!volumeButton.isSelected());
+            if (volumeButton.isSelected()) {
+                volumeButton.setImageResource(R.drawable.ic_volume_mute_24dp);
+                muteAllSounds(true);
+            } else {
+                volumeButton.setImageResource(R.drawable.ic_volume_loud_24dp);
+                muteAllSounds(false);
             }
         });
 
@@ -166,7 +165,7 @@ public class WorkoutActivity extends AppCompatActivity {
      * Defines callbacks for service binding, passed to bindService()
      * Performs an initial GUI update when connection is established.
      **/
-    private ServiceConnection serviceConnection = new ServiceConnection() {
+    private final ServiceConnection serviceConnection = new ServiceConnection() {
 
         @Override
         public void onServiceConnected(ComponentName className, IBinder service) {
@@ -202,7 +201,7 @@ public class WorkoutActivity extends AppCompatActivity {
 
         /**
          * Updates the GUI depending on the message recived
-         *
+         * <p>
          * onTickMillis - Updates the progressBar progress according to current timer millis and makes it blink
          * timer_title - Updates the GUI title and switches the GUI colors accordingly
          * countdown_seconds - Updates the current seconds in the GUI
@@ -216,7 +215,7 @@ public class WorkoutActivity extends AppCompatActivity {
                 if (intent.getLongExtra("onTickMillis", 0) != 0) {
 
                     long millis = intent.getLongExtra("onTickMillis", 0);
-                    progressBar.setProgress((int)millis);
+                    progressBar.setProgress((int) millis);
 
                     if (isProgressBarBlinking(millis, context)) {
                         progressBarBlink();
@@ -237,14 +236,17 @@ public class WorkoutActivity extends AppCompatActivity {
                     int currentSet = intent.getIntExtra("current_set", 0);
                     int sets = intent.getIntExtra("sets", 0);
 
-                    currentSetsInfo.setText(getResources().getString(R.string.workout_info) + ": " + Integer.toString(currentSet) + "/" + Integer.toString(sets));
+                    currentSetsInfo.setText(getResources().getString(R.string.workout_info) + ": " + currentSet + "/" + sets);
                 }
                 if (intent.getBooleanExtra("workout_finished", false) != false) {
                     showFinishedView();
                 }
                 if (intent.getIntExtra("exercise_id", -1) != -1) {
-                    Integer exercise = intent.getIntExtra("exercise_id", -1);
-                    Glide.with(context).load(db.getExercise(exercise).getImage()).into(workoutImage);
+                    int exerciseID = intent.getIntExtra("exercise_id", -1);
+                    Exercise exercise = db.getExercise(exerciseID);
+                    workoutName.setText(exercise.getName());
+                    workoutDescription.setText(exercise.getDescription());
+                    Glide.with(context).load(exercise.getImage()).into(workoutImage);
                 }
 
                 if (intent.getLongExtra("new_timer", 0) != 0) {
@@ -264,11 +266,11 @@ public class WorkoutActivity extends AppCompatActivity {
         /**
          * Check if the progressbar should be blinking
          *
-         * @param millis The current milliseconds
+         * @param millis  The current milliseconds
          * @param context Context
          * @return Boolean if the progressbar should be blinking
          */
-        private boolean isProgressBarBlinking(long millis, Context context){
+        private boolean isProgressBarBlinking(long millis, Context context) {
             int buffer = 100; //Makes sure the animation has time to begin
 
             if (millis <= workoutBlinkingTime && workoutColors && isBlinkingProgressBarEnabled(context) && oldTimeStamp - buffer >= millis) {
@@ -278,7 +280,7 @@ public class WorkoutActivity extends AppCompatActivity {
                 oldTimeStamp = millis;
                 return true;
             }
-            return  false;
+            return false;
         }
     }
 
@@ -312,7 +314,7 @@ public class WorkoutActivity extends AppCompatActivity {
 
         //progressBar.setProgressBackgroundTintList(ColorStateList.valueOf(getResources().getColor(progressBackgroundColor)));
 
-        if(guiFlip)
+        if (guiFlip)
             workoutImage.setImageAlpha(255);
         else
             workoutImage.setImageAlpha(50);
@@ -324,7 +326,7 @@ public class WorkoutActivity extends AppCompatActivity {
     private void progressBarBlink() {
         if (progressBar.getAlpha() == 1.0f)
             progressBar.animate().alpha(0.1f).setDuration(600).start();
-        else if(progressBar.getAlpha() <= 0.15f)
+        else if (progressBar.getAlpha() <= 0.15f)
             progressBar.animate().alpha(1.0f).setDuration(600).start();
     }
 
@@ -335,14 +337,14 @@ public class WorkoutActivity extends AppCompatActivity {
      * @param view View
      */
     public void onClick(View view) {
-        switch(view.getId()) {
+        switch (view.getId()) {
             case R.id.workout_previous:
-                if(timerService != null){
+                if (timerService != null) {
                     timerService.prevTimer();
                 }
                 break;
             case R.id.workout_next:
-                if(timerService != null){
+                if (timerService != null) {
                     timerService.nextTimer();
                 }
                 break;
@@ -351,10 +353,9 @@ public class WorkoutActivity extends AppCompatActivity {
                 finish();
                 break;
             case R.id.finish_workout:
-                if(isCancelDialogEnabled(this)){
+                if (isCancelDialogEnabled(this)) {
                     showCancelAlert(true);
-                }
-                else {
+                } else {
                     showFinishedView();
                 }
                 break;
@@ -366,8 +367,8 @@ public class WorkoutActivity extends AppCompatActivity {
     /**
      * Update all GUI elements by getting the current timer values from the TimerService
      */
-    private void updateGUI(){
-        if(timerService != null){
+    private void updateGUI() {
+        if (timerService != null) {
             boolean isPaused = timerService.getIsPaused();
             int currentSet = timerService.getCurrentSet();
             String title = timerService.getCurrentTitle();
@@ -377,15 +378,15 @@ public class WorkoutActivity extends AppCompatActivity {
             Integer currentExerciseId = timerService.getCurrentExerciseId();
 
 
-            if(timerService.getisExerciseMode()){
+            if (timerService.getisExerciseMode()) {
                 float d = getApplicationContext().getResources().getDisplayMetrics().density;
                 int margin;
-                if(d > 2)
+                if (d > 2)
                     margin = (int) (d * 182);
                 else
                     margin = (int) (d * 140);
                 RelativeLayout.LayoutParams timerlp = (RelativeLayout.LayoutParams) workoutTimer.getLayoutParams();
-                timerlp.setMargins(0,0,margin,margin);
+                timerlp.setMargins(0, 0, margin, margin);
                 timerlp.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
                 timerlp.addRule(RelativeLayout.ALIGN_PARENT_END);
                 timerlp.removeRule(RelativeLayout.CENTER_HORIZONTAL);
@@ -397,48 +398,49 @@ public class WorkoutActivity extends AppCompatActivity {
                 barlp.addRule(RelativeLayout.ALIGN_END, workoutTimer.getId());
 
                 workoutImage.setVisibility(View.VISIBLE);
+                workoutName.setVisibility(View.VISIBLE);
+                workoutDescription.setVisibility(View.VISIBLE);
             }
 
-            if(title.equals(getResources().getString(R.string.workout_headline_workout))){
+            if (title.equals(getResources().getString(R.string.workout_headline_workout))) {
                 timerDuration = timerService.getWorkoutTime();
                 setWorkoutGuiColors(true);
-            }
-            else if(title.equals(getResources().getString(R.string.workout_headline_start_timer))){
+            } else if (title.equals(getResources().getString(R.string.workout_headline_start_timer))) {
                 timerDuration = timerService.getStartTime();
                 setWorkoutGuiColors(false);
-            }
-            else if(title.equals(getResources().getString(R.string.workout_headline_rest))){
+            } else if (title.equals(getResources().getString(R.string.workout_headline_rest))) {
                 timerDuration = timerService.getRestTime();
                 setWorkoutGuiColors(false);
-            }
-            else if(title.equals(getResources().getString(R.string.workout_block_periodization_headline))){
+            } else if (title.equals(getResources().getString(R.string.workout_block_periodization_headline))) {
                 timerDuration = timerService.getBlockRestTime();
                 setWorkoutGuiColors(false);
             }
 
             String time = Long.toString((int) Math.ceil(savedTime / 1000.0));
 
-            currentSetsInfo.setText(getResources().getString(R.string.workout_info) +": "+Integer.toString(currentSet)+"/"+Integer.toString(sets));
+            currentSetsInfo.setText(getResources().getString(R.string.workout_info) + ": " + currentSet + "/" + sets);
             workoutTitle.setText(title);
             workoutTimer.setText(time);
             progressBar.setMax((int) timerDuration);
             progressBar.setProgress((int) savedTime);
             progressBar.setAlpha(1.0f);
 
-            if(timerService.getisExerciseMode()) {
-                Glide.with(this).load(db.getExercise(currentExerciseId).getImage()).into(workoutImage);
+            if (timerService.getisExerciseMode()) {
+                Exercise exercise = db.getExercise(currentExerciseId);
+                workoutName.setText(exercise.getName());
+                workoutDescription.setText(exercise.getDescription());
+                Glide.with(this).load(exercise.getImage()).into(workoutImage);
             }
 
-            if (isPaused){
+            if (isPaused) {
                 fab.setImageResource(R.drawable.ic_play_24dp);
                 fab.setSelected(true);
-            }
-            else {
+            } else {
                 fab.setImageResource(R.drawable.ic_pause_24dp);
                 fab.setSelected(false);
             }
 
-            if(title.equals(getResources().getString(R.string.workout_headline_done))){
+            if (title.equals(getResources().getString(R.string.workout_headline_done))) {
                 showFinishedView();
             }
         }
@@ -450,8 +452,8 @@ public class WorkoutActivity extends AppCompatActivity {
      *
      * @return The AlertDialog
      */
-    private void showCancelAlert(final boolean showFinish){
-        if(timerService != null){
+    private void showCancelAlert(final boolean showFinish) {
+        if (timerService != null) {
             timerService.pauseTimer();
             timerService.setCancelAlert(true);
         }
@@ -460,57 +462,46 @@ public class WorkoutActivity extends AppCompatActivity {
 
         final CharSequence[] item = {getResources().getString(R.string.workout_canceled_check)};
         final boolean[] selection = {false};
-        final ArrayList selectedItem = new ArrayList();
+        final ArrayList<Integer> selectedItem = new ArrayList<>();
 
-        alertBuilder.setMultiChoiceItems(item, selection, new DialogInterface.OnMultiChoiceClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int indexSelected, boolean isChecked) {
-                if (isChecked) {
-                    selectedItem.add(indexSelected);
-                    PrefManager.setCancelWorkoutCheck(getBaseContext(), false);
-                } else if (selectedItem.contains(indexSelected)) {
-                    selectedItem.remove(Integer.valueOf(indexSelected));
-                    PrefManager.setCancelWorkoutCheck(getBaseContext(), true);
-                }
+        alertBuilder.setMultiChoiceItems(item, selection, (dialog, indexSelected, isChecked) -> {
+            if (isChecked) {
+                selectedItem.add(indexSelected);
+                PrefManager.setCancelWorkoutCheck(getBaseContext(), false);
+            } else if (selectedItem.contains(indexSelected)) {
+                selectedItem.remove(Integer.valueOf(indexSelected));
+                PrefManager.setCancelWorkoutCheck(getBaseContext(), true);
             }
         });
 
         alertBuilder.setTitle(R.string.workout_canceled_info);
 
-        alertBuilder.setNegativeButton(getString(R.string.alert_confirm_dialog_negative), new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int id) {
-                if(timerService != null){
-                    timerService.resumeTimer();
-                    timerService.setCancelAlert(false);
-                }
-                updateGUI();
-                dialog.dismiss();
+        alertBuilder.setNegativeButton(getString(R.string.alert_confirm_dialog_negative), (dialog, id) -> {
+            if (timerService != null) {
+                timerService.resumeTimer();
+                timerService.setCancelAlert(false);
             }
+            updateGUI();
+            dialog.dismiss();
         });
 
 
-        alertBuilder.setPositiveButton(getString(R.string.alert_confirm_dialog_positive), new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int id) {
-                if(showFinish){
-                    showFinishedView();
-                }
-                else {
-                    cleanTimerServiceFinish();
-                    finish();
-                }
+        alertBuilder.setPositiveButton(getString(R.string.alert_confirm_dialog_positive), (dialog, id) -> {
+            if (showFinish) {
+                showFinishedView();
+            } else {
+                cleanTimerServiceFinish();
+                finish();
             }
         });
 
-        alertBuilder.setOnCancelListener(new OnCancelListener() {
-
-            public void onCancel(DialogInterface dialog) {
-                if(timerService != null){
-                    timerService.resumeTimer();
-                    timerService.setCancelAlert(false);
-                }
-                updateGUI();
-                dialog.dismiss();
+        alertBuilder.setOnCancelListener(dialog -> {
+            if (timerService != null) {
+                timerService.resumeTimer();
+                timerService.setCancelAlert(false);
             }
+            updateGUI();
+            dialog.dismiss();
         });
 
         alertBuilder.create().show();
@@ -520,11 +511,11 @@ public class WorkoutActivity extends AppCompatActivity {
      * Shows a transparent overlay over the workout screen.
      * Overlay displays that the workout is over and optionally how many calories were burned.
      */
-    private void showFinishedView(){
+    private void showFinishedView() {
         TextView finishButton = (TextView) this.findViewById(R.id.finish_workout);
         finishButton.setEnabled(false);
 
-        if(timerService != null){
+        if (timerService != null) {
             timerService.setCurrentTitle(getString(R.string.workout_headline_done));
             timerService.pauseTimer();
         }
@@ -533,23 +524,18 @@ public class WorkoutActivity extends AppCompatActivity {
         this.fab.hide();
         this.finishedView.setVisibility(View.VISIBLE);
 
-        finishedView.setOnTouchListener(new OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                return true;
-            }
-        });
+        finishedView.setOnTouchListener((v, event) -> true);
 
-        if(isCaloriesEnabled(this)){
-            TextView txt = (TextView)findViewById(R.id.workout_finished_calories_text);
-            TextView nmbr = (TextView)findViewById(R.id.workout_finished_calories_number);
-            TextView unit = (TextView)findViewById(R.id.workout_finished_calories_unit);
+        if (isCaloriesEnabled(this)) {
+            TextView txt = (TextView) findViewById(R.id.workout_finished_calories_text);
+            TextView nmbr = (TextView) findViewById(R.id.workout_finished_calories_number);
+            TextView unit = (TextView) findViewById(R.id.workout_finished_calories_unit);
 
             txt.setVisibility(View.VISIBLE);
             nmbr.setVisibility(View.VISIBLE);
             unit.setVisibility(View.VISIBLE);
 
-            if(timerService != null){
+            if (timerService != null) {
                 String caloriesBurned = Integer.toString(timerService.getCaloriesBurned());
                 this.caloriesNumber.setText(caloriesBurned);
             }
@@ -574,7 +560,7 @@ public class WorkoutActivity extends AppCompatActivity {
     public void onResume() {
         super.onResume();
 
-        if(timerService != null){
+        if (timerService != null) {
             timerService.setIsAppInBackground(false);
         }
         updateGUI();
@@ -588,7 +574,7 @@ public class WorkoutActivity extends AppCompatActivity {
     public void onPause() {
         super.onPause();
 
-        if(timerService != null){
+        if (timerService != null) {
             timerService.setIsAppInBackground(true);
         }
         unregisterReceiver(timeReceiver);
@@ -599,7 +585,7 @@ public class WorkoutActivity extends AppCompatActivity {
      */
     @Override
     public void onDestroy() {
-        if(timerService != null){
+        if (timerService != null) {
             timerService.workoutClosed();
             timerService.setCancelAlert(false);
         }
@@ -611,10 +597,9 @@ public class WorkoutActivity extends AppCompatActivity {
      */
     @Override
     public void onBackPressed() {
-        if(isCancelDialogEnabled(this)){
+        if (isCancelDialogEnabled(this)) {
             showCancelAlert(false);
-        }
-        else{
+        } else {
             cleanTimerServiceFinish();
             finish();
         }
@@ -625,8 +610,8 @@ public class WorkoutActivity extends AppCompatActivity {
     /**
      * Calls the service to stop an clear all timer
      */
-    private void cleanTimerServiceFinish(){
-        if(timerService != null) {
+    private void cleanTimerServiceFinish() {
+        if (timerService != null) {
             timerService.cleanTimerFinish();
         }
     }
@@ -636,15 +621,15 @@ public class WorkoutActivity extends AppCompatActivity {
      *
      * @param mute Flag to mute or unmute all sounds
      */
-    private void muteAllSounds(boolean mute){
+    private void muteAllSounds(boolean mute) {
         PrefManager.setSoundsMuted(getBaseContext(), mute);
     }
 
     /*
-    * Multiple checks for what was enabled inside the settings
-    */
-    public boolean isKeepScreenOnEnabled(Context context){
-        return  PrefManager.getKeepScreenOnSwitchEnabled(context);
+     * Multiple checks for what was enabled inside the settings
+     */
+    public boolean isKeepScreenOnEnabled(Context context) {
+        return PrefManager.getKeepScreenOnSwitchEnabled(context);
     }
 
     public boolean isStartTimerEnabled(Context context) {
