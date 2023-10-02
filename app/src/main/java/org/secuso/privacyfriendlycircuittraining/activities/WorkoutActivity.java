@@ -17,8 +17,6 @@ package org.secuso.privacyfriendlycircuittraining.activities;
 import android.app.AlertDialog;
 import android.content.ComponentName;
 import android.content.Context;
-import android.content.DialogInterface;
-import android.content.DialogInterface.OnCancelListener;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.ServiceConnection;
@@ -27,18 +25,17 @@ import android.graphics.drawable.Drawable;
 import android.graphics.drawable.LayerDrawable;
 import android.os.Bundle;
 import android.os.IBinder;
-import android.view.MotionEvent;
 import android.view.View;
-import android.view.View.OnTouchListener;
 import android.view.WindowManager;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.constraintlayout.widget.ConstraintSet;
 import androidx.core.content.ContextCompat;
 
 import com.bumptech.glide.Glide;
@@ -379,27 +376,15 @@ public class WorkoutActivity extends AppCompatActivity {
 
 
             if (timerService.getisExerciseMode()) {
-                float d = getApplicationContext().getResources().getDisplayMetrics().density;
-                int margin;
-                if (d > 2)
-                    margin = (int) (d * 182);
-                else
-                    margin = (int) (d * 140);
-                RelativeLayout.LayoutParams timerlp = (RelativeLayout.LayoutParams) workoutTimer.getLayoutParams();
-                timerlp.setMargins(0, 0, margin, margin);
-                timerlp.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
-                timerlp.addRule(RelativeLayout.ALIGN_PARENT_END);
-                timerlp.removeRule(RelativeLayout.CENTER_HORIZONTAL);
-                workoutTimer.setLayoutParams(timerlp);
-                workoutTimer.setTextSize(36);
-
-                RelativeLayout.LayoutParams barlp = (RelativeLayout.LayoutParams) progressBar.getLayoutParams();
-                barlp.addRule(RelativeLayout.ALIGN_BOTTOM, workoutTimer.getId());
-                barlp.addRule(RelativeLayout.ALIGN_END, workoutTimer.getId());
-
                 workoutImage.setVisibility(View.VISIBLE);
                 workoutName.setVisibility(View.VISIBLE);
                 workoutDescription.setVisibility(View.VISIBLE);
+            } else {
+                ConstraintLayout constraintLayout = findViewById(R.id.workout_center_view_constraint_layout);
+                ConstraintSet constraintSet = new ConstraintSet();
+                constraintSet.clone(constraintLayout);
+                constraintSet.setVerticalBias(R.id.workout_image, 1f);
+                constraintSet.applyTo(constraintLayout);
             }
 
             if (title.equals(getResources().getString(R.string.workout_headline_workout))) {
