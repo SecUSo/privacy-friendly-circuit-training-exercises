@@ -175,6 +175,9 @@ public class MainActivity extends BaseActivity {
                     toast.setGravity(Gravity.CENTER, 0, 60);
                     toast.show();
                     workoutMode.setChecked(false);
+                    isExerciseMode = false;
+                    workoutModeSwitchState = false;
+                    PrefManager.setWorkoutMode(getBaseContext(), false);
                 } else {
                     buttonView.getRootView().findViewById(R.id.exerciesetsRow).setVisibility(View.VISIBLE);
                     sets = 1;
