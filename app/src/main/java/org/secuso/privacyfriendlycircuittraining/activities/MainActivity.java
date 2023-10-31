@@ -18,7 +18,6 @@ import android.app.AlarmManager;
 import android.app.AlertDialog;
 import android.content.ComponentName;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.ServiceConnection;
 import android.os.Build;
@@ -32,7 +31,6 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.CompoundButton;
 import android.widget.Spinner;
 import android.widget.Switch;
 import android.widget.TextView;
@@ -59,15 +57,12 @@ public class MainActivity extends BaseActivity {
 
     // CONFIGURE TIMER VARIABLES HERE
     // Max and min values for the workout and rest timer as well as the sets
-    private final int workoutMaxTime = 300; // 5 min
-    private final int workoutMinTime = 10; // 10 sec
-    private final int restMaxTime = 300; // 5 min
-    private final int restMinTime = 10; // 10 sec
-    private final int maxSets = 16;
-    private final int minSets = 1;
-
-    // General
-    private Intent intent = null;
+    private static final int workoutMaxTime = 300; // 5 min
+    private static final int workoutMinTime = 10; // 10 sec
+    private static final int restMaxTime = 300; // 5 min
+    private static final int restMinTime = 10; // 10 sec
+    private static final int maxSets = 16;
+    private static final int minSets = 1;
 
     // Block periodization values and Button
     private final long blockPeriodizationTimeMax = 300; // 5:00 min
@@ -77,7 +72,7 @@ public class MainActivity extends BaseActivity {
     private Switch blockPeriodizationSwitchButton;
 
     // Timer values
-    private final long startTime = 10; // Starttimer 10 sec
+    private static final long startTime = 10; // Starttimer 10 sec
     private long workoutTime = 0;
     private long restTime = 0;
     private int sets = 0;
@@ -96,7 +91,7 @@ public class MainActivity extends BaseActivity {
 
     private Spinner exerciseSetSpinner;
     private Switch workoutMode;
-    private PFASQLiteHelper db = new PFASQLiteHelper(this);
+    private final PFASQLiteHelper db = new PFASQLiteHelper(this);
     ArrayList<Integer> exerciseIds = null;
     ArrayList<Integer> ExerciseIdsForRounds = null;
 
@@ -131,8 +126,9 @@ public class MainActivity extends BaseActivity {
         this.workoutMode.setChecked(workoutModeSwitchState);
         this.blockPeriodizationSwitchButton.setChecked(blockPeriodizationSwitchState);
 
-        if(workoutModeSwitchState) {
+        if (workoutModeSwitchState) {
             findViewById(R.id.exerciesetsRow).setVisibility(View.VISIBLE);
+            isExerciseMode = true;
         }
 
         //Start timer service
@@ -140,7 +136,7 @@ public class MainActivity extends BaseActivity {
         startService(new Intent(this, TimerService.class));
 
         //Schedule the next motivation notification (necessary if permission was not granted)
-        if(NotificationHelper.isMotivationAlertEnabled(this)){
+        if (NotificationHelper.isMotivationAlertEnabled(this)) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
                 AlarmManager am = (AlarmManager) getApplicationContext().getSystemService(Context.ALARM_SERVICE);
                 if (!am.canScheduleExactAlarms()) { //Check permission to schedule exact alarm on versions >= Android S
@@ -154,55 +150,51 @@ public class MainActivity extends BaseActivity {
         }
 
         //Set the change listener for the switch button to turn block periodization on and off
-        blockPeriodizationSwitchButton.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                isBlockPeriodization = isChecked;
-                blockPeriodizationSwitchState = isChecked;
-                PrefManager.setBlockPeriodizationSwitchButton(getBaseContext(), isChecked);
-            }
+        blockPeriodizationSwitchButton.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            isBlockPeriodization = isChecked;
+            blockPeriodizationSwitchState = isChecked;
+            PrefManager.setBlockPeriodizationSwitchButton(getBaseContext(), isChecked);
         });
 
-        //Suggest the user to enter his body data
+        //Suggest the user to enter their body data
         PrefManager.performMigrations(getBaseContext());
-        if(PrefManager.isFirstTimeLaunch(getBaseContext())){
+        if (PrefManager.isFirstTimeLaunch(getBaseContext())) {
             PrefManager.setFirstTimeLaunch(getBaseContext(), false);
             showPersonalizationAlert();
         }
 
         final List<ExerciseSet> exerciseSetslist = db.getAllExerciseSet();
 
-        workoutMode.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                isExerciseMode = isChecked;
-                workoutModeSwitchState = isChecked;
-                PrefManager.setWorkoutMode(getBaseContext(), isChecked);
-                if(isExerciseMode){
-                    if(exerciseSetslist.size() == 0){
-                        toast = Toast.makeText(getApplication(), getResources().getString(R.string.no_exercise_sets), Toast.LENGTH_LONG);
-                        toast.setGravity(Gravity.CENTER, 0, 60);
-                        toast.show();
-                        workoutMode.setChecked(false);
-                    }
-                    else {
-                        buttonView.getRootView().findViewById(R.id.exerciesetsRow).setVisibility(View.VISIBLE);
-                        sets = 1;
-                        setsText.setText(Integer.toString(sets));
-                    }
-                }
-                else{
-                    buttonView.getRootView().findViewById(R.id.exerciesetsRow).setVisibility(View.GONE);
-                    sets = PrefManager.setsDefault;
+        workoutMode.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            isExerciseMode = isChecked;
+            workoutModeSwitchState = isChecked;
+            PrefManager.setWorkoutMode(getBaseContext(), isChecked);
+            if (isExerciseMode) {
+                if (exerciseSetslist.size() == 0) {
+                    toast = Toast.makeText(getApplication(), getResources().getString(R.string.no_exercise_sets), Toast.LENGTH_LONG);
+                    toast.setGravity(Gravity.CENTER, 0, 60);
+                    toast.show();
+                    workoutMode.setChecked(false);
+                    isExerciseMode = false;
+                    workoutModeSwitchState = false;
+                    PrefManager.setWorkoutMode(getBaseContext(), false);
+                } else {
+                    buttonView.getRootView().findViewById(R.id.exerciesetsRow).setVisibility(View.VISIBLE);
+                    sets = 1;
                     setsText.setText(Integer.toString(sets));
-                    exerciseIds = null;
                 }
+            } else {
+                buttonView.getRootView().findViewById(R.id.exerciesetsRow).setVisibility(View.GONE);
+                sets = PrefManager.setsDefault;
+                setsText.setText(Integer.toString(sets));
             }
         });
         exerciseIds = new ArrayList<>();
         final List<String> exerciseSetsNames = new ArrayList<>();
-        for(ExerciseSet ex : exerciseSetslist){
+        for (ExerciseSet ex : exerciseSetslist) {
             exerciseSetsNames.add(ex.getName());
         }
-        ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this,
+        ArrayAdapter<String> dataAdapter = new ArrayAdapter<>(this,
                 android.R.layout.simple_spinner_item, exerciseSetsNames);
         dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         exerciseSetSpinner.setAdapter(dataAdapter);
@@ -213,12 +205,14 @@ public class MainActivity extends BaseActivity {
             }
 
             @Override
-            public void onNothingSelected(AdapterView<?> parentView) { }
+            public void onNothingSelected(AdapterView<?> parentView) {
+            }
         });
     }
 
     /**
      * This method connects the Activity to the menu item
+     *
      * @return ID of the menu item it belongs to
      */
     @Override
@@ -265,7 +259,7 @@ public class MainActivity extends BaseActivity {
             this.workoutMode.setChecked(!this.workoutMode.isChecked());
             PrefManager.setWorkoutMode(getBaseContext(), this.workoutMode.isChecked());
         } else if (id == R.id.start_workout) {
-            intent = new Intent(this, WorkoutActivity.class);
+            Intent intent = new Intent(this, WorkoutActivity.class);
 
             if (isExerciseMode) {
                 ExerciseIdsForRounds = getExercisesForRounds(exerciseIds, sets);
@@ -275,8 +269,12 @@ public class MainActivity extends BaseActivity {
                 setsPerRound = sets;
             }
 
-            if (setsPerRound == 0 || ExerciseIdsForRounds.size() == 0) {
-                Toast.makeText(this, R.string.exercise_set_has_no_exercises, Toast.LENGTH_SHORT).show();
+            if (setsPerRound == 0) {
+                if (isExerciseMode && ExerciseIdsForRounds.size() == 0) {
+                    Toast.makeText(this, R.string.exercise_set_has_no_exercises, Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(this, R.string.exercise_set_has_no_sets, Toast.LENGTH_SHORT).show();
+                }
                 return;
             }
 
@@ -295,7 +293,7 @@ public class MainActivity extends BaseActivity {
     /**
      * Defines callbacks for service binding, passed to bindService()
      **/
-    private ServiceConnection serviceConnection = new ServiceConnection() {
+    private final ServiceConnection serviceConnection = new ServiceConnection() {
 
         @Override
         public void onServiceConnected(ComponentName className, IBinder service) {
@@ -311,58 +309,57 @@ public class MainActivity extends BaseActivity {
     };
 
 
-
-   /**
-    * Build an AlertDialog for the block periodization configurations
-    */
-    private AlertDialog buildBlockAlert(){
+    /**
+     * Build an AlertDialog for the block periodization configurations
+     */
+    private AlertDialog buildBlockAlert() {
         LayoutInflater inflater = getLayoutInflater();
         View dialogLayout = inflater.inflate(R.layout.block_periodization, null);
 
-        Button timeButtonPlus = (Button)dialogLayout.findViewById(R.id.main_block_periodization_time_plus);
-        Button timeButtonMinus = (Button)dialogLayout.findViewById(R.id.main_block_periodization_time_minus);
-        Button setButtonPlus = (Button)dialogLayout.findViewById(R.id.main_block_periodization_sets_plus);
-        Button setButtonMinus = (Button)dialogLayout.findViewById(R.id.main_block_periodization_sets_minus);
+        Button timeButtonPlus = (Button) dialogLayout.findViewById(R.id.main_block_periodization_time_plus);
+        Button timeButtonMinus = (Button) dialogLayout.findViewById(R.id.main_block_periodization_time_minus);
+        Button setButtonPlus = (Button) dialogLayout.findViewById(R.id.main_block_periodization_sets_plus);
+        Button setButtonMinus = (Button) dialogLayout.findViewById(R.id.main_block_periodization_sets_minus);
 
-        final TextView setsText = (TextView)dialogLayout.findViewById(R.id.main_block_periodization_sets_amount);
-        final TextView timeText = (TextView)dialogLayout.findViewById(R.id.main_block_periodization_time);
-        blockPeriodizationSets = (blockPeriodizationSets >= sets) ? sets-1 : blockPeriodizationSets;
+        final TextView setsText = (TextView) dialogLayout.findViewById(R.id.main_block_periodization_sets_amount);
+        final TextView timeText = (TextView) dialogLayout.findViewById(R.id.main_block_periodization_time);
+        blockPeriodizationSets = (blockPeriodizationSets >= sets) ? sets - 1 : blockPeriodizationSets;
         blockPeriodizationSets = (blockPeriodizationSets <= 0) ? 1 : blockPeriodizationSets;
 
         setsText.setText(Integer.toString(blockPeriodizationSets));
         timeText.setText(formatTime(blockPeriodizationTime));
 
-        setButtonPlus.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                if(blockPeriodizationSets < sets-1){ blockPeriodizationSets += 1; }
-                setsText.setText(Integer.toString(blockPeriodizationSets));
-                PrefManager.setTimerPeriodizationSet(getBaseContext(), blockPeriodizationSets);
+        setButtonPlus.setOnClickListener(v -> {
+            if (blockPeriodizationSets < sets - 1) {
+                blockPeriodizationSets += 1;
             }
+            setsText.setText(Integer.toString(blockPeriodizationSets));
+            PrefManager.setTimerPeriodizationSet(getBaseContext(), blockPeriodizationSets);
         });
 
-        setButtonMinus.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                if(blockPeriodizationSets > 1){ blockPeriodizationSets -= 1; }
-                setsText.setText(Integer.toString(blockPeriodizationSets));
-                PrefManager.setTimerPeriodizationSet(getBaseContext(), blockPeriodizationSets);
+        setButtonMinus.setOnClickListener(v -> {
+            if (blockPeriodizationSets > 1) {
+                blockPeriodizationSets -= 1;
             }
+            setsText.setText(Integer.toString(blockPeriodizationSets));
+            PrefManager.setTimerPeriodizationSet(getBaseContext(), blockPeriodizationSets);
         });
 
 
-        timeButtonPlus.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                if(blockPeriodizationTime < blockPeriodizationTimeMax){ blockPeriodizationTime += 10; }
-                timeText.setText(formatTime(blockPeriodizationTime));
-                PrefManager.setTimerPeriodizationTime(getBaseContext(), (int) blockPeriodizationTime);
+        timeButtonPlus.setOnClickListener(v -> {
+            if (blockPeriodizationTime < blockPeriodizationTimeMax) {
+                blockPeriodizationTime += 10;
             }
+            timeText.setText(formatTime(blockPeriodizationTime));
+            PrefManager.setTimerPeriodizationTime(getBaseContext(), (int) blockPeriodizationTime);
         });
 
-        timeButtonMinus.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                if(blockPeriodizationTime > 10){ blockPeriodizationTime -= 10; }
-                timeText.setText(formatTime(blockPeriodizationTime));
-                PrefManager.setTimerPeriodizationTime(getBaseContext(), (int) blockPeriodizationTime);
+        timeButtonMinus.setOnClickListener(v -> {
+            if (blockPeriodizationTime > 10) {
+                blockPeriodizationTime -= 10;
             }
+            timeText.setText(formatTime(blockPeriodizationTime));
+            PrefManager.setTimerPeriodizationTime(getBaseContext(), (int) blockPeriodizationTime);
         });
 
 
@@ -370,33 +367,23 @@ public class MainActivity extends BaseActivity {
         alertBuilder.setView(dialogLayout);
 
         alertBuilder.setTitle(getResources().getString(R.string.main_block_periodization_headline)).setPositiveButton(
-                    "Ok",
-                    new DialogInterface.OnClickListener() {
-                        public void onClick(DialogInterface dialog, int id) {
-                            dialog.cancel();
-                        }
-                });
+                "Ok",
+                (dialog, id) -> dialog.cancel());
 
         return alertBuilder.create();
     }
 
-    private void showPersonalizationAlert(){
+    private void showPersonalizationAlert() {
         AlertDialog.Builder alertBuilder = new AlertDialog.Builder(this);
 
         alertBuilder.setTitle(R.string.alert_personalization_title);
         alertBuilder.setMessage(R.string.alert_personalization_message);
-        alertBuilder.setNegativeButton(getString(R.string.alert_confirm_dialog_negative), new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int id) {
-                dialog.dismiss();
-            }
-        });
-        alertBuilder.setPositiveButton(getString(R.string.alert_confirm_dialog_positive), new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int id) {
-                Intent i = new Intent( MainActivity.this, SettingsActivity.class );
-                i.putExtra( PreferenceActivity.EXTRA_SHOW_FRAGMENT, SettingsActivity.PersonalizationPreferenceFragment.class.getName() );
-                i.putExtra( PreferenceActivity.EXTRA_NO_HEADERS, true );
-                startActivity(i);
-            }
+        alertBuilder.setNegativeButton(getString(R.string.alert_confirm_dialog_negative), (dialog, id) -> dialog.dismiss());
+        alertBuilder.setPositiveButton(getString(R.string.alert_confirm_dialog_positive), (dialog, id) -> {
+            Intent i = new Intent(MainActivity.this, SettingsActivity.class);
+            i.putExtra(PreferenceActivity.EXTRA_SHOW_FRAGMENT, SettingsActivity.PersonalizationPreferenceFragment.class.getName());
+            i.putExtra(PreferenceActivity.EXTRA_NO_HEADERS, true);
+            startActivity(i);
         });
         alertBuilder.create().show();
     }
@@ -450,10 +437,10 @@ public class MainActivity extends BaseActivity {
     }
 
     private String formatTime(long seconds) {
-        long min = seconds/60;
-        long sec = seconds%60;
+        long min = seconds / 60;
+        long sec = seconds % 60;
 
-        return String.format("%02d : %02d", min,sec);
+        return String.format("%02d : %02d", min, sec);
     }
 
     private ArrayList<Integer> getExercisesForRounds(ArrayList<Integer> exerciseIds, int rounds) {

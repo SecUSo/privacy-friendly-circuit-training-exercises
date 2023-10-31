@@ -27,11 +27,10 @@ import java.util.ArrayList;
 /**
  * @author Karola Marky
  * @version 20161225
- *          Structure based on http://tech.sarathdr.com/android-app/convert-database-cursor-result-to-json-array-android-app-development/
- *          accessed at 25th December 2016
- *          <p>
- *          This class turns a database into a JSON string
- *
+ * Structure based on http://tech.sarathdr.com/android-app/convert-database-cursor-result-to-json-array-android-app-development/
+ * accessed at 25th December 2016
+ * <p>
+ * This class turns a database into a JSON string
  */
 
 public class DatabaseExporter {
@@ -48,6 +47,7 @@ public class DatabaseExporter {
 
     /**
      * Turns a single DB table into a JSON string
+     *
      * @return JSON string of the table
      */
     public JSONArray tableToJSON(String TABLE_NAME) {
@@ -114,7 +114,7 @@ public class DatabaseExporter {
 
         if (c.moveToFirst()) {
             while (!c.isAfterLast()) {
-                arrTblNames.add(c.getString(c.getColumnIndex("name")));
+                arrTblNames.add(c.getString(c.getColumnIndexOrThrow("name")));
                 c.moveToNext();
             }
         }
@@ -122,7 +122,6 @@ public class DatabaseExporter {
     }
 
     /**
-     *
      * @return Entire DB as JSONObject
      * @throws JSONException
      */
