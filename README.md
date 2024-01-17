@@ -41,6 +41,10 @@ https://www.fitness-gesundheit.uni-wuppertal.de/fileadmin/fitness-gesundheit/pdf
 Minimum SDK: 21
 Target SDK: 32 
 
+## Data Backup
+
+You can use the [Privacy Friendly Backup app](https://github.com/SecUSo/privacy-friendly-backup) to backup and restore this application's data. This can also be used to migrate your data to a new phone.
+
 ## License
 
 Privacy Friendly Circuit Trainer is licensed under the GPLv3.
