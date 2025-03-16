@@ -14,6 +14,7 @@
 
 package org.secuso.privacyfriendlycircuittraining.receivers;
 
+import android.app.AlarmManager;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -28,9 +29,12 @@ import static org.secuso.privacyfriendlycircuittraining.helpers.NotificationHelp
  * @author Alexander Karakuz
  * @version 20170812
  */
-public class OnBootCompletedBroadcastReceiver extends BroadcastReceiver {
+public class NotificationEventsReceiver extends BroadcastReceiver {
+
+    private static final String TAG = "NotificationEventsReceiver";
     @Override
     public void onReceive(Context context, Intent intent) {
+        if (Intent.ACTION_BOOT_COMPLETED.equals(intent.getAction()) && AlarmManager.ACTION_SCHEDULE_EXACT_ALARM_PERMISSION_STATE_CHANGED.equals(intent.getAction())) return;
         if(isMotivationAlertEnabled(context)){
             setMotivationAlert(context);
         }
