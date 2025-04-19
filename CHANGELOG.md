@@ -1,54 +1,54 @@
 # Changelog
 
-<a name="v1.2.1"></a>
-## [Circuit Training (Privacy Friendly) v1.2.1](https://github.com/SecUSo/privacy-friendly-circuit-training-exercises/releases/tag/v1.2.1) - 31 Oct 2023
+<a id="v1.2.1"></a>
+## [Circuit Training (Privacy Friendly) v1.2.1](https://github.com/SecUSo/privacy-friendly-circuit-training-exercises/releases/tag/v1.2.1) - 2023-10-31
 
 ## What's Changed
-* Update dependencies by [@udenr](https://github.com/udenr) in https://github.com/SecUSo/privacy-friendly-circuit-training-exercises/pull/26
-* Fix lint errors by [@udenr](https://github.com/udenr) in https://github.com/SecUSo/privacy-friendly-circuit-training-exercises/pull/28
-* Update workflows by [@udenr](https://github.com/udenr) in https://github.com/SecUSo/privacy-friendly-circuit-training-exercises/pull/27
-* Fix documentation genders by [@DeflateAwning](https://github.com/DeflateAwning) in https://github.com/SecUSo/privacy-friendly-circuit-training-exercises/pull/24
-* Bug fixes by [@barefootstache](https://github.com/barefootstache) in https://github.com/SecUSo/privacy-friendly-circuit-training-exercises/pull/21
-* Fix/exercise mode switch by [@udenr](https://github.com/udenr) in https://github.com/SecUSo/privacy-friendly-circuit-training-exercises/pull/29
-* Feature: Add exercise name and description by [@udenr](https://github.com/udenr) in https://github.com/SecUSo/privacy-friendly-circuit-training-exercises/pull/30
-* Update to version 1.2.1 by [@udenr](https://github.com/udenr) in https://github.com/SecUSo/privacy-friendly-circuit-training-exercises/pull/32
+* Update dependencies by [@udenr](https://github.com/udenr) in [#26](https://github.com/SecUSo/privacy-friendly-circuit-training-exercises/pull/26)
+* Fix lint errors by [@udenr](https://github.com/udenr) in [#28](https://github.com/SecUSo/privacy-friendly-circuit-training-exercises/pull/28)
+* Update workflows by [@udenr](https://github.com/udenr) in [#27](https://github.com/SecUSo/privacy-friendly-circuit-training-exercises/pull/27)
+* Fix documentation genders by [@DeflateAwning](https://github.com/DeflateAwning) in [#24](https://github.com/SecUSo/privacy-friendly-circuit-training-exercises/pull/24)
+* Bug fixes by [@barefootstache](https://github.com/barefootstache) in [#21](https://github.com/SecUSo/privacy-friendly-circuit-training-exercises/pull/21)
+* Fix/exercise mode switch by [@udenr](https://github.com/udenr) in [#29](https://github.com/SecUSo/privacy-friendly-circuit-training-exercises/pull/29)
+* Feature: Add exercise name and description by [@udenr](https://github.com/udenr) in [#30](https://github.com/SecUSo/privacy-friendly-circuit-training-exercises/pull/30)
+* Update to version 1.2.1 by [@udenr](https://github.com/udenr) in [#32](https://github.com/SecUSo/privacy-friendly-circuit-training-exercises/pull/32)
 
 ## New Contributors
-* [@DeflateAwning](https://github.com/DeflateAwning) made their first contribution in https://github.com/SecUSo/privacy-friendly-circuit-training-exercises/pull/24
-* [@barefootstache](https://github.com/barefootstache) made their first contribution in https://github.com/SecUSo/privacy-friendly-circuit-training-exercises/pull/21
+* [@DeflateAwning](https://github.com/DeflateAwning) made their first contribution in [#24](https://github.com/SecUSo/privacy-friendly-circuit-training-exercises/pull/24)
+* [@barefootstache](https://github.com/barefootstache) made their first contribution in [#21](https://github.com/SecUSo/privacy-friendly-circuit-training-exercises/pull/21)
 
 **Full Changelog**: https://github.com/SecUSo/privacy-friendly-circuit-training-exercises/compare/v1.2.0...v1.2.1
 
 [Changes][v1.2.1]
 
 
-<a name="v1.2.0"></a>
-## [Circuit Training (Privacy Friendly) v1.2.0](https://github.com/SecUSo/privacy-friendly-circuit-training-exercises/releases/tag/v1.2.0) - 13 Jan 2023
+<a id="v1.2.0"></a>
+## [Circuit Training (Privacy Friendly) v1.2.0](https://github.com/SecUSo/privacy-friendly-circuit-training-exercises/releases/tag/v1.2.0) - 2023-01-13
 
 ## What's Changed
-* Update README.md by [@Poussinou](https://github.com/Poussinou) in https://github.com/SecUSo/privacy-friendly-circuit-training-exercises/pull/15
-* Add support for Privacy Friendly Backup by [@udenr](https://github.com/udenr) in https://github.com/SecUSo/privacy-friendly-circuit-training-exercises/pull/19
-* Refactor preference handling by [@udenr](https://github.com/udenr) in https://github.com/SecUSo/privacy-friendly-circuit-training-exercises/pull/20
+* Update README.md by [@Poussinou](https://github.com/Poussinou) in [#15](https://github.com/SecUSo/privacy-friendly-circuit-training-exercises/pull/15)
+* Add support for Privacy Friendly Backup by [@udenr](https://github.com/udenr) in [#19](https://github.com/SecUSo/privacy-friendly-circuit-training-exercises/pull/19)
+* Refactor preference handling by [@udenr](https://github.com/udenr) in [#20](https://github.com/SecUSo/privacy-friendly-circuit-training-exercises/pull/20)
 
 ## New Contributors
-* [@Poussinou](https://github.com/Poussinou) made their first contribution in https://github.com/SecUSo/privacy-friendly-circuit-training-exercises/pull/15
-* [@udenr](https://github.com/udenr) made their first contribution in https://github.com/SecUSo/privacy-friendly-circuit-training-exercises/pull/19
+* [@Poussinou](https://github.com/Poussinou) made their first contribution in [#15](https://github.com/SecUSo/privacy-friendly-circuit-training-exercises/pull/15)
+* [@udenr](https://github.com/udenr) made their first contribution in [#19](https://github.com/SecUSo/privacy-friendly-circuit-training-exercises/pull/19)
 
 **Full Changelog**: https://github.com/SecUSo/privacy-friendly-circuit-training-exercises/compare/v1.1...v1.2.0
 
 [Changes][v1.2.0]
 
 
-<a name="v1.1"></a>
-## [Circuit Training (Privacy Friendly) v1.1](https://github.com/SecUSo/privacy-friendly-circuit-training-exercises/releases/tag/v1.1) - 06 Jun 2019
+<a id="v1.1"></a>
+## [Circuit Training (Privacy Friendly) v1.1](https://github.com/SecUSo/privacy-friendly-circuit-training-exercises/releases/tag/v1.1) - 2019-06-06
 
 - bug fixes
 
 [Changes][v1.1]
 
 
-<a name="v1.0"></a>
-## [Privacy Friendly Circuit Training v1.0](https://github.com/SecUSo/privacy-friendly-circuit-training-exercises/releases/tag/v1.0) - 29 Mar 2018
+<a id="v1.0"></a>
+## [Privacy Friendly Circuit Training v1.0](https://github.com/SecUSo/privacy-friendly-circuit-training-exercises/releases/tag/v1.0) - 2018-03-29
 
 Privacy Friendly Circuit Trainer is an Android App that supports the user during his/her circuit training session. It provides a configurable set of timers for the exercises and the rest phases as well as multiple other features.
 
@@ -60,4 +60,4 @@ Privacy Friendly Circuit Trainer is an Android App that supports the user during
 [v1.1]: https://github.com/SecUSo/privacy-friendly-circuit-training-exercises/compare/v1.0...v1.1
 [v1.0]: https://github.com/SecUSo/privacy-friendly-circuit-training-exercises/tree/v1.0
 
-<!-- Generated by https://github.com/rhysd/changelog-from-release v3.7.1 -->
+<!-- Generated by https://github.com/rhysd/changelog-from-release v3.9.0 -->
