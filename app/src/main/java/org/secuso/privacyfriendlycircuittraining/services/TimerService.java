@@ -30,6 +30,7 @@ import android.os.IBinder;
 import android.widget.RemoteViews;
 
 import androidx.core.app.NotificationCompat;
+import androidx.core.content.ContextCompat;
 
 import org.secuso.privacyfriendlycircuittraining.R;
 import org.secuso.privacyfriendlycircuittraining.activities.WorkoutActivity;
@@ -115,7 +116,7 @@ public class TimerService extends Service {
         this.restTimer = createRestTimer(this.startTime);
         this.workoutTimer = createWorkoutTimer(this.workoutTime);
 
-        registerReceiver(notificationReceiver, new IntentFilter(NOTIFICATION_BROADCAST));
+        ContextCompat.registerReceiver(this, notificationReceiver, new IntentFilter(NOTIFICATION_BROADCAST), ContextCompat.RECEIVER_EXPORTED);
 
         notiBuilder = new NotificationCompat.Builder(this);
         notiManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
