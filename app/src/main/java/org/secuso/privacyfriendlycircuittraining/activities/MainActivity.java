@@ -36,6 +36,7 @@ import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import org.secuso.privacyfriendlycircuittraining.GoodbyeGoogleHelperKt;
 import org.secuso.privacyfriendlycircuittraining.R;
 import org.secuso.privacyfriendlycircuittraining.database.PFASQLiteHelper;
 import org.secuso.privacyfriendlycircuittraining.fragments.GrantExactAlarmPermissionDialogFragment;
@@ -208,6 +209,7 @@ public class MainActivity extends BaseActivity {
             public void onNothingSelected(AdapterView<?> parentView) {
             }
         });
+        GoodbyeGoogleHelperKt.checkGoodbyeGoogle(this, getLayoutInflater());
     }
 
     /**
