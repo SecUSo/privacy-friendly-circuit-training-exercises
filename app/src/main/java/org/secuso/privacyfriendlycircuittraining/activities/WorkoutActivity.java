@@ -14,6 +14,7 @@
 
 package org.secuso.privacyfriendlycircuittraining.activities;
 
+import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.ComponentName;
 import android.content.Context;
@@ -23,6 +24,7 @@ import android.content.ServiceConnection;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.LayerDrawable;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.view.View;
@@ -541,6 +543,7 @@ public class WorkoutActivity extends AppCompatActivity {
     /**
      * Stop the notification and update the GUI with current values
      */
+    @SuppressLint("UnspecifiedRegisterReceiverFlag")
     @Override
     public void onResume() {
         super.onResume();
@@ -549,7 +552,11 @@ public class WorkoutActivity extends AppCompatActivity {
             timerService.setIsAppInBackground(false);
         }
         updateGUI();
-        registerReceiver(timeReceiver, new IntentFilter(TimerService.COUNTDOWN_BROADCAST));
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            registerReceiver(timeReceiver, new IntentFilter(TimerService.COUNTDOWN_BROADCAST), RECEIVER_EXPORTED);
+        } else {
+            registerReceiver(timeReceiver, new IntentFilter(TimerService.COUNTDOWN_BROADCAST));
+        }
     }
 
     /**
