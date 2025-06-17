@@ -61,7 +61,8 @@ public class MainActivity extends BaseActivity {
     private static final int workoutMinTime = 10; // 10 sec
     private static final int restMaxTime = 300; // 5 min
     private static final int restMinTime = 10; // 10 sec
-    private static final int maxSets = 16;
+    private static final int step = 5; // 5 sec step for the timer values
+    private static final int maxSets = 50;
     private static final int minSets = 1;
 
     // Block periodization values and Button
@@ -227,19 +228,19 @@ public class MainActivity extends BaseActivity {
     public void onClick(View view) {
         int id = view.getId();
         if (id == R.id.main_workout_interval_minus) {
-            workoutTime = (workoutTime <= workoutMinTime) ? workoutMaxTime : workoutTime - 10;
+            workoutTime = (workoutTime <= workoutMinTime) ? workoutMaxTime : workoutTime - step;
             workoutIntervalText.setText(formatTime(workoutTime));
             PrefManager.setTimerWorkout(getBaseContext(), (int) this.workoutTime);
         } else if (id == R.id.main_workout_interval_plus) {
-            this.workoutTime = (workoutTime >= workoutMaxTime) ? workoutMinTime : this.workoutTime + 10;
+            this.workoutTime = (workoutTime >= workoutMaxTime) ? workoutMinTime : this.workoutTime + step;
             this.workoutIntervalText.setText(formatTime(workoutTime));
             PrefManager.setTimerWorkout(getBaseContext(), (int) this.workoutTime);
         } else if (id == R.id.main_rest_interval_minus) {
-            this.restTime = (restTime <= restMinTime) ? restMaxTime : this.restTime - 10;
+            this.restTime = (restTime <= restMinTime) ? restMaxTime : this.restTime - step;
             this.restIntervalText.setText(formatTime(restTime));
             PrefManager.setTimerRest(getBaseContext(), (int) this.restTime);
         } else if (id == R.id.main_rest_interval_plus) {
-            this.restTime = (restTime >= restMaxTime) ? restMinTime : this.restTime + 10;
+            this.restTime = (restTime >= restMaxTime) ? restMinTime : this.restTime + step;
             this.restIntervalText.setText(formatTime(restTime));
             PrefManager.setTimerRest(getBaseContext(), (int) this.restTime);
         } else if (id == R.id.main_sets_minus) {
