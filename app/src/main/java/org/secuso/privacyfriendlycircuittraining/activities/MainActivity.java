@@ -125,6 +125,7 @@ public class MainActivity extends BaseActivity {
         this.setsText.setText(Integer.toString(sets));
         this.workoutMode.setChecked(workoutModeSwitchState);
         this.blockPeriodizationSwitchButton.setChecked(blockPeriodizationSwitchState);
+        this.isBlockPeriodization = blockPeriodizationSwitchState;
 
         if (workoutModeSwitchState) {
             findViewById(R.id.exerciesetsRow).setVisibility(View.VISIBLE);
