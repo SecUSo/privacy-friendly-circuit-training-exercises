@@ -154,16 +154,16 @@
     <string-array name="pref_default_notification_motivation_alert_messages">
         <item>Let\'s do it, it\'s time to work out!</item>
     </string-array>
-    <string name="alert_confirm_dialog_positive">Oui</string>
-    <string name="alert_confirm_dialog_negative">Non</string>
+    <string name="alert_confirm_dialog_positive">Yes</string>
+    <string name="alert_confirm_dialog_negative">No</string>
     <string name="workout_canceled_info">Do you want to abort the workout?</string>
     <string name="workout_canceled_check">Don\'t show this message again</string>
     <string name="alert_personalization_title">Do you want to personalize your app now?</string>
     <string name="alert_personalization_message">This will improve the calories calculation.</string>
     <!-- ReportFragment -->
-    <string name="month">Mois</string>
-    <string name="week">Semaine</string>
-    <string name="day">Jour</string>
+    <string name="month">Month</string>
+    <string name="week">Week</string>
+    <string name="day">Day</string>
     <string name="report_workout_time">Workout time in minutes</string>
     <string name="report_calories">Calories</string>
     <string name="activity_summary_subtitle">Summary of activities</string>
@@ -175,10 +175,10 @@
     <string name="slide1_heading">Welcome!</string>
     <string name="slide1_text1">Cette application vous assiste pendant votre circuit d\'entraînement.. Elle vous fournit un ensemble configurable de minuteries pour les exercices et les phases de repos.</string>
     <string name="slide1_text2">Il est également possible d\'accéder aux statistiques des sessions de formation achevées.</string>
-    <string name="slide2_heading">Personnalisation</string>
-    <string name="slide2_text">Afin d\'améliorer le calcul des calories que vous avez brûlées, veuillez personnaliser vos données personnelles. Les calories sont comptabilisées uniquement pour les phases d\'entraînement terminées.</string>
+    <string name="slide2_heading">Personalization</string>
+    <string name="slide2_text">To improve the calculation of the calories you have burned, please personalize your data. Calories are only counted for completed training phases.</string>
     <string name="slide3_heading">Notifications</string>
-    <string name="slide3_text">L\'application peut vous rappeler les séances d\'entraînement à venir. Cette fonction peut être configurée dans les paramètres.</string>
+    <string name="slide3_text">The app can remind you about upcoming workout sessions. This can be configured inside the settings.</string>
     <string name="slide4_heading">Periodisation par block</string>
     <string name="slide4_text_1">Lors de la configuration des minuteries, vous pouvez également choisir la fonction de périodisation par blocs.</string>
     <string name="slide4_text_2">Cette fonction vous permet de configurer des pauses plus longues et séparées entre les exercices. La séance d\'entraînement peut ainsi être divisée en plusieurs cycles d\'entraînement à haute intensité.</string>
@@ -189,7 +189,7 @@
     <string name="main_button_welcomedialog">Show Welcome</string>
     <string name="next">Next</string>
     <string name="skip">Skip</string>
-    <string name="title_activity_workout">Exercices</string>
+    <string name="title_activity_workout">Workout</string>
     <string name="title_activity_statistics">Statistics</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="exerciseset_dialog_hint">Name of the Exercise Set</string>
