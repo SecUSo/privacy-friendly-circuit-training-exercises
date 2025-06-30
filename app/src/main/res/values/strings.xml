@@ -172,7 +172,7 @@
     <string name="action_calories">Calories</string>
     <string name="action_time">Workout time</string>
     <!-- ### TUTORIAL DIALOG ### -->
-    <string name="slide1_heading">Bienvenue!</string>
+    <string name="slide1_heading">Welcome!</string>
     <string name="slide1_text1">Cette application vous assiste pendant votre circuit d\'entraînement.. Elle vous fournit un ensemble configurable de minuteries pour les exercices et les phases de repos.</string>
     <string name="slide1_text2">Il est également possible d\'accéder aux statistiques des sessions de formation achevées.</string>
     <string name="slide2_heading">Personnalisation</string>
@@ -184,11 +184,11 @@
     <string name="slide4_text_2">Cette fonction vous permet de configurer des pauses plus longues et séparées entre les exercices. La séance d\'entraînement peut ainsi être divisée en plusieurs cycles d\'entraînement à haute intensité.</string>
     <string name="slide5_heading">Exercise Sets</string>
     <string name="slide5_text">You can create Exercise Sets from your own exercises and use them for circuit training.</string>
-    <string name="okay">Ok</string>
-    <string name="viewhelp">Voir l\'aide</string>
+    <string name="okay">Okay</string>
+    <string name="viewhelp">View Help</string>
     <string name="main_button_welcomedialog">Show Welcome</string>
-    <string name="next">Suivant</string>
-    <string name="skip">Passer</string>
+    <string name="next">Next</string>
+    <string name="skip">Skip</string>
     <string name="title_activity_workout">Exercices</string>
     <string name="title_activity_statistics">Statistics</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
