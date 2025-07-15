@@ -1,5 +1,19 @@
 # Changelog
 
+<a id="v1.2.4"></a>
+## [Circuit Training (Privacy Friendly) v1.2.4](https://github.com/SecUSo/privacy-friendly-circuit-training-exercises/releases/tag/v1.2.4) - 2025-07-15
+
+## What's Changed
+* Update github workflows by [@udenr](https://github.com/udenr) in [#45](https://github.com/SecUSo/privacy-friendly-circuit-training-exercises/pull/45)
+* Fix: Receiver lead to crashes on API 34+ by [@coderPaddyS](https://github.com/coderPaddyS) in [#48](https://github.com/SecUSo/privacy-friendly-circuit-training-exercises/pull/48)
+* Change versionCode to differentiate from last Google Play version by [@coderPaddyS](https://github.com/coderPaddyS) in [#49](https://github.com/SecUSo/privacy-friendly-circuit-training-exercises/pull/49)
+
+
+**Full Changelog**: https://github.com/SecUSo/privacy-friendly-circuit-training-exercises/compare/v1.2.3...v1.2.4
+
+[Changes][v1.2.4]
+
+
 <a id="v1.2.1"></a>
 ## [Circuit Training (Privacy Friendly) v1.2.1](https://github.com/SecUSo/privacy-friendly-circuit-training-exercises/releases/tag/v1.2.1) - 2023-10-31
 
@@ -55,6 +69,7 @@ Privacy Friendly Circuit Trainer is an Android App that supports the user during
 [Changes][v1.0]
 
 
+[v1.2.4]: https://github.com/SecUSo/privacy-friendly-circuit-training-exercises/compare/v1.2.1...v1.2.4
 [v1.2.1]: https://github.com/SecUSo/privacy-friendly-circuit-training-exercises/compare/v1.2.0...v1.2.1
 [v1.2.0]: https://github.com/SecUSo/privacy-friendly-circuit-training-exercises/compare/v1.1...v1.2.0
 [v1.1]: https://github.com/SecUSo/privacy-friendly-circuit-training-exercises/compare/v1.0...v1.1
