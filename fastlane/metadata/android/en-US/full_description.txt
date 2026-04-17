@@ -24,7 +24,7 @@ Privacy Friendly Circuit Trainer does not require any permissions. The selection
 2. No advertisement
 Many other free apps in the Google Play Store dazzle annoying advertising and also shortens battery life.
 
-Privacy Friendly Circuit Training is part of the Privacy Friendly Apps group developed by the research group SECUSO at Technische Universität Darmstadt. More information at: https://secuso.org/pfa
+Privacy Friendly Circuit Training is part of the Privacy Friendly Apps group developed by the research group SECUSO at Karlsruhe Institute of Technology. More information at: https://secuso.org/pfa
 
 You can reach us via
 Bluesky - @secusoresearch.bsky.social https://bsky.app/profile/secusoresearch.bsky.social

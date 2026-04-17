@@ -23,7 +23,7 @@ Privacy Friendly Zirkeltraining benötigt keine Berechtigungen. Die Auswahl der 
 2. Keine Werbung
 Viele andere kostenlose Apps im Google Play Store blenden nervige Werbung ein und verkürzen zudem die Akkulaufzeit.
 
-Die App gehört zur Gruppe der Privacy Friendly Apps, die von der Forschungsgruppe SECUSO der Technischen Universität Darmstadt entwickelt werden. Mehr Informationen unter: https://secuso.org/pfa
+Die App gehört zur Gruppe der Privacy Friendly Apps, die von der Forschungsgruppe SECUSO des Karlsruher Institut für Technologie entwickelt werden. Mehr Informationen unter: https://secuso.org/pfa
 
 Kontaktieren Sie uns gerne über:
 Bluesky - @secusoresearch.bsky.social https://bsky.app/profile/secusoresearch.bsky.social
