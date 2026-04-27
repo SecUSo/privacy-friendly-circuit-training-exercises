@@ -3,7 +3,7 @@
     <string name="exercisesets_lists_empty">У вас нет наборов упражнений</string>
     <string name="exercises_lists_empty">У вас нет упражнений</string>
     <string name="workout_notification_pause">Пауза</string>
-    <string name="help">Справка</string>
+    <string name="help">Помощь</string>
     <string name="pref_title_notification_delete_statistics_alert">Очистить статистику</string>
     <string name="main_button_disabled_text">Неактивная кнопка</string>
     <string name="navigation_drawer_close">Закрыть панель навигации</string>
@@ -11,7 +11,7 @@
     <string name="action_tutorial">Руководство</string>
     <string name="save">Сохранить</string>
     <string name="action_statistics">Статистика</string>
-    <string name="edit">Редактировать</string>
+    <string name="edit">Отредактировать</string>
     <string name="delete">Удалить</string>
     <string name="set">Задать</string>
     <string name="action_about">О приложении</string>
@@ -49,7 +49,7 @@
     <string name="help_feature_block_periodization">Возможность: Периодизация блоков</string>
     <string name="version_number">Версия</string>
     <string name="about_author">Авторы：</string>
-    <string name="about">О приложении</string>
+    <string name="about">О программе</string>
     <string name="about_affiliation">В сотрудничестве с</string>
     <string name="title_activity_settings">Настройки</string>
     <string name="pref_example_switch_summary">Пример сводки Switch</string>
@@ -91,7 +91,7 @@
     <string name="pref_sound_rythm_title">Сигнал таймера</string>
     <string name="pref_header_statistics">Статистика</string>
     <string name="main_button_welcomedialog">Показать приветствие</string>
-    <string name="cancel">Отмена</string>
+    <string name="cancel">Отменить</string>
     <string name="workout_headline_start_timer">НАЧАЛО ЧЕРЕЗ</string>
     <string name="workout_headline_workout">ЗАНЯТНИЕ</string>
     <string name="pref_voice_countdown_rest_summary">Голос отсчитывает последние секунды фазы отдыха.</string>
