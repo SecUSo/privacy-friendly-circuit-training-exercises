@@ -167,12 +167,33 @@ class PFApplicationData private constructor(context: Context) {
         repo = context.resources.getString(org.secuso.pfacore.R.string.about_github)
     )
 
-    // more addition
     private val tutorial = buildTutorial {
         stage {
-            title = context.getString(R.string.app_name)
-            images = single(R.mipmap.ic_launcher)
-            description = context.getString(R.string.app_name)
+            title = context.getString(R.string.slide1_heading)
+            images = single(R.mipmap.ic_splash)
+            description = context.getString(R.string.slide1_text1) + "\n\n" +
+                    context.getString(R.string.slide1_text2)
+        }
+        stage {
+            title = context.getString(R.string.slide4_heading)
+            images = single(R.mipmap.ic_splash)
+            description = context.getString(R.string.slide4_text_1) + "\n\n" +
+                    context.getString(R.string.slide4_text_2)
+        }
+        stage {
+            title = context.getString(R.string.slide3_heading)
+            images = single(R.mipmap.ic_splash)
+            description = context.getString(R.string.slide3_text)
+        }
+        stage {
+            title = context.getString(R.string.slide2_heading)
+            images = single(R.mipmap.ic_splash)
+            description = context.getString(R.string.slide2_text)
+        }
+        stage {
+            title = context.getString(R.string.slide5_heading)
+            images = single(R.mipmap.ic_splash)
+            description = context.getString(R.string.slide5_text)
         }
     }
 
