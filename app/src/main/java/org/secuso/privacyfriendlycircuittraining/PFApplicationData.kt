@@ -1,0 +1,198 @@
+package org.secuso.privacyfriendlycircuittraining
+
+import android.content.Context
+import androidx.lifecycle.map
+import org.secuso.pfacore.application.PFData
+import org.secuso.pfacore.model.Theme
+import org.secuso.pfacore.model.about.About
+import org.secuso.pfacore.model.preferences.Preferable
+import org.secuso.pfacore.ui.help.Help
+import org.secuso.pfacore.ui.preferences.appPreferences
+import org.secuso.pfacore.ui.preferences.settings.appearance
+import org.secuso.pfacore.ui.preferences.settings.general
+import org.secuso.pfacore.ui.preferences.settings.preferenceFirstTimeLaunch
+import org.secuso.pfacore.ui.preferences.settings.radio
+import org.secuso.pfacore.ui.preferences.settings.settingDeviceInformationOnErrorReport
+import org.secuso.pfacore.ui.preferences.settings.settingThemeSelector
+import org.secuso.pfacore.ui.preferences.settings.switch
+import org.secuso.pfacore.ui.tutorial.buildTutorial
+
+
+class PFApplicationData private constructor(context: Context) {
+
+    lateinit var theme: Preferable<String>
+        private set
+    lateinit var firstTimeLaunch: Preferable<Boolean>
+        private set
+    lateinit var includeDeviceDataInReport: Preferable<Boolean>
+        private set
+
+    lateinit var keepScreenOn: Preferable<Boolean>
+        private set
+    lateinit var startTimer: Preferable<Boolean>
+        private set
+    lateinit var blinkingProgressBar: Preferable<Boolean>
+        private set
+    lateinit var voiceCountdownWorkout: Preferable<Boolean>
+        private set
+    lateinit var voiceCountdownRest: Preferable<Boolean>
+        private set
+    lateinit var soundRythm: Preferable<Boolean>
+        private set
+    lateinit var voiceHalftime: Preferable<Boolean>
+        private set
+    lateinit var cancelWorkoutCheck: Preferable<Boolean>
+        private set
+    lateinit var caloriesCounter: Preferable<Boolean>
+        private set
+    lateinit var gender: Preferable<String>
+        private set
+
+    private val preferences = appPreferences(context) {
+        preferences {
+            firstTimeLaunch = preferenceFirstTimeLaunch
+        }
+        settings {
+            category(context.getString(R.string.pref_header_workout)) {
+                keepScreenOn = switch {
+                    key = context.getString(R.string.pref_keep_screen_on_switch_enabled)
+                    title { resource(R.string.pref_keep_screen_on_switch) }
+                    summary { resource(R.string.pref_keep_screen_on_switch_summary) }
+                    default = true
+                    backup = true
+                }
+                startTimer = switch {
+                    key = context.getString(R.string.pref_start_timer_switch_enabled)
+                    title { resource(R.string.pref_start_timer_switch) }
+                    summary { resource(R.string.pref_start_timer_switch_summary) }
+                    default = true
+                    backup = true
+                }
+                blinkingProgressBar = switch {
+                    key = context.getString(R.string.pref_blinking_progress_bar)
+                    title { resource(R.string.pref_blinking_progress_bar_title) }
+                    summary { resource(R.string.pref_blinking_progress_bar_summary) }
+                    default = false
+                    backup = true
+                }
+                voiceCountdownWorkout = switch {
+                    key = context.getString(R.string.pref_voice_countdown_workout)
+                    title { resource(R.string.pref_voice_countdown_workout_title) }
+                    summary { resource(R.string.pref_voice_countdown_workout_summary) }
+                    default = true
+                    backup = true
+                }
+                voiceCountdownRest = switch {
+                    key = context.getString(R.string.pref_voice_countdown_rest)
+                    title { resource(R.string.pref_voice_countdown_rest_title) }
+                    summary { resource(R.string.pref_voice_countdown_rest_summary) }
+                    default = true
+                    backup = true
+                }
+                soundRythm = switch {
+                    key = context.getString(R.string.pref_sound_rythm)
+                    title { resource(R.string.pref_sound_rythm_title) }
+                    summary { resource(R.string.pref_sound_rythm_summary) }
+                    default = true
+                    backup = true
+                }
+                voiceHalftime = switch {
+                    key = context.getString(R.string.pref_voice_halftime)
+                    title { resource(R.string.pref_voice_halftime_title) }
+                    summary { resource(R.string.pref_voice_halftime_summary) }
+                    default = true
+                    backup = true
+                }
+                cancelWorkoutCheck = switch {
+                    key = context.getString(R.string.pref_cancel_workout_check)
+                    title { resource(R.string.pref_cancel_workout_check_title) }
+                    summary { resource(R.string.pref_cancel_workout_check_summary) }
+                    default = true
+                    backup = true
+                }
+            }
+            category(context.getString(R.string.pref_statistics_title)) {
+                caloriesCounter = switch {
+                    key = context.getString(R.string.pref_calories_counter)
+                    title { resource(R.string.pref_calories_counter_title) }
+                    summary { resource(R.string.pref_calories_counter_summary) }
+                    default = true
+                    backup = true
+                }
+            }
+            category(context.getString(R.string.pref_group_title_personal_settings)) {
+                gender = radio {
+                    key = context.getString(R.string.pref_gender)
+                    default = "1"
+                    backup = true
+                    entries {
+                        entries(R.array.pref_keys_gender)
+                        values(resources.getStringArray(R.array.pref_values_gender).toList())
+                    }
+                    title { resource(R.string.pref_title_gender) }
+                    summary { transform { state, value -> state.entries.find { it.value == value }!!.entry } }
+                }
+            }
+            appearance {
+                theme = settingThemeSelector
+            }
+            general {
+                includeDeviceDataInReport = settingDeviceInformationOnErrorReport
+            }
+        }
+    }
+
+    private val help = Help.build(context) {
+        listOf(
+            R.string.help_whatis to R.string.help_whatis_answer,
+            R.string.help_feature_workout_timer to R.string.help_feature_workout_timer_answer,
+            R.string.help_feature_motivation_alert to R.string.help_feature_motivation_alert_answer,
+            R.string.help_feature_block_periodization to R.string.help_feature_block_periodization_answer,
+            R.string.help_feature_workout_history to R.string.help_feature_workout_history_answer,
+            R.string.help_feature_own_exercises to R.string.help_feature_own_exercises_answer,
+            R.string.help_privacy to R.string.help_privacy_answer,
+            R.string.help_permission to R.string.help_permission_answer,
+        ).forEach { (q, a) ->
+            item {
+                title { resource(q) }
+                description { resource(a) }
+            }
+        }
+    }
+
+    private val about = About(
+        name = context.resources.getString(R.string.app_name),
+        version = BuildConfig.VERSION_NAME,
+        authors = "Betul Cuhadar, SECUSO",
+        repo = context.resources.getString(org.secuso.pfacore.R.string.about_github)
+    )
+
+    // more addition
+    private val tutorial = buildTutorial {
+        stage {
+            title = context.getString(R.string.app_name)
+            images = single(R.mipmap.ic_launcher)
+            description = context.getString(R.string.app_name)
+        }
+    }
+
+    val data = PFData(
+        about = about,
+        help = help,
+        preferences = preferences,
+        tutorial = tutorial,
+        theme = theme.state.map { Theme.valueOf(it) },
+        firstLaunch = firstTimeLaunch,
+        includeDeviceDataInReport = includeDeviceDataInReport,
+    )
+
+    companion object {
+        private var _instance: PFApplicationData? = null
+        fun instance(context: Context): PFApplicationData {
+            if (_instance == null) {
+                _instance = PFApplicationData(context)
+            }
+            return _instance!!
+        }
+    }
+}
