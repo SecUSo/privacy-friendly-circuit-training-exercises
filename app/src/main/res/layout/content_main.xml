@@ -33,7 +33,7 @@
                 android:layout_weight="1"
                 android:gravity="center"
                 android:text="@string/main_text_title"
-                android:textColor="@color/black"
+                android:textColor="?android:attr/textColorPrimary"
                 android:textSize="28sp" />
 
         </TableRow>
@@ -50,7 +50,7 @@
                 android:layout_weight="1"
                 android:gravity="center"
                 android:text="@string/main_text_work_interval"
-                android:textColor="@color/black"
+                android:textColor="?android:attr/textColorPrimary"
                 android:textSize="20sp" />
         </TableRow>
 
@@ -72,7 +72,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="0.15" />
 
-                <Button
+                <androidx.appcompat.widget.AppCompatButton
                     android:id="@+id/main_workout_interval_minus"
                     android:layout_width="0dp"
                     android:layout_height="35dp"
@@ -92,11 +92,11 @@
                     android:layout_weight="0.4"
                     android:gravity="center"
                     android:text="00 : 00"
-                    android:textColor="@color/black"
+                    android:textColor="?android:attr/textColorPrimary"
                     android:textSize="24sp"
                     android:textStyle="bold" />
 
-                <Button
+                <androidx.appcompat.widget.AppCompatButton
                     android:id="@+id/main_workout_interval_plus"
                     android:layout_width="0dp"
                     android:layout_height="35dp"
@@ -130,7 +130,7 @@
                 android:layout_weight="1"
                 android:gravity="center"
                 android:text="@string/main_text_rest_interval"
-                android:textColor="@color/black"
+                android:textColor="?android:attr/textColorPrimary"
                 android:textSize="20sp" />
         </TableRow>
 
@@ -152,7 +152,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="0.15" />
 
-                <Button
+                <androidx.appcompat.widget.AppCompatButton
                     android:id="@+id/main_rest_interval_minus"
                     android:layout_width="0dp"
                     android:layout_height="35dp"
@@ -172,11 +172,11 @@
                     android:layout_weight="0.4"
                     android:gravity="center"
                     android:text="00 : 00"
-                    android:textColor="@color/black"
+                    android:textColor="?android:attr/textColorPrimary"
                     android:textSize="24sp"
                     android:textStyle="bold" />
 
-                <Button
+                <androidx.appcompat.widget.AppCompatButton
                     android:id="@+id/main_rest_interval_plus"
                     android:layout_width="0dp"
                     android:layout_height="35dp"
@@ -210,7 +210,7 @@
                             android:layout_weight="1"
                             android:gravity="center"
                             android:text="@string/main_text_sets"
-                            android:textColor="@color/black"
+                            android:textColor="?android:attr/textColorPrimary"
                             android:textSize="20sp" />-->
 
             <LinearLayout
@@ -235,7 +235,7 @@
                     android:onClick="onClick"
                     android:text="@string/use_exercise_sets"
                     android:textAlignment="viewStart"
-                    android:textColor="@color/black"
+                    android:textColor="?android:attr/textColorPrimary"
                     android:textSize="20sp" />
 
             </LinearLayout>
@@ -264,7 +264,7 @@
                     android:layout_marginRight="80dp"
                     android:layout_weight="1"
                     android:gravity="center"
-                    android:textColor="@color/black"
+                    android:textColor="?android:attr/textColorPrimary"
                     android:textSize="36sp" />
 
             </LinearLayout>
@@ -288,7 +288,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="0.15" />
 
-                <Button
+                <androidx.appcompat.widget.AppCompatButton
                     android:id="@+id/main_sets_minus"
                     android:layout_width="0dp"
                     android:layout_height="35dp"
@@ -308,11 +308,11 @@
                     android:layout_weight="0.4"
                     android:gravity="center"
                     android:text="0"
-                    android:textColor="@color/black"
+                    android:textColor="?android:attr/textColorPrimary"
                     android:textSize="24sp"
                     android:textStyle="bold" />
 
-                <Button
+                <androidx.appcompat.widget.AppCompatButton
                     android:id="@+id/main_sets_plus"
                     android:layout_width="0dp"
                     android:layout_height="35dp"
@@ -370,7 +370,7 @@
                         android:onClick="onClick"
                         android:text="@string/main_block_periodization"
                         android:textAlignment="center"
-                        android:textColor="@color/black"
+                        android:textColor="?android:attr/textColorPrimary"
                         android:textSize="20sp" />
 
                     <ImageButton

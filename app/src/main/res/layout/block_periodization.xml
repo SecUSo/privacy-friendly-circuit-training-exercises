@@ -13,7 +13,7 @@
         android:layout_marginTop="15dp"
         android:paddingEnd="35dp"
         android:text="@string/main_block_periodization_sets"
-        android:textColor="@color/black"
+        android:textColor="?android:attr/textColorPrimary"
         android:textSize="18sp" />
 
     <LinearLayout
@@ -32,11 +32,11 @@
             android:paddingLeft="30dp"
             android:paddingStart="30dp"
             android:text="0"
-            android:textColor="@color/black"
+            android:textColor="?android:attr/textColorPrimary"
             android:textSize="24sp"
             android:textStyle="bold" />
 
-        <Button
+        <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/main_block_periodization_sets_minus"
             android:layout_width="35dp"
             android:layout_height="35dp"
@@ -51,7 +51,7 @@
             android:layout_width="20dp"
             android:layout_height="match_parent" />
 
-        <Button
+        <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/main_block_periodization_sets_plus"
             android:layout_width="35dp"
             android:layout_height="35dp"
@@ -72,7 +72,7 @@
         android:layout_marginTop="35dp"
         android:paddingEnd="35dp"
         android:text="@string/main_block_periodization_duration"
-        android:textColor="@color/black"
+        android:textColor="?android:attr/textColorPrimary"
         android:textSize="18sp" />
 
     <LinearLayout
@@ -90,11 +90,11 @@
             android:layout_weight="0.11"
             android:paddingStart="30dp"
             android:text="00 : 00"
-            android:textColor="@color/black"
+            android:textColor="?android:attr/textColorPrimary"
             android:textSize="24sp"
             android:textStyle="bold" />
 
-        <Button
+        <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/main_block_periodization_time_minus"
             android:layout_width="35dp"
             android:layout_height="35dp"
@@ -110,7 +110,7 @@
             android:layout_width="20dp"
             android:layout_height="match_parent" />
 
-        <Button
+        <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/main_block_periodization_time_plus"
             android:layout_width="35dp"
             android:layout_height="35dp"
