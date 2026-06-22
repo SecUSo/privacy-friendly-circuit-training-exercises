@@ -147,41 +147,6 @@ public class ExerciseActivity extends BaseActivity implements View.OnLongClickLi
 
     }
 
-    @Override
-    protected void onPostCreate(Bundle savedInstanceState) {
-        super.onPostCreate(savedInstanceState);
-
-        setDrawerEnabled(!is_in_picker_mode);
-
-        mDrawerToggle.setToolbarNavigationClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if(is_in_picker_mode)
-                    onBackPressed();
-            }
-        });
-    }
-
-    public void setDrawerEnabled(final boolean enabled) {
-
-        int lockMode = enabled ?
-                DrawerLayout.LOCK_MODE_UNLOCKED :
-                DrawerLayout.LOCK_MODE_LOCKED_CLOSED;
-
-        mDrawerLayout.setDrawerLockMode(lockMode);
-
-        mDrawerToggle.setDrawerIndicatorEnabled(enabled);
-
-        ActionBar actionBar = getSupportActionBar();
-        if (actionBar != null) {
-            actionBar.setDisplayHomeAsUpEnabled(!enabled);
-            actionBar.setDisplayShowHomeEnabled(enabled);
-            actionBar.setHomeButtonEnabled(enabled);
-        }
-
-        mDrawerToggle.syncState();
-    }
-
 
     public void addExercise(Exercise exercise) {
         exerciseList.add(exercise);
@@ -256,9 +221,6 @@ public class ExerciseActivity extends BaseActivity implements View.OnLongClickLi
         }
     }
 
-    protected int getNavigationDrawerID() {
-        return R.id.nav_exercises;
-    }
 
     public FloatingActionButton getNewListFab()
     {

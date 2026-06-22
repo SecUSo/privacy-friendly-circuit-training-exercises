@@ -46,10 +46,6 @@ public class StatisticsActivity extends BaseActivity implements DailyReportFragm
         fragmentTransaction.commit();
     }
 
-    @Override
-    protected int getNavigationDrawerID() {
-        return R.id.nav_statistics;
-    }
 
 }
 

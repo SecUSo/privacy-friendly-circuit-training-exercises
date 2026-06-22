@@ -211,16 +211,6 @@ public class MainActivity extends BaseActivity {
     }
 
     /**
-     * This method connects the Activity to the menu item
-     *
-     * @return ID of the menu item it belongs to
-     */
-    @Override
-    protected int getNavigationDrawerID() {
-        return R.id.nav_main;
-    }
-
-    /**
      * Click functions for timer values, block periodization AlertDialog and workout start button
      */
     public void onClick(View view) {

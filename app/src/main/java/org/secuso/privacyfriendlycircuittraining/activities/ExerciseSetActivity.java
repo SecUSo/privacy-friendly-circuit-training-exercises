@@ -187,10 +187,6 @@ public class ExerciseSetActivity extends BaseActivity implements View.OnLongClic
         }
     }
 
-    protected int getNavigationDrawerID() {
-        return R.id.nav_exercisesets;
-    }
-
     public FloatingActionButton getNewListFab()
     {
         return newListFab;
