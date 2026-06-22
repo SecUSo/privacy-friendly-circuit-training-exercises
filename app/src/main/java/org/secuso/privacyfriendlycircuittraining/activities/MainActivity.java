@@ -15,7 +15,7 @@
 package org.secuso.privacyfriendlycircuittraining.activities;
 
 import android.app.AlarmManager;
-import android.app.AlertDialog;
+import androidx.appcompat.app.AlertDialog;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
@@ -353,7 +353,7 @@ public class MainActivity extends BaseActivity {
         });
 
 
-        AlertDialog.Builder alertBuilder = new AlertDialog.Builder(this);
+        AlertDialog.Builder alertBuilder = new AlertDialog.Builder(this, R.style.AppTheme_Dialog);
         alertBuilder.setView(dialogLayout);
 
         alertBuilder.setTitle(getResources().getString(R.string.main_block_periodization_headline)).setPositiveButton(
@@ -364,7 +364,7 @@ public class MainActivity extends BaseActivity {
     }
 
     private void showPersonalizationAlert() {
-        AlertDialog.Builder alertBuilder = new AlertDialog.Builder(this);
+        AlertDialog.Builder alertBuilder = new AlertDialog.Builder(this, R.style.AppTheme_Dialog);
 
         alertBuilder.setTitle(R.string.alert_personalization_title);
         alertBuilder.setMessage(R.string.alert_personalization_message);

@@ -14,7 +14,7 @@
 
 package org.secuso.privacyfriendlycircuittraining.activities;
 
-import android.app.AlertDialog;
+import androidx.appcompat.app.AlertDialog;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
@@ -443,7 +443,7 @@ public class WorkoutActivity extends AppCompatActivity {
             timerService.setCancelAlert(true);
         }
 
-        AlertDialog.Builder alertBuilder = new AlertDialog.Builder(this);
+        AlertDialog.Builder alertBuilder = new AlertDialog.Builder(this, R.style.AppTheme_Dialog);
 
         final CharSequence[] item = {getResources().getString(R.string.workout_canceled_check)};
         final boolean[] selection = {false};
