@@ -135,6 +135,7 @@
     <string name="pref_title_age">Age</string>
     <string name="pref_title_height">Height (cm)</string>
     <string name="pref_title_gender">Gender</string>
+    <string name="pref_summary_motivation_alert_switch">Show motivational notifications during the day</string>
     <string-array name="pref_keys_gender">
         <item>female</item>
         <item>male</item>

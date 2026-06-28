@@ -8,6 +8,7 @@ import org.secuso.pfacore.model.about.About
 import org.secuso.pfacore.model.preferences.Preferable
 import org.secuso.pfacore.ui.help.Help
 import org.secuso.pfacore.ui.preferences.appPreferences
+import org.secuso.pfacore.ui.preferences.settings.action
 import org.secuso.pfacore.ui.preferences.settings.appearance
 import org.secuso.pfacore.ui.preferences.settings.general
 import org.secuso.pfacore.ui.preferences.settings.preferenceFirstTimeLaunch
@@ -53,6 +54,33 @@ class PFApplicationData private constructor(context: Context) {
             firstTimeLaunch = preferenceFirstTimeLaunch
         }
         settings {
+            category(context.getString(R.string.pref_header_notification)) {
+                switch {
+                    key = context.getString(R.string.pref_notification_motivation_alert_enabled)
+                    default = false
+                    backup = true
+                    title { resource(R.string.pref_title_motivation_alert_switch) }
+                    summary { resource(R.string.pref_summary_motivation_alert_switch) }
+                    onUpdate = { enabled ->
+                        if (enabled) {
+                            org.secuso.privacyfriendlycircuittraining.helpers.NotificationHelper.setMotivationAlert(context)
+                        } else {
+                            org.secuso.privacyfriendlycircuittraining.helpers.NotificationHelper.cancelMotivationAlert(context)
+                        }
+                    }
+                }
+                action {
+                    onClick = { activity ->
+                        activity.startActivity(
+                            android.content.Intent(
+                                activity,
+                                org.secuso.privacyfriendlycircuittraining.activities.MotivationAlertTextsActivity::class.java
+                            )
+                        )
+                    }
+                    title { resource(R.string.pref_notification_motivation_alert_texts_title) }
+                }
+            }
             category(context.getString(R.string.pref_header_workout)) {
                 keepScreenOn = switch {
                     key = context.getString(R.string.pref_keep_screen_on_switch_enabled)
@@ -118,6 +146,25 @@ class PFApplicationData private constructor(context: Context) {
                     summary { resource(R.string.pref_calories_counter_summary) }
                     default = true
                     backup = true
+                }
+                action {
+                    onClick = { activity ->
+                        val dialog = androidx.appcompat.app.AlertDialog.Builder(activity)
+                        dialog.setTitle(R.string.pref_delete_statistics_dialog_title)
+                        dialog.setMessage(R.string.pref_delete_statistics_dialog_info)
+                        dialog.setCancelable(true)
+                        dialog.setPositiveButton(R.string.alert_confirm_dialog_positive) { _, _ ->
+                            org.secuso.privacyfriendlycircuittraining.database.PFASQLiteHelper(activity).deleteAllWorkokutData()
+                            android.widget.Toast.makeText(
+                                activity,
+                                R.string.pref_delete_statistics_dialog_toast,
+                                android.widget.Toast.LENGTH_SHORT
+                            ).show()
+                        }
+                        dialog.setNegativeButton(R.string.alert_confirm_dialog_negative) { d, _ -> d.cancel() }
+                        dialog.show()
+                    }
+                    title { resource(R.string.pref_delete_statistics_dialog_title) }
                 }
             }
             category(context.getString(R.string.pref_group_title_personal_settings)) {
