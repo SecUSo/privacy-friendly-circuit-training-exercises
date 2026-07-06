@@ -209,4 +209,5 @@
     <string name="exercise_set_has_no_exercises">Chosen exercise set has no exercises.</string>
     <string name="exercise_set_has_no_sets">Chosen exercise set has no sets.</string>
     <string name="request_schedule_exact_alarm_permission">In order to send you motivation alerts, the permission to set an alarm is needed. Do you want to grant the permission now?</string>
+    <string name="request_schedule_exact_alarm_permission_title">Alarm Permission</string>
 </resources>

@@ -38,7 +38,7 @@ import android.widget.Toast;
 
 import org.secuso.privacyfriendlycircuittraining.R;
 import org.secuso.privacyfriendlycircuittraining.database.PFASQLiteHelper;
-import org.secuso.privacyfriendlycircuittraining.fragments.GrantExactAlarmPermissionDialogFragment;
+import org.secuso.privacyfriendlycircuittraining.fragments.ExactAlarmPermissionDialog;
 import org.secuso.privacyfriendlycircuittraining.helpers.NotificationHelper;
 import org.secuso.privacyfriendlycircuittraining.models.ExerciseSet;
 import org.secuso.privacyfriendlycircuittraining.services.TimerService;
@@ -140,7 +140,7 @@ public class MainActivity extends BaseActivity {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
                 AlarmManager am = (AlarmManager) getApplicationContext().getSystemService(Context.ALARM_SERVICE);
                 if (!am.canScheduleExactAlarms()) { //Check permission to schedule exact alarm on versions >= Android S
-                    new GrantExactAlarmPermissionDialogFragment().show(getFragmentManager(), GrantExactAlarmPermissionDialogFragment.TAG);
+                    ExactAlarmPermissionDialog.show(this);
                 } else {
                     NotificationHelper.setMotivationAlert(this);
                 }
