@@ -14,7 +14,7 @@
 
 package org.secuso.privacyfriendlycircuittraining.activities;
 
-import androidx.appcompat.app.AlertDialog;
+import android.annotation.SuppressLint;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
@@ -32,6 +32,7 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.constraintlayout.widget.ConstraintLayout;
@@ -580,6 +581,7 @@ public class WorkoutActivity extends AppCompatActivity {
     /*
      * Stop all timers and remove notification when navigating back to the main activity
      */
+    @SuppressLint("MissingSuperCall")
     @Override
     public void onBackPressed() {
         if (isCancelDialogEnabled(this)) {

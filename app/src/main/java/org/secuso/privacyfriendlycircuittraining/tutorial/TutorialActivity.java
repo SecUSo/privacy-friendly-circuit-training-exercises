@@ -14,14 +14,12 @@
 
 package org.secuso.privacyfriendlycircuittraining.tutorial;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
-import androidx.viewpager.widget.PagerAdapter;
-import androidx.viewpager.widget.ViewPager;
-import androidx.appcompat.app.AppCompatActivity;
 import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -32,11 +30,16 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.viewpager.widget.PagerAdapter;
+import androidx.viewpager.widget.ViewPager;
+
 import org.secuso.privacyfriendlycircuittraining.R;
 import org.secuso.privacyfriendlycircuittraining.activities.MainActivity;
 
 /**
  * Class structure taken from tutorial at http://www.androidhive.info/2016/05/android-build-intro-slider-app/
+ *
  * @author Karola Marky, Nils Schroth
  * @version 20180322
  */
@@ -120,6 +123,7 @@ public class TutorialActivity extends AppCompatActivity {
     /*
      * Prevents the the view from going blank
      */
+    @SuppressLint("MissingSuperCall")
     @Override
     public void onBackPressed() {
         Intent i = new Intent(this, MainActivity.class);

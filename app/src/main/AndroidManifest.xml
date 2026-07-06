@@ -41,25 +41,6 @@
             android:label="@string/app_name"
             android:theme="@style/PrivacyFriendlyCoreTheme.NoActionBar" />
         <activity
-            android:name="org.secuso.privacyfriendlycircuittraining.activities.AboutActivity"
-            android:theme="@style/PrivacyFriendlyCoreTheme.NoActionBar"
-            android:label="@string/about"
-            android:parentActivityName="org.secuso.privacyfriendlycircuittraining.activities.MainActivity"
-            android:screenOrientation="portrait">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="org.secuso.privacyfriendlycircuittraining.activities.MainActivity" />
-        </activity>
-        <activity
-            android:name="org.secuso.privacyfriendlycircuittraining.activities.SettingsActivity"
-            android:label="@string/title_activity_settings"
-            android:parentActivityName="org.secuso.privacyfriendlycircuittraining.activities.MainActivity"
-            android:theme="@style/PrivacyFriendlyCoreTheme.NoActionBar">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="org.secuso.privacyfriendlycircuittraining.activities.MainActivity" />
-        </activity>
-        <activity
             android:name="org.secuso.privacyfriendlycircuittraining.activities.WorkoutActivity"
             android:label="@string/title_activity_workout"
             android:launchMode="singleTask"
