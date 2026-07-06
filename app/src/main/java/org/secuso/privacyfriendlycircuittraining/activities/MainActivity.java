@@ -39,6 +39,7 @@ import android.widget.Toast;
 import org.secuso.privacyfriendlycircuittraining.R;
 import org.secuso.privacyfriendlycircuittraining.database.PFASQLiteHelper;
 import org.secuso.privacyfriendlycircuittraining.fragments.ExactAlarmPermissionDialog;
+import org.secuso.privacyfriendlycircuittraining.fragments.PersonalizationSuggestionDialog;
 import org.secuso.privacyfriendlycircuittraining.helpers.NotificationHelper;
 import org.secuso.privacyfriendlycircuittraining.models.ExerciseSet;
 import org.secuso.privacyfriendlycircuittraining.services.TimerService;
@@ -103,12 +104,6 @@ public class MainActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        //Init preferences
-        PreferenceManager.setDefaultValues(this, R.xml.pref_notification, true);
-        PreferenceManager.setDefaultValues(this, R.xml.pref_personalization, true);
-        PreferenceManager.setDefaultValues(this, R.xml.pref_statistics, true);
-        PreferenceManager.setDefaultValues(this, R.xml.pref_workout, true);
-
         //Set default values for the timer configurations
         setDefaultTimerValues();
 
@@ -160,7 +155,7 @@ public class MainActivity extends BaseActivity {
         PrefManager.performMigrations(getBaseContext());
         if (PrefManager.isFirstTimeLaunch(getBaseContext())) {
             PrefManager.setFirstTimeLaunch(getBaseContext(), false);
-            showPersonalizationAlert();
+            PersonalizationSuggestionDialog.show(this);
         }
 
         final List<ExerciseSet> exerciseSetslist = db.getAllExerciseSet();
@@ -361,21 +356,6 @@ public class MainActivity extends BaseActivity {
                 (dialog, id) -> dialog.cancel());
 
         return alertBuilder.create();
-    }
-
-    private void showPersonalizationAlert() {
-        AlertDialog.Builder alertBuilder = new AlertDialog.Builder(this, R.style.AppTheme_Dialog);
-
-        alertBuilder.setTitle(R.string.alert_personalization_title);
-        alertBuilder.setMessage(R.string.alert_personalization_message);
-        alertBuilder.setNegativeButton(getString(R.string.alert_confirm_dialog_negative), (dialog, id) -> dialog.dismiss());
-        alertBuilder.setPositiveButton(getString(R.string.alert_confirm_dialog_positive), (dialog, id) -> {
-            Intent i = new Intent(MainActivity.this, SettingsActivity.class);
-            i.putExtra(PreferenceActivity.EXTRA_SHOW_FRAGMENT, SettingsActivity.PersonalizationPreferenceFragment.class.getName());
-            i.putExtra(PreferenceActivity.EXTRA_NO_HEADERS, true);
-            startActivity(i);
-        });
-        alertBuilder.create().show();
     }
 
 
