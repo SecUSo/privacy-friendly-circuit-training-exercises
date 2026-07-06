@@ -6,16 +6,19 @@ import org.secuso.pfacore.application.PFData
 import org.secuso.pfacore.model.Theme
 import org.secuso.pfacore.model.about.About
 import org.secuso.pfacore.model.preferences.Preferable
+import org.secuso.pfacore.ui.dialog.show
 import org.secuso.pfacore.ui.help.Help
 import org.secuso.pfacore.ui.preferences.appPreferences
 import org.secuso.pfacore.ui.preferences.settings.action
 import org.secuso.pfacore.ui.preferences.settings.appearance
 import org.secuso.pfacore.ui.preferences.settings.general
+import org.secuso.pfacore.ui.preferences.settings.input
 import org.secuso.pfacore.ui.preferences.settings.preferenceFirstTimeLaunch
 import org.secuso.pfacore.ui.preferences.settings.radio
 import org.secuso.pfacore.ui.preferences.settings.settingDeviceInformationOnErrorReport
 import org.secuso.pfacore.ui.preferences.settings.settingThemeSelector
 import org.secuso.pfacore.ui.preferences.settings.switch
+import org.secuso.pfacore.ui.preferences.settings.time
 import org.secuso.pfacore.ui.tutorial.buildTutorial
 
 
@@ -49,6 +52,14 @@ class PFApplicationData private constructor(context: Context) {
     lateinit var gender: Preferable<String>
         private set
 
+    lateinit var age: Preferable<String>
+        private set
+    lateinit var weight: Preferable<String>
+        private set
+
+    lateinit var notificationTime: Preferable<Long>
+        private set
+
     private val preferences = appPreferences(context) {
         preferences {
             firstTimeLaunch = preferenceFirstTimeLaunch
@@ -68,6 +79,17 @@ class PFApplicationData private constructor(context: Context) {
                             org.secuso.privacyfriendlycircuittraining.helpers.NotificationHelper.cancelMotivationAlert(context)
                         }
                     }
+                }
+                notificationTime = time {
+                    key = context.getString(R.string.pref_notification_motivation_alert_time)
+                    default = 64_800_000L
+                    backup = true
+                    title { resource(R.string.pref_title_notification_motivation_alert_time) }
+                    summary { transform { _, value ->
+                        val totalMin = (value / 60_000L).toInt()
+                        String.format("%02d:%02d", totalMin / 60, totalMin % 60)
+                    } }
+                    validation = { _, _ -> true }
                 }
                 action {
                     onClick = { activity ->
@@ -149,20 +171,21 @@ class PFApplicationData private constructor(context: Context) {
                 }
                 action {
                     onClick = { activity ->
-                        val dialog = androidx.appcompat.app.AlertDialog.Builder(activity)
-                        dialog.setTitle(R.string.pref_delete_statistics_dialog_title)
-                        dialog.setMessage(R.string.pref_delete_statistics_dialog_info)
-                        dialog.setCancelable(true)
-                        dialog.setPositiveButton(R.string.alert_confirm_dialog_positive) { _, _ ->
-                            org.secuso.privacyfriendlycircuittraining.database.PFASQLiteHelper(activity).deleteAllWorkokutData()
-                            android.widget.Toast.makeText(
-                                activity,
-                                R.string.pref_delete_statistics_dialog_toast,
-                                android.widget.Toast.LENGTH_SHORT
-                            ).show()
-                        }
-                        dialog.setNegativeButton(R.string.alert_confirm_dialog_negative) { d, _ -> d.cancel() }
-                        dialog.show()
+                        org.secuso.pfacore.model.dialog.AbortElseDialog.build(activity) {
+                            title = { activity.getString(R.string.pref_delete_statistics_dialog_title) }
+                            content = { activity.getString(R.string.pref_delete_statistics_dialog_info) }
+                            acceptLabel = activity.getString(R.string.alert_confirm_dialog_positive)
+                            abortLabel = activity.getString(R.string.alert_confirm_dialog_negative)
+                            onElse = {
+                                org.secuso.privacyfriendlycircuittraining.database.PFASQLiteHelper(activity)
+                                    .deleteAllWorkokutData()
+                                android.widget.Toast.makeText(
+                                    activity,
+                                    R.string.pref_delete_statistics_dialog_toast,
+                                    android.widget.Toast.LENGTH_SHORT
+                                ).show()
+                            }
+                        }.show()
                     }
                     title { resource(R.string.pref_delete_statistics_dialog_title) }
                 }
@@ -178,6 +201,28 @@ class PFApplicationData private constructor(context: Context) {
                     }
                     title { resource(R.string.pref_title_gender) }
                     summary { transform { state, value -> state.entries.find { it.value == value }!!.entry } }
+                }
+                age = input<String> {
+                    key = context.getString(R.string.pref_age)
+                    default = "25"
+                    backup = true
+                    title { resource(R.string.pref_title_age) }
+                    summary { transform { _, value -> value } }
+                    validation = { value ->
+                        val n = value?.toIntOrNull()
+                        if (n != null && n in 1..120) value else null
+                    }
+                }
+                weight = input<String> {
+                    key = context.getString(R.string.pref_weight)
+                    default = "70"
+                    backup = true
+                    title { resource(R.string.pref_title_weight) }
+                    summary { transform { _, value -> value } }
+                    validation = { value ->
+                        val n = value?.toIntOrNull()
+                        if (n != null && n in 1..500) value else null
+                    }
                 }
             }
             appearance {
