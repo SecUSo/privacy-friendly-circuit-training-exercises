@@ -10,7 +10,14 @@
     </style>
     <style name="AppTheme.Dialog" parent="Theme.AppCompat.DayNight.Dialog.Alert">
         <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorAccent">@color/colorAccent</item>
+        <item name="colorAccent">@color/colorPrimary</item>
+        <item name="buttonBarPositiveButtonStyle">@style/AppTheme.Dialog.Button</item>
+        <item name="buttonBarNegativeButtonStyle">@style/AppTheme.Dialog.Button</item>
+        <item name="buttonBarNeutralButtonStyle">@style/AppTheme.Dialog.Button</item>
+    </style>
+
+    <style name="AppTheme.Dialog.Button" parent="Widget.AppCompat.Button.ButtonBar.AlertDialog">
+        <item name="android:textColor">?android:attr/textColorPrimary</item>
     </style>
 
     <style name="SimpleImageButton">

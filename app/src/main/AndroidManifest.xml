@@ -53,11 +53,11 @@
         <activity
             android:name="org.secuso.privacyfriendlycircuittraining.activities.MotivationAlertTextsActivity"
             android:label="@string/title_activity_motivation_alert_texts"
-            android:parentActivityName="org.secuso.privacyfriendlycircuittraining.activities.SettingsActivity"
+            android:parentActivityName="org.secuso.privacyfriendlycircuittraining.activities.MainActivity"
             android:theme="@style/PrivacyFriendlyCoreTheme.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="org.secuso.privacyfriendlycircuittraining.activities.SettingsActivity" />
+                android:value="org.secuso.privacyfriendlycircuittraining.activities.MainActivity" />
         </activity>
         <activity
             android:name="org.secuso.privacyfriendlycircuittraining.activities.StatisticsActivity"
