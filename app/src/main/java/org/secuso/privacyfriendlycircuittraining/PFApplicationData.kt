@@ -281,10 +281,10 @@ class PFApplicationData private constructor(context: Context) {
     }
 
     private val about = About(
-        name = context.resources.getString(R.string.app_name),
+        name = context.getString(R.string.app_name),
         version = BuildConfig.VERSION_NAME,
-        authors = "Betul Cuhadar, SECUSO",
-        repo = context.resources.getString(org.secuso.pfacore.R.string.about_github)
+        authors = context.getString(R.string.about_author_names),
+        repo = context.getString(org.secuso.pfacore.R.string.about_github)
     )
 
     private val tutorial = buildTutorial {
