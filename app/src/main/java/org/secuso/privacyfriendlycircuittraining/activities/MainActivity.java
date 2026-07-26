@@ -50,6 +50,13 @@ import android.content.pm.PackageManager;
 
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
+import android.net.Uri;
+import org.secuso.privacyfriendlycircuittraining.models.Exercise;
+import android.content.SharedPreferences;
+import android.net.Uri;
+
+import org.json.JSONException;
+import org.secuso.privacyfriendlycircuittraining.models.Exercise;
 /**
  * Main view that lets the user choose the timer intervals, training mode and has a button to start the workout
  *
@@ -159,6 +166,9 @@ public class MainActivity extends BaseActivity {
 
         //Suggest the user to enter their body data
         PrefManager.performMigrations(getBaseContext());
+
+        // Create the sample exercises and the default exercise set
+        createDefaultExerciseSetIfNeeded();
 
         if (PrefManager.isFirstTimeLaunch(getBaseContext())) {
             findViewById(android.R.id.content).post(() -> {
@@ -368,7 +378,106 @@ public class MainActivity extends BaseActivity {
 
         return alertBuilder.create();
     }
+    private void createDefaultExerciseSetIfNeeded() {
+        SharedPreferences initializationPreferences =
+                getSharedPreferences(
+                        "database_initialization",
+                        MODE_PRIVATE
+                );
 
+        if (initializationPreferences.getBoolean(
+                "default_exercises_created",
+                false
+        )) {
+            return;
+        }
+
+        List<Exercise> existingExercises = db.getAllExercise();
+
+        int squatId = -1;
+        int pushupId = -1;
+
+        for (Exercise exercise : existingExercises) {
+            if ("Squat".equals(exercise.getName())) {
+                squatId = exercise.getID();
+            } else if ("Pushup".equals(exercise.getName())) {
+                pushupId = exercise.getID();
+            }
+        }
+
+        if (squatId == -1) {
+            Uri squatIcon = Uri.parse(
+                    "android.resource://"
+                            + getPackageName()
+                            + "/"
+                            + R.drawable.ic_exercise_squat
+            );
+
+            Exercise squat = new Exercise(
+                    0,
+                    "Squat",
+                    "Example description",
+                    squatIcon
+            );
+
+            squatId = (int) db.addExercise(squat);
+        }
+
+        if (pushupId == -1) {
+            Uri pushupIcon = Uri.parse(
+                    "android.resource://"
+                            + getPackageName()
+                            + "/"
+                            + R.drawable.ic_exercise_pushup
+            );
+
+            Exercise pushup = new Exercise(
+                    0,
+                    "Pushup",
+                    "Example description",
+                    pushupIcon
+            );
+
+            pushupId = (int) db.addExercise(pushup);
+        }
+
+        ArrayList<Integer> defaultExerciseIds = new ArrayList<>();
+        defaultExerciseIds.add(squatId);
+        defaultExerciseIds.add(pushupId);
+
+        ExerciseSet existingDefaultSet = null;
+
+        for (ExerciseSet exerciseSet : db.getAllExerciseSet()) {
+            if ("Example".equals(exerciseSet.getName())) {
+                existingDefaultSet = exerciseSet;
+                break;
+            }
+        }
+
+        if (existingDefaultSet == null) {
+            ExerciseSet defaultExerciseSet = new ExerciseSet(
+                    0,
+                    "Example",
+                    defaultExerciseIds
+            );
+
+            db.addExerciseSet(defaultExerciseSet);
+        } else {
+            existingDefaultSet.setExercises(defaultExerciseIds);
+
+            try {
+                db.updateExerciseSet(existingDefaultSet);
+            } catch (JSONException exception) {
+                exception.printStackTrace();
+                return;
+            }
+        }
+
+        initializationPreferences
+                .edit()
+                .putBoolean("default_exercises_created", true)
+                .apply();
+    }
 
     /**
      * Initializes the timer values for the GUI. Previously chosen setup is retrieved if one exists.

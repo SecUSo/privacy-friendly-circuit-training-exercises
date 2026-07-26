@@ -44,6 +44,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import org.secuso.privacyfriendlycircuittraining.R;
 import org.secuso.privacyfriendlycircuittraining.database.PFASQLiteHelper;
+import org.secuso.privacyfriendlycircuittraining.fragments.CancelWorkoutDialog;
 import org.secuso.privacyfriendlycircuittraining.models.Exercise;
 import org.secuso.privacyfriendlycircuittraining.services.TimerService;
 import org.secuso.privacyfriendlycircuittraining.tutorial.PrefManager;
@@ -444,53 +445,33 @@ public class WorkoutActivity extends AppCompatActivity {
             timerService.setCancelAlert(true);
         }
 
-        AlertDialog.Builder alertBuilder = new AlertDialog.Builder(this, R.style.AppTheme_Dialog);
+        CancelWorkoutDialog.show(
+                this,
 
-        final CharSequence[] item = {getResources().getString(R.string.workout_canceled_check)};
-        final boolean[] selection = {false};
-        final ArrayList<Integer> selectedItem = new ArrayList<>();
+                // User selected "No" or dismissed the dialog
+                () -> {
+                    if (timerService != null) {
+                        timerService.resumeTimer();
+                        timerService.setCancelAlert(false);
+                    }
 
-        alertBuilder.setMultiChoiceItems(item, selection, (dialog, indexSelected, isChecked) -> {
-            if (isChecked) {
-                selectedItem.add(indexSelected);
-                PrefManager.setCancelWorkoutCheck(getBaseContext(), false);
-            } else if (selectedItem.contains(indexSelected)) {
-                selectedItem.remove(Integer.valueOf(indexSelected));
-                PrefManager.setCancelWorkoutCheck(getBaseContext(), true);
-            }
-        });
+                    updateGUI();
+                },
 
-        alertBuilder.setTitle(R.string.workout_canceled_info);
+                // User selected "Yes"
+                () -> {
+                    if (timerService != null) {
+                        timerService.setCancelAlert(false);
+                    }
 
-        alertBuilder.setNegativeButton(getString(R.string.alert_confirm_dialog_negative), (dialog, id) -> {
-            if (timerService != null) {
-                timerService.resumeTimer();
-                timerService.setCancelAlert(false);
-            }
-            updateGUI();
-            dialog.dismiss();
-        });
-
-
-        alertBuilder.setPositiveButton(getString(R.string.alert_confirm_dialog_positive), (dialog, id) -> {
-            if (showFinish) {
-                showFinishedView();
-            } else {
-                cleanTimerServiceFinish();
-                finish();
-            }
-        });
-
-        alertBuilder.setOnCancelListener(dialog -> {
-            if (timerService != null) {
-                timerService.resumeTimer();
-                timerService.setCancelAlert(false);
-            }
-            updateGUI();
-            dialog.dismiss();
-        });
-
-        alertBuilder.create().show();
+                    if (showFinish) {
+                        showFinishedView();
+                    } else {
+                        cleanTimerServiceFinish();
+                        finish();
+                    }
+                }
+        );
     }
 
     /**
