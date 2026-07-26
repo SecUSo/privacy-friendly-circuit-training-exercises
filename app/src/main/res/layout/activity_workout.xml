@@ -62,6 +62,7 @@
         android:elevation="8dp"
         android:onClick="onClick"
         android:src="@drawable/ic_pause_24dp"
+        app:tint="@android:color/white"
         app:backgroundTint="@color/colorPrimary"
         app:fabSize="normal" />
 
