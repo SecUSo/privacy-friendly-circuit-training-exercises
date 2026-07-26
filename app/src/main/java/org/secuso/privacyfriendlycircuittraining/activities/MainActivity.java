@@ -23,8 +23,6 @@ import android.content.ServiceConnection;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.IBinder;
-import android.preference.PreferenceActivity;
-import android.preference.PreferenceManager;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -47,7 +45,11 @@ import org.secuso.privacyfriendlycircuittraining.tutorial.PrefManager;
 
 import java.util.ArrayList;
 import java.util.List;
+import android.Manifest;
+import android.content.pm.PackageManager;
 
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 /**
  * Main view that lets the user choose the timer intervals, training mode and has a button to start the workout
  *
@@ -98,6 +100,9 @@ public class MainActivity extends BaseActivity {
 
     private boolean isExerciseMode = false;
     private static Toast toast;
+
+    private static final int POST_NOTIFICATIONS_REQUEST_CODE = 1001;
+    private boolean notificationPermissionRequested = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -378,7 +383,11 @@ public class MainActivity extends BaseActivity {
         this.workoutModeSwitchState = PrefManager.getWorkoutMode(getBaseContext());
     }
 
-
+    @Override
+    protected void onResume() {
+        super.onResume();
+        requestNotificationPermissionIfNeeded();
+    }
     @Override
     protected void onStart() {
         super.onStart();
@@ -427,5 +436,55 @@ public class MainActivity extends BaseActivity {
         for (int i = 0; i < rounds; i++)
             temp.addAll(exerciseIds);
         return temp;
+    }
+    private void requestNotificationPermissionIfNeeded() {
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.TIRAMISU) {
+            return;
+        }
+
+        if (!NotificationHelper.isMotivationAlertEnabled(this)) {
+            return;
+        }
+
+        if (ContextCompat.checkSelfPermission(
+                this,
+                Manifest.permission.POST_NOTIFICATIONS
+        ) == PackageManager.PERMISSION_GRANTED) {
+            NotificationHelper.setMotivationAlert(this);
+            return;
+        }
+
+        if (!notificationPermissionRequested) {
+            notificationPermissionRequested = true;
+
+            ActivityCompat.requestPermissions(
+                    this,
+                    new String[]{Manifest.permission.POST_NOTIFICATIONS},
+                    POST_NOTIFICATIONS_REQUEST_CODE
+            );
+        }
+    }
+    @Override
+    public void onRequestPermissionsResult(
+            int requestCode,
+            String[] permissions,
+            int[] grantResults
+    ) {
+        super.onRequestPermissionsResult(
+                requestCode,
+                permissions,
+                grantResults
+        );
+
+        if (requestCode == POST_NOTIFICATIONS_REQUEST_CODE) {
+            if (
+                    grantResults.length > 0
+                            && grantResults[0] == PackageManager.PERMISSION_GRANTED
+            ) {
+                NotificationHelper.setMotivationAlert(this);
+            } else {
+                NotificationHelper.cancelMotivationAlert(this);
+            }
+        }
     }
 }

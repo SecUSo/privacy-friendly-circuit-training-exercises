@@ -62,6 +62,22 @@ public class PrefManager {
         SharedPreferences prefs = getPreferences(context);
         SharedPreferences.Editor editor = prefs.edit();
 
+        String notificationTimeKey =
+                context.getString(R.string.pref_notification_motivation_alert_time);
+
+        if (prefs.contains(notificationTimeKey)) {
+            long storedNotificationTime =
+                    prefs.getLong(notificationTimeKey, 64800L);
+
+            // Previous versions stored the time in milliseconds.
+            if (storedNotificationTime > 86400L) {
+                editor.putLong(
+                        notificationTimeKey,
+                        storedNotificationTime / 1000L
+                );
+            }
+        }
+
         //migrate firstTimeLaunch
         if (context.getSharedPreferences(PREF_NAME, PRIVATE_MODE).contains(IS_FIRST_TIME_LAUNCH)) {
             setFirstTimeLaunch(context, context.getSharedPreferences(PREF_NAME, PRIVATE_MODE).getBoolean(IS_FIRST_TIME_LAUNCH, true));
@@ -234,7 +250,10 @@ public class PrefManager {
     }
 
     public static long getNotificationMotivationAlertTime(Context context) {
-        return getPreferences(context).getLong(context.getString(R.string.pref_notification_motivation_alert_time), 64800000);
+        return getPreferences(context).getLong(
+                context.getString(R.string.pref_notification_motivation_alert_time),
+                64800L
+        );
     }
 
     public static String getAge(Context context) {

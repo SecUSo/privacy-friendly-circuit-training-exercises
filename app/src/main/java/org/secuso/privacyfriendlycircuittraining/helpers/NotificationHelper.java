@@ -49,14 +49,15 @@ public class NotificationHelper {
         PendingIntent motivationAlertPendingIntent = PendingIntent.getBroadcast(context, 1, motivationAlertIntent, PendingIntent.FLAG_IMMUTABLE);
         AlarmManager am = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
 
-        long timestamp = PrefManager.getNotificationMotivationAlertTime(context);
+        long secondsSinceMidnight =
+                PrefManager.getNotificationMotivationAlertTime(context);
 
+        int hour = (int) (secondsSinceMidnight / 3600L);
+        int minute = (int) ((secondsSinceMidnight % 3600L) / 60L);
 
         Calendar calendar = Calendar.getInstance();
-        calendar.setTimeInMillis(timestamp);
-        calendar.set(Calendar.YEAR, Calendar.getInstance().get(Calendar.YEAR));
-        calendar.set(Calendar.MONTH, Calendar.getInstance().get(Calendar.MONTH));
-        calendar.set(Calendar.DAY_OF_MONTH, Calendar.getInstance().get(Calendar.DAY_OF_MONTH));
+        calendar.set(Calendar.HOUR_OF_DAY, hour);
+        calendar.set(Calendar.MINUTE, minute);
         calendar.set(Calendar.SECOND, 0);
         calendar.set(Calendar.MILLISECOND, 0);
         if (calendar.before(Calendar.getInstance())) {
@@ -64,18 +65,42 @@ public class NotificationHelper {
         }
 
         // Set alarm
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
-                if (!am.canScheduleExactAlarms()) {
-                    Log.i(LOG_CLASS, "Motivation alert cannot be scheduled because of missing permission.");
-                } else {
-                    am.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), motivationAlertPendingIntent);
-                }
+        if (am == null) {
+            Log.e(LOG_CLASS, "AlarmManager is not available.");
+            return;
+        }
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+            if (am.canScheduleExactAlarms()) {
+                am.setExactAndAllowWhileIdle(
+                        AlarmManager.RTC_WAKEUP,
+                        calendar.getTimeInMillis(),
+                        motivationAlertPendingIntent
+                );
             } else {
-                am.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), motivationAlertPendingIntent);
+                Log.i(
+                        LOG_CLASS,
+                        "Exact alarm permission is missing. Scheduling an inexact alarm instead."
+                );
+
+                am.setAndAllowWhileIdle(
+                        AlarmManager.RTC_WAKEUP,
+                        calendar.getTimeInMillis(),
+                        motivationAlertPendingIntent
+                );
             }
+        } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            am.setExactAndAllowWhileIdle(
+                    AlarmManager.RTC_WAKEUP,
+                    calendar.getTimeInMillis(),
+                    motivationAlertPendingIntent
+            );
         } else {
-            am.setExact(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), motivationAlertPendingIntent);
+            am.setExact(
+                    AlarmManager.RTC_WAKEUP,
+                    calendar.getTimeInMillis(),
+                    motivationAlertPendingIntent
+            );
         }
         Log.i(LOG_CLASS, "Scheduled motivation alert at start time " + calendar.toString());
     }

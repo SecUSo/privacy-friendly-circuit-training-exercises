@@ -35,6 +35,7 @@ import android.widget.LinearLayout;
 import org.secuso.privacyfriendlycircuittraining.R;
 import org.secuso.privacyfriendlycircuittraining.adapters.ExerciseAdapter;
 import org.secuso.privacyfriendlycircuittraining.database.PFASQLiteHelper;
+import org.secuso.privacyfriendlycircuittraining.fragments.DeleteItemsDialog;
 import org.secuso.privacyfriendlycircuittraining.fragments.ExerciseDialogFragment;
 import org.secuso.privacyfriendlycircuittraining.models.Exercise;
 
@@ -112,27 +113,20 @@ public class ExerciseActivity extends BaseActivity implements View.OnLongClickLi
             }
         });
 
-        deleteFab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                AlertDialog.Builder builder = new AlertDialog.Builder(ExerciseActivity.this, R.style.AppTheme_Dialog);
+        deleteFab.setOnClickListener(view ->
+                DeleteItemsDialog.show(
+                        ExerciseActivity.this,
+                        () -> {
+                            for (Exercise exercise : selection_list) {
+                                db.deleteExercise(exercise);
+                            }
 
-                builder.setPositiveButton(R.string.delete, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        for(Exercise ex : selection_list){
-                            db.deleteExercise(ex);
+                            mAdapter.updateAdapter(selection_list);
+                            clearActionMode();
+                            setNoExererciseMessage();
                         }
-                        mAdapter.updateAdapter(selection_list);
-                        clearActionMode();
-                        setNoExererciseMessage();
-                    }
-                });
-                builder.setNegativeButton(R.string.cancel, null);
-                builder.setMessage(R.string.dialog_exercise_set_confirm_delete_message);
-                builder.create().show();
-            }
-        });
+                )
+        );
 
         acceptFab.setOnClickListener(new View.OnClickListener() {
             @Override
