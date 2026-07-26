@@ -101,6 +101,9 @@ class PFApplicationData private constructor(context: Context) {
                         )
                     }
                     title { resource(R.string.pref_notification_motivation_alert_texts_title) }
+                    summary {
+                        resource(R.string.pref_notification_motivation_alert_texts_summary)
+                    }
                 }
             }
             category(context.getString(R.string.pref_header_workout)) {
@@ -188,6 +191,9 @@ class PFApplicationData private constructor(context: Context) {
                         }.show()
                     }
                     title { resource(R.string.pref_delete_statistics_dialog_title) }
+                    summary {
+                        resource(R.string.pref_delete_statistics_summary)
+                    }
                 }
             }
             category(context.getString(R.string.pref_group_title_personal_settings)) {

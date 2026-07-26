@@ -131,6 +131,7 @@ public class MainActivity extends BaseActivity {
         startService(new Intent(this, TimerService.class));
 
         //Schedule the next motivation notification (necessary if permission was not granted)
+        // helper function ın the pfa core -- in doc also
         if (NotificationHelper.isMotivationAlertEnabled(this)) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
                 AlarmManager am = (AlarmManager) getApplicationContext().getSystemService(Context.ALARM_SERVICE);
@@ -153,9 +154,14 @@ public class MainActivity extends BaseActivity {
 
         //Suggest the user to enter their body data
         PrefManager.performMigrations(getBaseContext());
+
         if (PrefManager.isFirstTimeLaunch(getBaseContext())) {
-            PrefManager.setFirstTimeLaunch(getBaseContext(), false);
-            PersonalizationSuggestionDialog.show(this);
+            findViewById(android.R.id.content).post(() -> {
+                if (!isFinishing() && !isDestroyed()) {
+                    PersonalizationSuggestionDialog.show(this);
+                    PrefManager.setFirstTimeLaunch(getBaseContext(), false);
+                }
+            });
         }
 
         final List<ExerciseSet> exerciseSetslist = db.getAllExerciseSet();
@@ -393,7 +399,10 @@ public class MainActivity extends BaseActivity {
 
     @Override
     public void onDestroy() {
-        timerService.setIsAppInBackground(false);
+        if (timerService != null) {
+            timerService.setIsAppInBackground(false);
+        }
+
         stopService(new Intent(this, TimerService.class));
         super.onDestroy();
     }

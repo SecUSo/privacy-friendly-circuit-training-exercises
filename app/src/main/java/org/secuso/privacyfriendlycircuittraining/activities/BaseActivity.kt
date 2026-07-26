@@ -38,7 +38,23 @@ abstract class BaseActivity : DrawerActivity() {
         defaultDrawerSection(this)
     }
 
-    override fun isActiveDrawerElement(element: DrawerElement): Boolean = false
+    override fun isActiveDrawerElement(element: DrawerElement): Boolean {
+        return when (this) {
+            is MainActivity ->
+                element.name == getString(R.string.action_main)
+
+            is ExerciseSetActivity ->
+                element.name == getString(R.string.action_exercisesets)
+
+            is ExerciseActivity ->
+                element.name == getString(R.string.action_exercises)
+
+            is StatisticsActivity ->
+                element.name == getString(R.string.action_statistics)
+
+            else -> false
+        }
+    }
 
     companion object {
         const val MAIN_CONTENT_FADEOUT_DURATION = 150

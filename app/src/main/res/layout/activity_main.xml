@@ -37,6 +37,7 @@
             android:background="@drawable/button_fullwidth"
             android:onClick="onClick"
             android:src="@drawable/ic_play_24dp"
+            app:tint="@android:color/white"
             app:backgroundTint="@color/colorPrimary"
             app:layout_anchorGravity="bottom|right|end" />
 

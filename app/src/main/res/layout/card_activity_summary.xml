@@ -135,7 +135,7 @@
                             android:layout_centerHorizontal="true"
                             android:layout_centerVertical="true"
                             android:textAppearance="?android:attr/textAppearanceLarge"
-                            android:textColor="@color/black"
+                            android:textColor="?android:attr/textColorPrimary"
                             android:textSize="24sp" />
 
                     </RelativeLayout>
@@ -153,7 +153,7 @@
                             android:layout_centerVertical="true"
                             android:layout_marginLeft="8dp"
                             android:layout_marginStart="8dp"
-                            android:textColor="@color/black"
+                            android:textColor="?android:attr/textColorPrimary"
                             android:textSize="24sp" />
 
                     </RelativeLayout>
@@ -176,7 +176,7 @@
                             android:layout_alignParentTop="false"
                             android:layout_centerHorizontal="true"
                             android:text="@string/action_time"
-                            android:textColor="@color/black" />
+                            android:textColor="?android:attr/textColorPrimary" />
                     </RelativeLayout>
 
                     <RelativeLayout
@@ -191,7 +191,7 @@
                             android:layout_alignParentTop="true"
                             android:layout_centerHorizontal="true"
                             android:text="@string/summary_card_calories"
-                            android:textColor="@color/black" />
+                            android:textColor="?android:attr/textColorPrimary" />
                     </RelativeLayout>
                 </LinearLayout>
             </LinearLayout>
