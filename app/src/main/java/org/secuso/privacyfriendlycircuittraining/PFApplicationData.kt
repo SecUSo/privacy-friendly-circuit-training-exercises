@@ -82,13 +82,35 @@ class PFApplicationData private constructor(context: Context) {
                 }
                 notificationTime = time {
                     key = context.getString(R.string.pref_notification_motivation_alert_time)
-                    default = 64_800_000L
+                    default = 64_800L
                     backup = true
-                    title { resource(R.string.pref_title_notification_motivation_alert_time) }
-                    summary { transform { _, value ->
-                        val totalMin = (value / 60_000L).toInt()
-                        String.format("%02d:%02d", totalMin / 60, totalMin % 60)
-                    } }
+                    onUpdate = {
+                        if (
+                            org.secuso.privacyfriendlycircuittraining.helpers
+                                .NotificationHelper.isMotivationAlertEnabled(context)
+                        ) {
+                            org.secuso.privacyfriendlycircuittraining.helpers
+                                .NotificationHelper.cancelMotivationAlert(context)
+
+                            org.secuso.privacyfriendlycircuittraining.helpers
+                                .NotificationHelper.setMotivationAlert(context)
+                        }
+                    }
+                    title {
+                        resource(R.string.pref_title_notification_motivation_alert_time)
+                    }
+
+                    summary {
+                        transform { _, value ->
+                            val totalMinutes = (value / 60L).toInt()
+                            String.format(
+                                "%02d:%02d",
+                                totalMinutes / 60,
+                                totalMinutes % 60
+                            )
+                        }
+                    }
+
                     validation = { _, _ -> true }
                 }
                 action {

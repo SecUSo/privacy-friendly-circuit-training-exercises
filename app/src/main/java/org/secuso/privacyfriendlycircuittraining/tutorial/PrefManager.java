@@ -31,6 +31,8 @@ import java.util.function.BiFunction;
  */
 
 public class PrefManager {
+    private static final String PERSONALIZATION_DIALOG_SHOWN =
+            "personalization_dialog_shown";
     public static final int PREFERENCE_MODE = Context.MODE_PRIVATE;
 
     // Default values for the timers
@@ -128,7 +130,14 @@ public class PrefManager {
     public static void setFirstTimeLaunch(Context context, boolean value) {
         getEditor(context).putBoolean(context.getString(R.string.pref_is_first_time_launch), value).apply();
     }
-
+    public static void setPersonalizationDialogShown(
+            Context context,
+            boolean shown
+    ) {
+        getEditor(context)
+                .putBoolean(PERSONALIZATION_DIALOG_SHOWN, shown)
+                .apply();
+    }
     public static void setBlockPeriodizationSwitchButton(Context context, boolean value) {
         getEditor(context).putBoolean(context.getString(R.string.pref_block_periodization_switch_button), value).apply();
     }
@@ -271,5 +280,13 @@ public class PrefManager {
     public static Set<String> getNotificationMotivationAlertTexts(Context context) {
         Set<String> defaultStringSet = new HashSet<>(Arrays.asList(context.getResources().getStringArray(R.array.pref_default_notification_motivation_alert_messages)));
         return getPreferences(context).getStringSet(context.getString(R.string.pref_notification_motivation_alert_texts), defaultStringSet);
+    }
+    public static boolean shouldShowPersonalizationDialog(
+            Context context
+    ) {
+        return !getPreferences(context).getBoolean(
+                PERSONALIZATION_DIALOG_SHOWN,
+                false
+        );
     }
 }

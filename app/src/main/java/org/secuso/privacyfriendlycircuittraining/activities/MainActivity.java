@@ -110,6 +110,7 @@ public class MainActivity extends BaseActivity {
 
     private static final int POST_NOTIFICATIONS_REQUEST_CODE = 1001;
     private boolean notificationPermissionRequested = false;
+    private boolean personalizationDialogChecked = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -169,15 +170,6 @@ public class MainActivity extends BaseActivity {
 
         // Create the sample exercises and the default exercise set
         createDefaultExerciseSetIfNeeded();
-
-        if (PrefManager.isFirstTimeLaunch(getBaseContext())) {
-            findViewById(android.R.id.content).post(() -> {
-                if (!isFinishing() && !isDestroyed()) {
-                    PersonalizationSuggestionDialog.show(this);
-                    PrefManager.setFirstTimeLaunch(getBaseContext(), false);
-                }
-            });
-        }
 
         final List<ExerciseSet> exerciseSetslist = db.getAllExerciseSet();
 
@@ -594,6 +586,20 @@ public class MainActivity extends BaseActivity {
             } else {
                 NotificationHelper.cancelMotivationAlert(this);
             }
+        }
+    }
+    @Override
+    protected void onPostResume() {
+        super.onPostResume();
+
+        if (personalizationDialogChecked) {
+            return;
+        }
+
+        personalizationDialogChecked = true;
+
+        if (PrefManager.shouldShowPersonalizationDialog(this)) {
+            PersonalizationSuggestionDialog.show(this);
         }
     }
 }
